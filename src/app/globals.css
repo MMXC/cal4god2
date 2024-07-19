@@ -1,0 +1,126 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 224 71.4% 4.1%;
+      --card: 0 0% 100%;
+      --card-foreground: 224 71.4% 4.1%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 224 71.4% 4.1%;
+      --primary: 220.9 39.3% 11%;
+      --primary-foreground: 210 20% 98%;
+      --secondary: 220 14.3% 95.9%;
+      --secondary-foreground: 220.9 39.3% 11%;
+      --muted: 220 14.3% 95.9%;
+      --muted-foreground: 220 8.9% 46.1%;
+      --accent: 220 14.3% 95.9%;
+      --accent-foreground: 220.9 39.3% 11%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 20% 98%;
+      --border: 220 13% 91%;
+      --input: 220 13% 91%;
+      --ring: 224 71.4% 4.1%;
+      --radius: 0.5rem;
+      --chart-1: 12 76% 61%;
+      --chart-2: 173 58% 39%;
+      --chart-3: 197 37% 24%;
+      --chart-4: 43 74% 66%;
+      --chart-5: 27 87% 67%;
+    }
+
+    .dark {
+      --background: 224 71.4% 4.1%;
+      --foreground: 210 20% 98%;
+      --card: 224 71.4% 4.1%;
+      --card-foreground: 210 20% 98%;
+      --popover: 224 71.4% 4.1%;
+      --popover-foreground: 210 20% 98%;
+      --primary: 210 20% 98%;
+      --primary-foreground: 220.9 39.3% 11%;
+      --secondary: 215 27.9% 16.9%;
+      --secondary-foreground: 210 20% 98%;
+      --muted: 215 27.9% 16.9%;
+      --muted-foreground: 217.9 10.6% 64.9%;
+      --accent: 215 27.9% 16.9%;
+      --accent-foreground: 210 20% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 20% 98%;
+      --border: 215 27.9% 16.9%;
+      --input: 215 27.9% 16.9%;
+      --ring: 216 12.2% 83.9%;
+      --chart-1: 220 70% 50%;
+      --chart-2: 160 60% 45%;
+      --chart-3: 30 80% 55%;
+      --chart-4: 280 65% 60%;
+      --chart-5: 340 75% 55%;
+    }
+    .tabs-container {
+      width: 100%; /* 或者设置为具体宽度 */
+      position: relative;
+    }
+
+    .tabs-list {
+      background-color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1; /* 确保它在其他元素之上 */
+    }
+
+    .tabs-content {
+      width: 100%; /* 继承父容器的宽度 */
+    }
+
+    .aspect-square {
+      padding-bottom: 100%; /* 保持1:1的比例 */
+      position: relative;
+    }
+  }
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+    .double-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .double-underline::after,
+    .double-underline::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: currentColor;
+    }
+
+    .double-underline::after {
+      bottom: -4px; /* 调整这个值来改变下划线之间的距离 */
+    }
+    /* CSS */
+    .arrow-positioning {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .arrow-positioning .value {
+      font-size: 0.8em; /* Adjust this to control the size of the percentage value */
+    }
+
+    .arrow-positioning .value.up {
+      transform: translateY(-2px); /* Adjust this value to control how much the text moves up */
+    }
+
+    .arrow-positioning .value.down {
+      transform: translateY(2px); /* Adjust this value to control how much the text moves down */
+    }
+  }

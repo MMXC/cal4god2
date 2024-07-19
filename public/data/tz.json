@@ -1,0 +1,14 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"id": 1,"name":"不死2", "num":2, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs": 20,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/不死2.png"},
+        {"id": 2,"name":"圣战2", "num":2, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/圣战2.png"},
+        {"id": 3,"name":"塔寻2", "num":2, "sx":{"gj": 10,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/塔2.png"},
+        {"id": 4,"name":"塔征2", "num":2, "sx":{"gj": 12,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/塔征2.png"},
+        {"id": 5,"name":"炼金2", "num":2, "sx":{"gj": 16,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/炼金2.png"},
+        {"id": 6,"name":"魔狼2", "num":2, "sx":{"gj": 18,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/魔狼2.png"},
+        {"id": 7,"name":"魔狼6", "num":6, "sx":{"gj": 18,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/魔狼2.png"}
+
+    ]
+}
