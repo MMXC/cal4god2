@@ -12,9 +12,9 @@ export type Selection = {
 
 type UserSelectionContextType = {
     userSelections: Selection;
-    selectItem: (category: string, item: string) => void;
-    deleteItem: (category: keyof Selection, item: string) => void;
-    deleteOneItem: (category: keyof Selection, item: string) => void;
+    selectItem: (category: string, item: any) => void;
+    deleteItem: (category: keyof Selection, item: any) => void;
+    deleteOneItem: (category: keyof Selection, item: any) => void;
 };
 
 export const UserSelectionContext = createContext<UserSelectionContextType>({

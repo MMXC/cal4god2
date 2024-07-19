@@ -72,9 +72,10 @@ export default function Cal() {
                     fwzySelection: [],
                     tzSelection: [],
                 };
-                Object.entries(selections).map(([category, items]) => {
+                Object.entries(selections).map(([category, items])=> {
                     if (items.length > 0) {
-                        items.forEach((item) => {
+                        //Type error: Type '(category: keyof Selection, item: any) => void' is not assignable to type '(category: string, item: string) => void'.
+                        items.forEach((item:any) => {
                             selectItem(category, item);
                             const key = sxRelections[category as keyof typeof sxRelections];
                             if (key in item) {
