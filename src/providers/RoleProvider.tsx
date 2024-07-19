@@ -1,6 +1,6 @@
 // providers/RoleProvider.tsx
 'use client';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {RoleContext, RoleType, SourcesType} from '@/contexts/RoleContext';
 
 // Define specific types for calculateTotalScore
@@ -29,8 +29,6 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
         totalScore: 0.86,
     });
 
-    const [zsxsh, setZsxsh] = useState<number>(0);
-
     const calculateTotalScore = (values: ScoreValues) => {
         const maxBhsds = Math.max(values.bs??0, values.hs??0, values.ls??0, values.ds??0);
         return ((values.gj??0) + 100) / 100 *
@@ -42,7 +40,22 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             ((values.zzsh??0) + 100) / 100 *
             ((values.dzdbzs??0) + 100) / 100;
     };
-    const [oldRoleValues, setOldRoleValues] = useState<RoleType>(roleValues);
+    // 一个简单的深拷贝实现，用于复制对象
+    const deepCopy = (obj) => {
+        if (obj === null || typeof obj !== "object") {
+            return obj;
+        }
+
+        let copy = Array.isArray(obj) ? [] : {};
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                copy[key] = deepCopy(obj[key]);
+            }
+        }
+        return copy;
+    };
+
+
     const [sources, setSources] = useState<any>({
         '强化': {qsxsh: 3, bjl: 9, bjsh: 20, zzsh: 6,},
         '基础': {bjsh: 150,bjl: 10,},
@@ -56,11 +69,15 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
     });
 
     const [isLocked, setIsLocked] = useState(false);
-    const [lockScoreSnapshot, setLockScoreSnapshot] = useState<number | null>(null); // Store the snapshot of the score when locked
     const [scoreChangeRatio, setScoreChangeRatio] = useState<number | null>(null); // Store the ratio of change since unlock
     roleValues.totalScore = calculateTotalScore(roleValues);
+    const [oldRoleValues, setOldRoleValues] = useState<RoleType>(deepCopy(roleValues));
+    const oldRoleValuesRef = useRef(oldRoleValues);
     const updateRole = (updater: RoleType, type: keyof SourcesType, operation: 'add' | 'remove') => {
         setRoleValues((prev:any) => {
+            if(!isLocked){
+                setOldRoleValues(deepCopy(roleValues));
+            }
             const updatedValues = { ...prev };
             const updatedSources = { ...sources };
             for (const key in updater) {
@@ -86,36 +103,17 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
                     }
                 }
             }
-
-            // Update total score
-            updatedValues.totalScore = calculateTotalScore(updatedValues);
             return updatedValues;
         });
-        const zsh = Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh;
-        setZsxsh(zsh+roleValues.qsxsh);
         roleValues.totalScore  = calculateTotalScore(roleValues);
         setSources(sources);
-        const ratio = (((roleValues.totalScore??0) - (lockScoreSnapshot??0.86)) / (lockScoreSnapshot??0.86))*100;
+        const ratio = (((roleValues.totalScore??0) - (oldRoleValues.totalScore??0.86)) / (oldRoleValues.totalScore??0.86))*100;
         setScoreChangeRatio(ratio);
-        if(!isLocked){
-            setLockScoreSnapshot(calculateTotalScore(roleValues));
-            setOldRoleValues(roleValues);
-        }
     };
 
     const toggleLock = () => {
-        if (!isLocked) {
-            // Save the current score when locking
-            setOldRoleValues({
-                ...roleValues,
-                totalScore: calculateTotalScore(roleValues),
-            });
-            setLockScoreSnapshot(roleValues.totalScore)
-            setScoreChangeRatio(0); // Reset ratio on lock
-        } else {
-            // No action needed when unlocking, ratio will be calculated in updateRole
-            setScoreChangeRatio(0);
-        }
+        setOldRoleValues(deepCopy(roleValues));
+        setScoreChangeRatio(0);
         setIsLocked(!isLocked);
     };
 
@@ -126,8 +124,6 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             updateRole,
             isLocked,
             toggleLock,
-            zsxsh,
-            lockScoreSnapshot,
             scoreChangeRatio
         }}>
             {children}

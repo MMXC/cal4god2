@@ -34,7 +34,7 @@ import QRCode from 'qrcode.react'; // 导入QRCode组件
 // 假设这是你的UserContext
 export default function Cal() {
     const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
-    const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio, zsxsh} = useContext(RoleContext);
+    const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio} = useContext(RoleContext);
     const {updateRole} = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
     const nameRelections = {
@@ -56,10 +56,7 @@ export default function Cal() {
     useEffect(() => {
         let isMounted = true;
         // 只在组件挂载时运行一次
-        if(!isLocked){
-            toggleLock();
-        }
-        (async () => {
+        isMounted && (async () => {
             const savedSelections: { zkSelection: any[], zbSelection: any[], jbSelection: any[], fwSelection: any[], fwzySelection: any[], tzSelection: any[] }
                 = JSON.parse(localStorage.getItem('userSelections')?? '{}');
             if (isMounted && savedSelections) {
@@ -87,8 +84,8 @@ export default function Cal() {
                 })
 
             }
-            toggleLock();
         })();
+        toggleLock();
         // 清理函数，确保在组件卸载前取消异步操作
         return () => {
             isMounted = false;
@@ -324,7 +321,7 @@ export default function Cal() {
                         <span className="flex items-center text-lg font-small arrow-positioning">
                             {scoreChangeRatio !== null && (
                                 <>
-                                    {scoreChangeRatio >= 0 ? (
+                                    {scoreChangeRatio > 0 ? (
                                         <>
                                             <ArrowUpIcon className="w-6 h-6 mr-0.1" style={{ color: "#FF0000" }} />
                                             <span className="value up text-red-500" style={{ color: "#FF0000" }}>{scoreChangeRatio.toFixed(0)}%</span>
