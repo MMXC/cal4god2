@@ -546,6 +546,32 @@ export default function Cal() {
                             </Popover>
                         </div>
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <button className="btn btn-primary">
+                                        <BombIcon className="w-6 h-6 text-primary"/>
+                                    </button>
+                                </PopoverTrigger>
+                                <div>
+                                    <div className="text-sm font-medium">对指定属性Boss增伤</div>
+                                    <div className="text-2xl font-bold">{roleValues.dzdbzs}%</div>
+                                </div>
+                                <PopoverContent>
+                                    <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
+                                        {/* Use flex column to automatically*/
+                                            sources && Object.entries(sources).map(([type, properties]) => (
+                                                (properties && typeof properties === 'object' && ('dzdbzs' in properties)) && ((properties as { dzdbzs: number }).dzdbzs !== 0) && (
+                                                    <p key={type} className="text-sm">
+                                                        <br/>{type}: {(properties as { dzdbzs: number }).dzdbzs}%
+                                                    </p>
+                                                )
+                                            ))
+                                        }
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+                        <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{ marginTop: '1rem' }}>
                                 <div className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span style={{ color: 'red' }}>{ (5 * roleValues.totalScore * 333 * 6 /10000).toFixed(2)} 亿！</span>
