@@ -707,8 +707,8 @@ export default function Cal() {
                         </div>
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{ marginTop: '1rem' }}>
-                                <div className="text-lg font-semibold">恭喜你，你的初始破招伤害为 ${(5 * totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100)).toFixed(2)} 亿！远征伤害为
-                                    <span style={{ color: 'red' }}>${ 5 * totalScore.toFixed(2)} 亿！</span>
+                                <div className="text-lg font-semibold">恭喜你，你的初始破招伤害为 ${(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100)).toFixed(2)} 亿！远征伤害为
+                                    <span style={{ color: 'red' }}>${ (5 * roleValues.totalScore).toFixed(2)} 亿！</span>
                                 </div>
                                 <div className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10j计算）</div>
                             </div>
