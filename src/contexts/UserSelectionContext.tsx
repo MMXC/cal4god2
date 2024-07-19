@@ -2,12 +2,12 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 type Selection = {
-    zkSelection: string[];
-    zbSelection: string[];
-    jbSelection: string[];
-    fwSelection: string[];
-    fwzySelection: string[];
-    tzSelection: string[];
+    zkSelection: any[];
+    zbSelection: any[];
+    jbSelection: any[];
+    fwSelection: any[];
+    fwzySelection: any[];
+    tzSelection: any[];
 };
 
 type UserSelectionContextType = {
