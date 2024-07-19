@@ -104,6 +104,7 @@ export async function fetchTzCards(): Promise<any[]> {
 // 模拟API请求
 export async function uploadImage(formData: FormData): Promise<string> {
     try {
+        let link="";
         // // 27|2LK5mK1sbeI0oM4pif5jO8jcL78xnv8rDoBIvx5v
         const response = await fetch('https://imgtbl.com/api/v1/images/tokens', {
             method: 'POST',
@@ -172,15 +173,15 @@ export async function uploadImage(formData: FormData): Promise<string> {
                 }
                 const uploadData =await res.json();
                 if (uploadData.status) {
-                    return uploadData.data.links;
+                     link = uploadData.data.links;
                 } else {
                     throw new Error('上传失败');
                 }
-
             })
         }else{
             throw new Error('获取上传token失败');
         }
+        return link;
     } catch (error) {
         console.error('分享失败，需下载后发送或重试，失败原因:', error);
         throw error;

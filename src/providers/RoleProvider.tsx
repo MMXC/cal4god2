@@ -90,7 +90,7 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
         });
         roleValues.totalScore  = calculateTotalScore(roleValues);
         setSources(sources);
-        const ratio = ((roleValues.totalScore - lockScoreSnapshot) / lockScoreSnapshot)*100;
+        const ratio = (((roleValues.totalScore??0) - (lockScoreSnapshot??0.86)) / (lockScoreSnapshot??0.86))*100;
         setScoreChangeRatio(ratio);
         if(!isLocked){
             setLockScoreSnapshot(calculateTotalScore(roleValues));

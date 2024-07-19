@@ -17,7 +17,12 @@ type UserSelectionContextType = {
     deleteOneItem: (category: keyof Selection, item: string) => void;
 };
 
-export const UserSelectionContext = createContext<any>(null);
+export const UserSelectionContext = createContext<UserSelectionContextType>({
+    userSelections: {zkSelection: [], zbSelection: [], jbSelection: [], fwSelection: [], fwzySelection: [], tzSelection: []},
+    selectItem: () => {},
+    deleteItem: () => {},
+    deleteOneItem: () => {}
+});
 
 
 
