@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Toggle } from "@/components/ui/toggle"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import {UserSelectionContext} from "@/contexts/UserSelectionContext";
+import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Zk() {
@@ -32,7 +32,9 @@ export default function Zk() {
   const [activeTab, setActiveTab] = useState("active")
   const [zkList, setZkList] = useState<any[]>([]);
   const [lock, setLock] = useState(false);
-  const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
+  const contextValue = useContext(UserSelectionsContext);
+  const { userSelections, selectItem, deleteItem } = contextValue;
+
   const { updateRole } = useContext(RoleContext);
   useEffect(() => {
     let isMounted = true;

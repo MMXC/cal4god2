@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Toggle } from "@/components/ui/toggle"
-import {UserSelectionContext} from "@/contexts/UserSelectionContext";
+import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {fetchZkCards, fetchFwzyCards, fetchJbCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 
@@ -31,7 +31,7 @@ export default function Fwzy() {
   const [isChecked, setIsChecked] = useState<any>({})
   const [list, setList] = useState<any[]>([]);
 
-  const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
+  const { userSelections, selectItem, deleteItem } = useContext(UserSelectionsContext);
   const { updateRole } = useContext(RoleContext);
   const [lock, setLock] = useState(false);
 

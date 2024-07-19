@@ -19,12 +19,11 @@
  **/
 import {Button} from "@/components/ui/button"
 import {useContext, useEffect, useRef, useState} from 'react';
-import {UserSelectionContext} from '@/contexts/UserSelectionContext';
+import {UserSelectionsContext} from '@/contexts/UserSelectionsContext';
 import {RoleContext} from "@/contexts/RoleContext";
 import {PopoverTrigger} from "@radix-ui/react-popover";
 import {Popover, PopoverContent} from "@/components/ui/popover";
-import {PolarAngleAxis, PolarGrid, Radar, RadarChart} from "recharts"
-import {ChartContainer, ChartTooltip, ChartTooltipContent} from "@/components/ui/chart"
+
 import html2canvas from 'html2canvas';
 import {DownloadIcon} from "@radix-ui/react-icons";
 import {Card, CardContent} from "@/components/ui/card";
@@ -34,7 +33,7 @@ import QRCode from 'qrcode.react'; // 导入QRCode组件
 
 // 假设这是你的UserContext
 export default function Cal() {
-    const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionContext);
+    const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
     const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio} = useContext(RoleContext);
     const {updateRole} = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
@@ -638,7 +637,7 @@ async function dataURLToBlob(calRef: any, dataURL: string): Promise<Blob> {
 }
 
 function ShareButton(props:any) {
-    const {userSelections, selectItem} = useContext(UserSelectionContext);
+    const {userSelections, selectItem} = useContext(UserSelectionsContext);
     const [shareLinksCache, setShareLinksCache] = useState<{[key: string]: string}>({});
     const [shareLink, setShareLink] = useState<string | null>(null);
     const closeModal = () => setShareLink(null);

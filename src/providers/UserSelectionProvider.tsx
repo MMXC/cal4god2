@@ -1,7 +1,7 @@
 // providers/UserSelectionProvider.tsx
-import {useEffect, useState} from 'react';
-import {UserSelectionContext, Selection} from '@/contexts/UserSelectionContext';
 
+import {useEffect, useState} from "react";
+import {UserSelectionsContext,Selection} from "@/contexts/UserSelectionsContext"
 type Props = {
     children: React.ReactNode;
 };
@@ -15,6 +15,10 @@ export function UserSelectionProvider({ children }: Props) {
         fwzySelection: [],
         tzSelection: [],
     });
+    useEffect(() => {
+        // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
+        localStorage.setItem('userSelections', JSON.stringify(userSelections));
+    }, [userSelections]);
 
     const selectItem = (category: keyof Selection, item: any) => {
         if (userSelections[category].length < 12) {
@@ -66,16 +70,9 @@ export function UserSelectionProvider({ children }: Props) {
 
         console.log('After deletion:', userSelections); // 尝试打印更新后的状态，但这可能不会立即反映最新状态
     };
-
-
-    useEffect(() => {
-        // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
-        localStorage.setItem('userSelections', JSON.stringify(userSelections));
-    }, [userSelections]);
-
     return (
-        <UserSelectionContext.Provider value={{ userSelections, selectItem, deleteItem, deleteOneItem }}>
+        <UserSelectionsContext.Provider value={{ userSelections, selectItem, deleteItem, deleteOneItem }}>
             {children}
-        </UserSelectionContext.Provider>
+        </UserSelectionsContext.Provider>
     );
 }

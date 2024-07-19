@@ -22,14 +22,14 @@ import {useContext, useEffect, useState} from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {UserSelectionContext} from "@/contexts/UserSelectionContext";
+import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {fetchZbCards, fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Zb() {
   const [isChecked, setIsChecked] = useState<any>({})
   const [zbList, setZbList] = useState<any[]>([]);
 
-  const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
+  const { userSelections, selectItem, deleteItem } = useContext(UserSelectionsContext);
   const { updateRole } = useContext(RoleContext);
   useEffect(() => {
     let isMounted = true;

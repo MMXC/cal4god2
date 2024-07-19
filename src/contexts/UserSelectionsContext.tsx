@@ -17,17 +17,22 @@ type UserSelectionContextType = {
     deleteOneItem: (category: any, item: any) => void;
 };
 
-export const UserSelectionContext = createContext<UserSelectionContextType>({
-    userSelections: {zkSelection: [], zbSelection: [], jbSelection: [], fwSelection: [], fwzySelection: [], tzSelection: []},
-    selectItem: () => {},
-    deleteItem: () => {},
-    deleteOneItem: () => {}
+export const UserSelectionsContext = createContext<UserSelectionContextType>({
+    userSelections: {
+        zkSelection: [],
+        zbSelection: [],
+        jbSelection: [],
+        fwSelection: [],
+        fwzySelection: [],
+        tzSelection: [],
+    },
+    selectItem: () => { },
+    deleteItem: () => { },
+    deleteOneItem: () => { },
 });
 
-
-
-export function useUserSelection() {
-    const context = useContext(UserSelectionContext);
+export function useUserSelections() {
+    const context = useContext(UserSelectionsContext);
     if (!context) {
         throw new Error('useUserSelection must be used within a UserSelectionProvider');
     }

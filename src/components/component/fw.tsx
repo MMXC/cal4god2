@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { UserSelectionContext } from "@/contexts/UserSelectionContext";
+import { UserSelectionsContext } from "@/contexts/UserSelectionsContext";
 import { RoleContext } from "@/contexts/RoleContext";
 import {fetchFwCards, fetchJbCards} from "@/services/api";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,7 @@ export default function Fw() {
   const [cardQuantities, setCardQuantities] = useState<any>({});
   const [list, setList] = useState<any[]>([]);
 
-  const { userSelections, selectItem, deleteItem, deleteOneItem } = useContext(UserSelectionContext);
+  const { userSelections, selectItem, deleteItem, deleteOneItem } = useContext(UserSelectionsContext);
   const { updateRole } = useContext(RoleContext);
   const [lock, setLock] = useState(false);
 

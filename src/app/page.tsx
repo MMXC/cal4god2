@@ -17,6 +17,7 @@ import Tz from "@/components/component/tz";
 export default function Home() {
   const [activeTab, setActiveTab] = useState("zk"); // 将 "active" 改为 "zk" 或其他tab的值
   return (
+      <UserSelectionProvider>
       <RoleProvider>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -45,7 +46,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <UserSelectionProvider>
+
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           {/*<Image*/}
           {/*  className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"*/}
@@ -57,7 +58,7 @@ export default function Home() {
           {/*/>*/}
           <Cal />
         </div>
-        </UserSelectionProvider>
+
 
         <div className="mt-4 tabs-container justify-center">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -91,5 +92,6 @@ export default function Home() {
         </div>
       </main>
       </RoleProvider>
+      </UserSelectionProvider>
   );
 }
