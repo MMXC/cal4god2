@@ -41,15 +41,15 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             ((values.dzdbzs??0) + 100) / 100;
     };
     // 一个简单的深拷贝实现，用于复制对象
-    const deepCopy = (obj:any) => {
+    const deepCopy = (obj: any): any => {
         if (obj === null || typeof obj !== "object") {
             return obj;
         }
 
-        let copy = Array.isArray(obj) ? [] : {};
+        let copy: Record<string, any> = {};
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) {
-                copy[key as keyof typeof obj] = deepCopy(obj[key]);
+                copy[key] = deepCopy(obj[key]);
             }
         }
         return copy;
