@@ -562,7 +562,7 @@ export default function Cal() {
                                 </CardContent>
                                 <div className="relative flex items-end">
                                     <QRCode
-                                        value={''}
+                                        value={'https://cal2gos2.vecel.app'}
                                         size={100}
                                         level={'H'}
                                         includeMargin={true}
