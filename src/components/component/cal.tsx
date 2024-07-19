@@ -112,8 +112,8 @@ export default function Cal() {
                 })
         }else{
             userSelections[category]
-                .some((item:any) => {item.id=card.id})
-                .forEach((item:any) => {
+                .filter((item:any) => {item.id=card.id})
+                .findLast((item:any) => {
                     deleteOneItem(category, card.id)
                     const key = sxRelections[category as keyof typeof sxRelections];
                     if (key in card) {
