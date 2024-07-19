@@ -34,7 +34,7 @@ import QRCode from 'qrcode.react'; // 导入QRCode组件
 // 假设这是你的UserContext
 export default function Cal() {
     const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
-    const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio} = useContext(RoleContext);
+    const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio, zsxsh} = useContext(RoleContext);
     const {updateRole} = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
     const nameRelections = {
@@ -396,7 +396,7 @@ export default function Cal() {
                                 <div>
                                     <div className="text-sm font-medium">主属伤</div>
                                     <div
-                                        className="text-2xl font-bold">{Math.max(roleValues.bs, roleValues.hs, roleValues.ls, roleValues.ds) + roleValues.qsxsh}%
+                                        className="text-2xl font-bold">{Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh}%
                                     </div>
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">

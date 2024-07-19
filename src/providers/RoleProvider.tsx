@@ -1,6 +1,6 @@
 // providers/RoleProvider.tsx
 'use client';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {RoleContext, RoleType, SourcesType} from '@/contexts/RoleContext';
 
 // Define specific types for calculateTotalScore
@@ -28,6 +28,9 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
         pf: 0,
         totalScore: 0.86,
     });
+
+    const [zsxsh, setZsxsh] = useState<number>(0);
+
     const calculateTotalScore = (values: ScoreValues) => {
         const maxBhsds = Math.max(values.bs??0, values.hs??0, values.ls??0, values.ds??0);
         return ((values.gj??0) + 100) / 100 *
@@ -88,6 +91,8 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             updatedValues.totalScore = calculateTotalScore(updatedValues);
             return updatedValues;
         });
+        const zsh = Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh;
+        setZsxsh(zsh+roleValues.qsxsh);
         roleValues.totalScore  = calculateTotalScore(roleValues);
         setSources(sources);
         const ratio = (((roleValues.totalScore??0) - (lockScoreSnapshot??0.86)) / (lockScoreSnapshot??0.86))*100;
@@ -96,7 +101,6 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             setLockScoreSnapshot(calculateTotalScore(roleValues));
             setOldRoleValues(roleValues);
         }
-
     };
 
     const toggleLock = () => {
@@ -122,6 +126,7 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
             updateRole,
             isLocked,
             toggleLock,
+            zsxsh,
             lockScoreSnapshot,
             scoreChangeRatio
         }}>
