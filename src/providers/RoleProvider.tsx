@@ -49,7 +49,7 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
         let copy = Array.isArray(obj) ? [] : {};
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) {
-                copy[key] = deepCopy(obj[key]);
+                copy[key as keyof typeof obj] = deepCopy(obj[key]);
             }
         }
         return copy;
