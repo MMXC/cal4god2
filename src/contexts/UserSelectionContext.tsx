@@ -12,7 +12,7 @@ export type Selection = {
 
 type UserSelectionContextType = {
     userSelections: Selection;
-    selectItem: (category: string, item: any) => void;
+    selectItem: (category: keyof Selection, item: any) => void;
     deleteItem: (category: keyof Selection, item: any) => void;
     deleteOneItem: (category: keyof Selection, item: any) => void;
 };
