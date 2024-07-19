@@ -588,7 +588,7 @@ export default function Cal() {
                                 </CardContent>
                                 <div className="relative flex items-end">
                                     <QRCode
-                                        value={'https://cal2gos2.vecel.app'}
+                                        value={'https://god2.note-chat.cn'}
                                         size={100}
                                         level={'H'}
                                         includeMargin={true}
@@ -596,6 +596,7 @@ export default function Cal() {
                                 </div>
                             </Card>
                         </div>
+
                         <div className="grid items-center gap-2">
                             {/* 假设groupQrCodeUrl是群聊二维码的URL */}
                             <Card>
@@ -615,6 +616,8 @@ export default function Cal() {
                             </Card>
                         </div>
                     </div>
+                {/*    //https://god2.note-chat.cn/ */}
+
                 </div>
             </div>
         </div>
