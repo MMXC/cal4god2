@@ -62,7 +62,7 @@ export default function Cal() {
         }
         (async () => {
             const savedSelections: { zkSelection: any[], zbSelection: any[], jbSelection: any[], fwSelection: any[], fwzySelection: any[], tzSelection: any[] }
-                = JSON.parse(localStorage.getItem('userSelections'));
+                = JSON.parse(localStorage.getItem('userSelections')?? '{}');
             if (isMounted && savedSelections) {
                 let selections = savedSelections ? savedSelections : {
                     zkSelection: [],
@@ -76,7 +76,12 @@ export default function Cal() {
                     if (items.length > 0) {
                         items.forEach((item) => {
                             selectItem(category, item);
-                            updateRole(item[sxRelections[category]], nameRelections[category], 'add');
+                            const key = sxRelections[category as keyof typeof sxRelections];
+                            if (key in item) {
+                                updateRole(item[key], nameRelections[category as keyof typeof nameRelections], 'add');
+                            } else {
+                                console.error(`Key ${key} not found in item.`);
+                            }
                         });
                     }
                 })
@@ -90,15 +95,34 @@ export default function Cal() {
         };
     }, []); // 无依赖数组意味着此 effect 只在挂载时运行一次
 
-    const handleClickPrevCard = (category, card) => {
+    const handleClickPrevCard = (category:keyof typeof sxRelections|keyof typeof nameRelections, card:any) => {
+
         if(category !== 'fwSelection'){
-            userSelections[category] = userSelections[category].filter((item) => {item.id=card.id});
-            deleteItem(category, card.id)
-            updateRole(card[sxRelections[category]], nameRelections[category], 'remove');
+            userSelections[category]
+                .filter((item:any) => {item.id=card.id})
+                .forEach((item:any) => {
+                    deleteItem(category, card.id)
+                    const key = sxRelections[category];
+                    if (key in card) {
+                        updateRole(card[key], nameRelections[category], 'remove');
+                    } else {
+                        console.error(`Key ${key} not found in item.`);
+                    }
+                    return item;
+                })
         }else{
-            userSelections[category].remove(userSelections[category].find((item) => {item.id=card.id}));
-            deleteOneItem(category, card.id)
-            updateRole(card[sxRelections[category]], nameRelections[category], 'remove');
+            userSelections[category]
+                .some((item:any) => {item.id=card.id})
+                .forEach((item:any) => {
+                    deleteOneItem(category, card.id)
+                    const key = sxRelections[category as keyof typeof sxRelections];
+                    if (key in card) {
+                        updateRole(card[key], nameRelections[category as keyof typeof nameRelections], 'remove');
+                    } else {
+                        console.error(`Key ${key} not found in item.`);
+                    }
+                    return item;
+                })
         }
 
     }
@@ -130,7 +154,7 @@ export default function Cal() {
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-12">
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2 font-bold">
-                                <span className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item) => item.name).join("-")}</span>
+                                <span className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
@@ -159,7 +183,7 @@ export default function Cal() {
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-4">
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item) => item.name).join("-")}</span>
+                                <span className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
@@ -188,7 +212,7 @@ export default function Cal() {
                     <div className="grid grid-cols-[0.2fr_0.8fr] gap-4">
                         <div className="bg-card p-2 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item) => item.name).join("-")}</span>
+                                <span className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(2,1fr)] gap-2">
@@ -214,7 +238,7 @@ export default function Cal() {
                         </div>
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">装备&nbsp;&nbsp;{userSelections.zbSelection.map((item) => item.name).join("-")}</span>
+                                <span className="text-sm font-medium">装备&nbsp;&nbsp;{userSelections.zbSelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,1fr)] gap-2">
@@ -242,7 +266,7 @@ export default function Cal() {
                     <div className="bg-card p-4 rounded-lg shadow-md">
                         <div className="grid grid-rows-[auto_1fr] gap-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item) => item.name).join("-")}</span>
+                                <span className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(5,0.6fr)] gap-0.5">
