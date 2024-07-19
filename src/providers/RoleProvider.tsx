@@ -26,21 +26,21 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
         zzsh: 21,
         dzdbzs: 0,
         pf: 0,
-        totalScore: 1,
+        totalScore: 0.86,
     });
     const calculateTotalScore = (values: ScoreValues) => {
-        const maxBhsds = Math.max(values.bs, values.hs, values.ls, values.ds);
-        return (values.gj + 100) / 100 *
-            (maxBhsds + values.qsxsh + 100) / 100 *
-            values.bjl / 100 *
-            (values.bjsh + 100) / 100 *
-            (values.yczs + 100) / 100 *
-            (values.dbzs + 100) / 100 *
-            (values.zzsh + 100) / 100 *
-            (values.dzdbzs + 100) / 100;
+        const maxBhsds = Math.max(values.bs??0, values.hs??0, values.ls??0, values.ds??0);
+        return ((values.gj??0) + 100) / 100 *
+            (maxBhsds + (values.qsxsh??0) + 100) / 100 *
+            (values.bjl??0) / 100 *
+            ((values.bjsh??0) + 100) / 100 *
+            ((values.yczs??0) + 100) / 100 *
+            ((values.dbzs??0) + 100) / 100 *
+            ((values.zzsh??0) + 100) / 100 *
+            ((values.dzdbzs??0) + 100) / 100;
     };
     const [oldRoleValues, setOldRoleValues] = useState<RoleType>(roleValues);
-    const [sources, setSources] = useState<SourcesType | {}>({
+    const [sources, setSources] = useState<any>({
         '强化': {qsxsh: 3, bjl: 9, bjsh: 20, zzsh: 6,},
         '基础': {bjsh: 150,bjl: 10,},
         '天赋': {},
@@ -56,30 +56,30 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
     const [lockScoreSnapshot, setLockScoreSnapshot] = useState<number | null>(null); // Store the snapshot of the score when locked
     const [scoreChangeRatio, setScoreChangeRatio] = useState<number | null>(null); // Store the ratio of change since unlock
     roleValues.totalScore = calculateTotalScore(roleValues);
-    const updateRole = (updater: RoleType, type: string, operation: 'add' | 'remove') => {
-        setRoleValues(prev => {
+    const updateRole = (updater: RoleType, type: keyof SourcesType, operation: 'add' | 'remove') => {
+        setRoleValues((prev:any) => {
             const updatedValues = { ...prev };
             const updatedSources = { ...sources };
             for (const key in updater) {
                 if (updater.hasOwnProperty(key)) {
-                    const value = updater[key];
+                    const value = updater[key as keyof RoleType];
 
                     // Update role values
                     updatedValues[key as keyof RoleType] = operation === 'add'
-                        ? prev[key as keyof RoleType] + value
-                        : prev[key as keyof RoleType] - value;
+                        ? (prev[key as keyof RoleType]??0) + (value??0)
+                        : (prev[key as keyof RoleType]??0) - (value??0);
 
                     // Update sources
-                    if (!updatedSources[type]) {
-                        updatedSources[type] = {};
+                    if (!updatedSources[type as keyof typeof sources]) {
+                        updatedSources[type as keyof typeof sources] = {};
                     }
-                    if (!updatedSources[type][key as keyof RoleType]) {
-                        updatedSources[type][key as keyof RoleType] = 0;
+                    if (!updatedSources[type as keyof typeof sources][key as keyof RoleType]) {
+                        updatedSources[type as keyof typeof sources][key as keyof RoleType] = 0;
                     }
                     if (operation === 'add') {
-                        updatedSources[type][key as keyof RoleType] += value;
+                        updatedSources[type as keyof typeof sources][key as keyof RoleType] += (value??0);
                     } else if (operation === 'remove') {
-                        updatedSources[type][key as keyof RoleType] -= value;
+                        updatedSources[type as keyof typeof sources][key as keyof RoleType] -= (value??0);
                     }
                 }
             }

@@ -339,14 +339,16 @@ export default function Cal() {
                             )}
                         </span>
 
-                        <Button variant="outline" size="icon" onClick={toggleLock} title={isLocked?"已锁定":"已解锁"} >
+                        <Button variant="outline" size="icon" onClick={toggleLock} >
                             {isLocked ? (
                                 <>
-                                    <LockIcon className="w-5 h-5" title="已锁定" />
+                                    <LockIcon className="w-5 h-5" />
+                                    <span className="sr-only">解锁</span>
                                 </>
                             ) : (
                                 <>
-                                    <UnlockIcon className="w-5 h-5" title="已解锁"/>
+                                    <UnlockIcon className="w-5 h-5"/>
+                                    <span className="sr-only">锁定</span>
                                 </>
                             )}
                         </Button>
@@ -372,9 +374,9 @@ export default function Cal() {
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
                                                 sources && Object.entries(sources).map(([type, properties]) => (
-                                                    properties && properties.gj !== undefined && properties.gj !== 0 && (
+                                                    (properties && typeof properties === 'object' && ('gj' in properties)) && ((properties as { gj: number }).gj !== 0) && (
                                                         <p key={type} className="text-sm">
-                                                            <br/>{type}: {properties.gj}%
+                                                            <br/>{type}: {(properties as { gj: number }).gj}%
                                                         </p>
                                                     )
                                                 ))
@@ -400,9 +402,9 @@ export default function Cal() {
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
                                                 sources && Object.entries(sources).map(([type, properties]) => (
-                                                    properties && properties.qsxsh !== undefined && properties.qsxsh !== 0 && (
+                                                    (properties && typeof properties === 'object' && ('qsxsh' in properties)) && ((properties as { qsxsh: number }).qsxsh !== 0) && (
                                                         <p key={type} className="text-sm">
-                                                            <br/>{type}: {properties.qsxsh}%
+                                                            <br/>{type}: {(properties as { qsxsh: number }).qsxsh}%
                                                         </p>
                                                     )
                                                 ))
@@ -426,9 +428,9 @@ export default function Cal() {
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
                                                 sources && Object.entries(sources).map(([type, properties]) => (
-                                                    properties && properties.bjl !== undefined && properties.bjl !== 0 && (
+                                                    (properties && typeof properties === 'object' && ('bjl' in properties)) && ((properties as { bjl: number }).bjl !== 0) && (
                                                         <p key={type} className="text-sm">
-                                                            <br/>{type}: {properties.bjl}%
+                                                            <br/>{type}: {(properties as { bjl: number }).bjl}%
                                                         </p>
                                                     )
                                                 ))
@@ -449,7 +451,19 @@ export default function Cal() {
                                     <div className="text-sm font-medium">暴击伤害</div>
                                     <div className="text-2xl font-bold">{roleValues.bjsh}%</div>
                                 </div>
-
+                                <PopoverContent>
+                                    <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
+                                        {/* Use flex column to automatically*/
+                                            sources && Object.entries(sources).map(([type, properties]) => (
+                                                (properties && typeof properties === 'object' && ('bjsh' in properties)) && ((properties as { bjsh: number }).bjsh !== 0) && (
+                                                    <p key={type} className="text-sm">
+                                                        <br/>{type}: {(properties as { bjsh: number }).bjsh}%
+                                                    </p>
+                                                )
+                                            ))
+                                        }
+                                    </div>
+                                </PopoverContent>
                             </Popover>
                         </div>
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
@@ -467,9 +481,9 @@ export default function Cal() {
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                properties && properties.yczs !== undefined && properties.yczs !== 0 && (
+                                                (properties && typeof properties === 'object' && ('yczs' in properties)) && ((properties as { yczs: number }).yczs !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {properties.yczs}%
+                                                        <br/>{type}: {(properties as { yczs: number }).yczs}%
                                                     </p>
                                                 )
                                             ))
@@ -493,9 +507,9 @@ export default function Cal() {
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                properties && properties.dbzs !== undefined && properties.dbzs !== 0 && (
+                                                (properties && typeof properties === 'object' && ('dbzs' in properties)) && ((properties as { dbzs: number }).dbzs !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {properties.dbzs}%
+                                                        <br/>{type}: {(properties as { dbzs: number }).dbzs}%
                                                     </p>
                                                 )
                                             ))
@@ -519,9 +533,9 @@ export default function Cal() {
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                properties && properties.zzsh !== undefined && properties.zzsh !== 0 && (
+                                                (properties && typeof properties === 'object' && ('zzsh' in properties)) && ((properties as { zzsh: number }).zzsh !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {properties.zzsh}%
+                                                        <br/>{type}: {(properties as { zzsh: number }).zzsh}%
                                                     </p>
                                                 )
                                             ))
@@ -596,7 +610,7 @@ async function dataURLToBlob(calRef: any, dataURL: string): Promise<Blob> {
     return new Blob([int8Array], {type: 'image/png'});
 }
 
-function ShareButton(props) {
+function ShareButton(props:any) {
     const {userSelections, selectItem} = useContext(UserSelectionContext);
     const [shareLinksCache, setShareLinksCache] = useState<{[key: string]: string}>({});
     const [shareLink, setShareLink] = useState<string | null>(null);
@@ -632,7 +646,7 @@ function ShareButton(props) {
                     fileName += '-' + Object.entries(userSelections)
                         .map(([key, cards]) => {
                             if (cards && Array.isArray(cards) && cards.length > 0) {
-                                return (nameRelections[key] || '') + '-' + cards
+                                return (nameRelections[key as keyof typeof nameRelections] || '') + '-' + cards
                                     .sort((cardA, cardB) => cardA.id - cardB.id) // Assuming ids are numeric and can be sorted directly
                                     .map(card => card.name || '')
                                     .join('|');
@@ -683,36 +697,7 @@ function ShareButton(props) {
     );
 }
 
-function RadarchartChart(props) {
-    return (
-        <div {...props}>
-            <ChartContainer
-                config={{
-                    value: {
-                        label: "百分比",
-                        color: "hsl(var(--chart-1))",
-                    },
-                }}
-                className="mx-auto aspect-square"
-            >
-                <RadarChart
-                    data={[{name: "攻击", value: 100}, {name: "主属伤", value: 100}, {
-                        name: "暴击率",
-                        value: 100
-                    }, {name: "暴击伤害", value: 100}]}
-                >
-                    <ChartTooltip cursor={false} content={<ChartTooltipContent/>}/>
-                    <PolarAngleAxis dataKey="name"/>
-                    <PolarGrid/>
-                    <Radar dataKey="value" fill="var(--color-value)" fillOpacity={0.6}/>
-                </RadarChart>
-            </ChartContainer>
-        </div>
-    )
-}
-
-
-function BoltIcon(props) {
+function BoltIcon(props:any) {
     return (
         <svg
             {...props}
@@ -734,7 +719,7 @@ function BoltIcon(props) {
 }
 
 
-function BombIcon(props) {
+function BombIcon(props:any) {
     return (
         <svg
             {...props}
@@ -756,7 +741,7 @@ function BombIcon(props) {
 }
 
 
-function CloudLightningIcon(props) {
+function CloudLightningIcon(props:any) {
     return (
         <svg
             {...props}
@@ -777,7 +762,7 @@ function CloudLightningIcon(props) {
 }
 
 
-function CopyIcon(props) {
+function CopyIcon(props:any) {
     return (
         <svg
             {...props}
@@ -798,7 +783,7 @@ function CopyIcon(props) {
 }
 
 
-function FilterIcon(props) {
+function FilterIcon(props:any) {
     return (
         <svg
             {...props}
@@ -818,7 +803,7 @@ function FilterIcon(props) {
 }
 
 
-function FlameIcon(props) {
+function FlameIcon(props:any) {
     return (
         <svg
             {...props}
@@ -839,7 +824,7 @@ function FlameIcon(props) {
 }
 
 
-function HeartIcon(props) {
+function HeartIcon(props:any) {
     return (
         <svg
             {...props}
@@ -860,7 +845,7 @@ function HeartIcon(props) {
 }
 
 
-function PlusIcon(props) {
+function PlusIcon(props:any) {
     return (
         <svg
             {...props}
@@ -881,7 +866,7 @@ function PlusIcon(props) {
 }
 
 
-function ShieldIcon(props) {
+function ShieldIcon(props:any) {
     return (
         <svg
             {...props}
@@ -902,7 +887,7 @@ function ShieldIcon(props) {
 }
 
 
-function StarIcon(props) {
+function StarIcon(props:any) {
     return (
         <svg
             {...props}
@@ -923,7 +908,7 @@ function StarIcon(props) {
 }
 
 
-function SwordIcon(props) {
+function SwordIcon(props:any) {
     return (
         <svg
             {...props}
@@ -946,7 +931,7 @@ function SwordIcon(props) {
 }
 
 
-function XIcon(props) {
+function XIcon(props:any) {
     return (
         <svg
             {...props}

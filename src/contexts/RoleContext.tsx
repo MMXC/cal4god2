@@ -1,32 +1,32 @@
 import React, {createContext, useContext} from 'react';
 
 export type RoleType = {
-    gj: number;
-    bs: number;
-    hs: number;
-    ds: number;
-    ls: number;
-    bm: number;
-    dm: number;
-    lm: number;
-    hm: number;
-    hx: number;
-    bjl: number;
-    bjsh: number;
-    qsxsh: number;
-    yczs: number;
-    dbzs: number;
-    zzsh: number;
-    dzdbzs: number;
-    pf: number;
-    totalScore: number;
+    gj?: number;
+    bs?: number;
+    hs?: number;
+    ds?: number;
+    ls?: number;
+    bm?: number;
+    dm?: number;
+    lm?: number;
+    hm?: number;
+    hx?: number;
+    bjl?: number;
+    bjsh?: number;
+    qsxsh?: number;
+    yczs?: number;
+    dbzs?: number;
+    zzsh?: number;
+    dzdbzs?: number;
+    pf?: number;
+    totalScore?: number;
 };
 
-export type SourcesType = Record<string, Record<keyof RoleType, string>>;
+export type SourcesType = Record<string, Record<keyof RoleType, any>>;
 
 export type RoleContextType = {
     roleValues: RoleType;
-    sources: SourcesType | {};
+    sources: SourcesType;
     updateRole: (updater: RoleType,  type: string, operation: 'add' | 'remove') => void;
     isLocked: boolean,
     toggleLock: any,

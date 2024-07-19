@@ -27,8 +27,8 @@ import {UserSelectionContext} from "@/contexts/UserSelectionContext";
 import {fetchTzCards, fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Tz() {
-  const [isChecked, setIsChecked] = useState({})
-  const [tzList, setTzList] = useState([]);
+  const [isChecked, setIsChecked] = useState<any>({})
+  const [tzList, setTzList] = useState<any[]>([]);
   const [lock, setLock] = useState(false);
   const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -52,9 +52,9 @@ export default function Tz() {
   useEffect(() => {
     // 恢复状态
     if (userSelections.tzSelection.length>0) {
-      userSelections.tzSelection.map(card => {
-        if (userSelections.tzSelection.some(item => item.id === card.id)) {
-          setIsChecked((prevState) => ({
+      userSelections.tzSelection.map((card:any) => {
+        if (userSelections.tzSelection.some((item:any) => item.id === card.id)) {
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [card.id]: true,
           }))
@@ -63,16 +63,16 @@ export default function Tz() {
     }
   }, [userSelections.tzSelection])
 
-  const handleCardClick = async (category, card) => {
+  const handleCardClick = async (category:any, card:any) => {
     const id = card.id;
     if (lock) return;
 
     setLock(true);
 
     try {
-      if (!userSelections.tzSelection.some(item => item.id === card.id)) {
+      if (!userSelections.tzSelection.some((item:any) => item.id === card.id)) {
         if (userSelections.tzSelection.length < 2) {
-          setIsChecked((prevState) => ({
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [id]: true,
           }));
@@ -82,7 +82,7 @@ export default function Tz() {
           return;
         }
       } else {
-        setIsChecked((prevState) => ({
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [id]: false,
         }));
@@ -95,7 +95,7 @@ export default function Tz() {
   };
 
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredZkCards = tzList.filter(card =>
+  const filteredZkCards = tzList.filter((card:any) =>
       card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -114,13 +114,13 @@ export default function Tz() {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
-        {filteredZkCards.map((card) => (
+        {filteredZkCards.map((card:any) => (
           <Card
             key={card.id}
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
                 ? "border-2 border-primary ring-4 ring-primary-foreground"
-                : userSelections.tzSelection.some((item) => item.id === card.id)
+                : userSelections.tzSelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""
             }`}

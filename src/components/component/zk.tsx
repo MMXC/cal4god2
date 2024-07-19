@@ -28,9 +28,9 @@ import {UserSelectionContext} from "@/contexts/UserSelectionContext";
 import {fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Zk() {
-  const [isChecked, setIsChecked] = useState({})
+  const [isChecked, setIsChecked] = useState<any>({})
   const [activeTab, setActiveTab] = useState("active")
-  const [zkList, setZkList] = useState([]);
+  const [zkList, setZkList] = useState<any[]>([]);
   const [lock, setLock] = useState(false);
   const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -54,8 +54,8 @@ export default function Zk() {
   useEffect(() => {
     // 恢复状态
     if (userSelections.zkSelection.length > 0) {
-      userSelections.zkSelection.forEach(card => {
-        setIsChecked(prevState => ({
+      userSelections.zkSelection.forEach((card:any) => {
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [card.id]: true,
         }));
@@ -64,16 +64,16 @@ export default function Zk() {
   }, [userSelections.zkSelection]); // 添加依赖数组
 
 
-  const handleCardClick = async (category, card) => {
+  const handleCardClick = async (category:any, card:any) => {
     const id = card.id;
     if (lock) return;
 
     setLock(true);
 
     try {
-      if (!userSelections.zkSelection.some(item => item.id === card.id)) {
+      if (!userSelections.zkSelection.some((item:any) => item.id === card.id)) {
         if (userSelections.zkSelection.length < 12) {
-          setIsChecked((prevState) => ({
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [id]: true,
           }));
@@ -83,7 +83,7 @@ export default function Zk() {
           return;
         }
       } else {
-        setIsChecked((prevState) => ({
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [id]: false,
         }));
@@ -96,7 +96,7 @@ export default function Zk() {
   };
 
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredZkCards = zkList.filter(card =>
+  const filteredZkCards = zkList.filter((card:any) =>
       card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -121,7 +121,7 @@ export default function Zk() {
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
                 ? "border-2 border-primary ring-4 ring-primary-foreground"
-                : userSelections.zkSelection.some((item) => item.id === card.id)
+                : userSelections.zkSelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""
             }`}

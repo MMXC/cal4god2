@@ -26,8 +26,8 @@ import {UserSelectionContext} from "@/contexts/UserSelectionContext";
 import {fetchZbCards, fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Zb() {
-  const [isChecked, setIsChecked] = useState({})
-  const [zbList, setZbList] = useState([]);
+  const [isChecked, setIsChecked] = useState<any>({})
+  const [zbList, setZbList] = useState<any[]>([]);
 
   const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -50,9 +50,9 @@ export default function Zb() {
   useEffect(() => {
     // 恢复状态
     if (userSelections.zbSelection.length>0) {
-      userSelections.zbSelection.map(card => {
-        if (userSelections.zbSelection.some(item => item.id === card.id)) {
-          setIsChecked((prevState) => ({
+      userSelections.zbSelection.map((card:any) => {
+        if (userSelections.zbSelection.some((item:any) => item.id === card.id)) {
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [card.id]: true,
           }))
@@ -62,20 +62,20 @@ export default function Zb() {
   }, [userSelections.zbSelection])
 
   const [lock, setLock] = useState(false);
-  const handleCardClick = async (category, card) => {
+  const handleCardClick = async (category:any, card:any) => {
     const id = card.id;
     if (lock) return;
 
     setLock(true);
 
     try {
-      if (!userSelections.zbSelection.some(item => item.id === card.id)) {
+      if (!userSelections.zbSelection.some((item:any) => item.id === card.id)) {
         if (userSelections.zbSelection.length < 7) {
-          if(userSelections.zbSelection.some(zb => zb.type === card.type)){
+          if(userSelections.zbSelection.some((zb:any) => zb.type === card.type)){
             alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
             return;
           }
-          setIsChecked((prevState) => ({
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [id]: true,
           }));
@@ -85,7 +85,7 @@ export default function Zb() {
           return;
         }
       } else {
-        setIsChecked((prevState) => ({
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [id]: false,
         }));
@@ -98,7 +98,7 @@ export default function Zb() {
   };
 
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredZbCards = zbList.filter(card =>
+  const filteredZbCards = zbList.filter((card:any) =>
       card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -123,7 +123,7 @@ export default function Zb() {
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
                 ? "border-2 border-primary ring-4 ring-primary-foreground"
-                : userSelections.zbSelection.some((item) => item.id === card.id)
+                : userSelections.zbSelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""
             }`}

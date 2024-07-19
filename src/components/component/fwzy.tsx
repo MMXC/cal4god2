@@ -28,8 +28,8 @@ import {fetchZkCards, fetchFwzyCards, fetchJbCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 
 export default function Fwzy() {
-  const [isChecked, setIsChecked] = useState({})
-  const [list, setList] = useState([]);
+  const [isChecked, setIsChecked] = useState<any>({})
+  const [list, setList] = useState<any[]>([]);
 
   const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -55,9 +55,9 @@ export default function Fwzy() {
     setLock(true);
     // 恢复状态
     if (userSelections.fwzySelection.length > 0) {
-      userSelections.fwzySelection.map(card => {
-        if (userSelections.fwzySelection.some(item => item.id === card.id)) {
-          setIsChecked((prevState) => ({
+      userSelections.fwzySelection.map((card:any) => {
+        if (userSelections.fwzySelection.some((item:any) => item.id === card.id)) {
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [card.id]: true,
           }))
@@ -67,16 +67,16 @@ export default function Fwzy() {
     setLock(false);
   }, [userSelections.fwzySelection])
 
-  const handleCardClick = async (category, card) => {
+  const handleCardClick = async (category:any, card:any) => {
     const id = card.id;
     if (lock) return;
 
     setLock(true);
 
     try {
-      if (!userSelections.fwzySelection.some(item => item.id === card.id)) {
+      if (!userSelections.fwzySelection.some((item:any) => item.id === card.id)) {
         if (userSelections.fwzySelection.length < 10) {
-          setIsChecked((prevState) => ({
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [id]: true,
           }));
@@ -86,7 +86,7 @@ export default function Fwzy() {
           return;
         }
       } else {
-        setIsChecked((prevState) => ({
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [id]: false,
         }));
@@ -99,7 +99,7 @@ export default function Fwzy() {
   };
 
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredFwzyCards = list.filter(card =>
+  const filteredFwzyCards = list.filter((card:any) =>
       card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -118,13 +118,13 @@ export default function Fwzy() {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 gap-6 p-4">
-        {filteredFwzyCards.map((card) => (
+        {filteredFwzyCards.map((card:any) => (
           <Card
             key={card.id}
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
                 ? "border-2 border-primary ring-4 ring-primary-foreground"
-                : userSelections.fwzySelection.some((item) => item.id === card.id)
+                : userSelections.fwzySelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""
             }`}

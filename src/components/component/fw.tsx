@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function Fw() {
-  const [cardQuantities, setCardQuantities] = useState({});
-  const [list, setList] = useState([]);
+  const [cardQuantities, setCardQuantities] = useState<any>({});
+  const [list, setList] = useState<any[]>([]);
 
   const { userSelections, selectItem, deleteItem, deleteOneItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -35,21 +35,21 @@ export default function Fw() {
     setLock(true);
     // 恢复状态
     if (userSelections.fwSelection.length > 0) {
-      userSelections.fwSelection.map(card => {
+      userSelections.fwSelection.map((card:any) => {
         if (userSelections.fwSelection.length > 0) {
-          const newQuantities = userSelections.fwSelection.reduce((acc, card) => {
+          const newQuantities = userSelections.fwSelection.reduce((acc:any, card:any) => {
             acc[card.id] = (acc[card.id] || 0) + 1; // 如果不存在，则初始化为0，然后增加1
             return acc;
           }, {});
 
-          setCardQuantities(prevState => ({ ...prevState, ...newQuantities }));
+          setCardQuantities((prevState:any) => ({ ...prevState, ...newQuantities }));
         }
       })
     }
     setLock(false);
   }, [userSelections.fwSelection])
 
-  const handleCardClick = async (event, category, card) => {
+  const handleCardClick = async (event:any, category:any, card:any) => {
     const id = card.id;
     if (lock) return;
     setLock(true);
@@ -59,7 +59,7 @@ export default function Fw() {
       const cardWidth = cardRect.width;
       const threshold = cardWidth / 2; // 设定阈值，一半宽度
 
-      let newQuantity = cardQuantities[card.id] || 0;
+      let newQuantity = (card.id in cardQuantities)?cardQuantities[card.id]:0;
       let operation = 1;
       if (clickX < threshold) {
         // 左侧点击，增加数量
@@ -71,18 +71,18 @@ export default function Fw() {
       newQuantity += operation;
       newQuantity = Math.max(newQuantity, 0);
 
-      setCardQuantities(prevState => ({ ...prevState, [card.id]: newQuantity }));
+      setCardQuantities((prevState:any) => ({ ...prevState, [card.id]: newQuantity }));
       if (operation > 0) {
         // 检查数量限制
-        if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc, cur) => acc.num + cur.num, 0) >= 40 ||
-            userSelections.fwSelection.filter(item => item.id === card.id).length >= 10) {
+        if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc:any, cur:any) => acc.num + cur.num, 0) >= 40 ||
+            userSelections.fwSelection.filter((item:any) => item.id === card.id).length >= 10) {
           return;
         }
         selectItem(category, card);
         updateRole(card.sx, '符文', 'add');
       } else {
 
-        if (userSelections.fwSelection.reduce((acc, cur) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
+        if (userSelections.fwSelection.reduce((acc:any, cur:any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
           return
         } else {
           deleteOneItem(category, card.id);
@@ -96,7 +96,7 @@ export default function Fw() {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredFwCards = list.filter(card => card.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredFwCards = list.filter((card:any) => card.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
       <div>

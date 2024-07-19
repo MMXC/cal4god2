@@ -26,8 +26,8 @@ import {UserSelectionContext} from "@/contexts/UserSelectionContext";
 import {fetchJbCards, fetchTzCards, fetchZkCards} from "@/services/api";
 import {RoleContext} from "@/contexts/RoleContext";
 export default function Jb() {
-  const [isChecked, setIsChecked] = useState({})
-  const [list, setList] = useState([]);
+  const [isChecked, setIsChecked] = useState<any>({})
+  const [list, setList] = useState<any[]>([]);
 
   const { userSelections, selectItem, deleteItem } = useContext(UserSelectionContext);
   const { updateRole } = useContext(RoleContext);
@@ -52,9 +52,9 @@ export default function Jb() {
     setLock(true);
     // 恢复状态
     if (userSelections.jbSelection.length > 0) {
-      userSelections.jbSelection.map(card => {
-        if (userSelections.jbSelection.some(item => item.id === card.id)) {
-          setIsChecked((prevState) => ({
+      userSelections.jbSelection.map((card:any) => {
+        if (userSelections.jbSelection.some((item:any) => item.id === card.id)) {
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [card.id]: true,
           }))
@@ -65,19 +65,19 @@ export default function Jb() {
   }, [userSelections.jbSelection])
 
   const [lock, setLock] = useState(false);
-  const handleCardClick = async (category, card) => {
+  const handleCardClick = async (category:any, card:any) => {
     const id = card.id;
     if (lock) return;
 
     setLock(true);
 
     try {
-      if (!userSelections.jbSelection.some(item => item.id === card.id)) {
+      if (!userSelections.jbSelection.some((item:any) => item.id === card.id)) {
         if (userSelections.jbSelection.reduce(
-            (acc, obj) => acc + (obj.num || 0),
+            (acc:any, obj:any) => acc.num + (obj.num || 0),
             0
         ) + card.num <= 12) {
-          setIsChecked((prevState) => ({
+          setIsChecked((prevState:any) => ({
             ...prevState,
             [id]: true,
           }));
@@ -87,7 +87,7 @@ export default function Jb() {
           return;
         }
       } else {
-        setIsChecked((prevState) => ({
+        setIsChecked((prevState:any) => ({
           ...prevState,
           [id]: false,
         }));
@@ -99,7 +99,7 @@ export default function Jb() {
     }
   };
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredJbCards = list.filter(card =>
+  const filteredJbCards = list.filter((card:any) =>
       card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -114,7 +114,7 @@ export default function Jb() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1"
           />
-          <Button variant="outline">Filter</Button>
+          <Button variant="outline">查找</Button>
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
@@ -124,7 +124,7 @@ export default function Jb() {
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
                 ? "border-2 border-primary ring-4 ring-primary-foreground"
-                : userSelections.jbSelection.some((item) => item.id === card.id)
+                : userSelections.jbSelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""
             }`}
