@@ -1,7 +1,7 @@
 // contexts/UserSelectionContext.tsx
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type Selection = {
+export type Selection = {
     zkSelection: any[];
     zbSelection: any[];
     jbSelection: any[];
@@ -17,7 +17,9 @@ type UserSelectionContextType = {
     deleteOneItem: (category: keyof Selection, item: string) => void;
 };
 
-export const UserSelectionContext = createContext<UserSelectionContextType | null>(null);
+export const UserSelectionContext = createContext<any>(null);
+
+
 
 export function useUserSelection() {
     const context = useContext(UserSelectionContext);

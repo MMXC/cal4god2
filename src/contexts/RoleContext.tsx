@@ -34,7 +34,7 @@ export type RoleContextType = {
     effectiveScoreChangeRatio: number,
 };
 
-export const RoleContext = createContext<RoleContextType | null>(null);
+export const RoleContext = createContext<any>(null);
 
 // 创建角色数值的上下文
 export function useRole() {

@@ -18,7 +18,6 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("zk"); // 将 "active" 改为 "zk" 或其他tab的值
   return (
       <RoleProvider>
-    <UserSelectionProvider>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
           <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
@@ -46,7 +45,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-
+        <UserSelectionProvider>
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           {/*<Image*/}
           {/*  className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"*/}
@@ -58,6 +57,7 @@ export default function Home() {
           {/*/>*/}
           <Cal />
         </div>
+        </UserSelectionProvider>
 
         <div className="mt-4 tabs-container justify-center">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -90,7 +90,6 @@ export default function Home() {
           </Tabs>
         </div>
       </main>
-    </UserSelectionProvider>
       </RoleProvider>
   );
 }

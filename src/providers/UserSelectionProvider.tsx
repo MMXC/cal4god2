@@ -1,15 +1,6 @@
 // providers/UserSelectionProvider.tsx
 import {useEffect, useState} from 'react';
-import {UserSelectionContext} from '@/contexts/UserSelectionContext';
-
-type Selection = {
-    zkSelection: string[];
-    zbSelection: string[];
-    jbSelection: string[];
-    fwSelection: string[];
-    fwzySelection: string[];
-    tzSelection: string[];
-};
+import {UserSelectionContext, Selection} from '@/contexts/UserSelectionContext';
 
 type Props = {
     children: React.ReactNode;
