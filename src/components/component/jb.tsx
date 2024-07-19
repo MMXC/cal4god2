@@ -74,7 +74,7 @@ export default function Jb() {
     try {
       if (!userSelections.jbSelection.some((item:any) => item.id === card.id)) {
         if (userSelections.jbSelection.reduce(
-            (acc:any, obj:any) => acc.num + (obj.num || 0),
+            (acc:any, obj:any) => (acc.num || 0) + (obj.num || 0),
             0
         ) + card.num <= 12) {
           setIsChecked((prevState:any) => ({

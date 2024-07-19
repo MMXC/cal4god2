@@ -43,6 +43,9 @@ export default function Home() {
                 height={24}
                 priority
               />
+              {/*清空缓存并重新加载网页*/}
+              <button id="clearStorageBtn" onClick={() => {localStorage.clear(); window.location.reload();}}>重置</button>
+
             </a>
           </div>
         </div>
