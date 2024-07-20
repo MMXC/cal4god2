@@ -115,11 +115,11 @@ export default function Fw() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 gap-6 p-4">
+        <div className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-9 gap-6 p-4">
           {filteredFwCards.map(card => (
               <Card
                   key={card.id}
-                  className={`relative overflow-hidden rounded-lg shadow-lg ${cardQuantities[card.id] > 0 ? "border-2 border-primary ring-4 ring-primary-foreground" : ""}`}
+                  className={`relative overflow-hidden rounded-lg shadow-lg ${cardQuantities[card.id] > 0 ? "border-2 golden-glow ring-4 ring-primary-foreground" : ""}`}
                   onClick={event => handleCardClick(event, 'fwSelection', card)}
               >
                 <div className="relative">

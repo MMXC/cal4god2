@@ -117,13 +117,13 @@ export default function Fwzy() {
           <Button variant="outline">查找</Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 gap-6 p-4">
+      <div className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-12 gap-6 p-4">
         {filteredFwzyCards.map((card:any) => (
           <Card
             key={card.id}
             className={`relative overflow-hidden rounded-lg shadow-lg ${
               isChecked[card.id]
-                ? "border-2 border-primary ring-4 ring-primary-foreground"
+                ? "border-2 golden-glow ring-4 ring-primary-foreground"
                 : userSelections.fwzySelection.some((item:any) => item.id === card.id)
                 ? "border-2 border-gold"
                 : ""

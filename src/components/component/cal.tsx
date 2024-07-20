@@ -145,7 +145,7 @@ export default function Cal() {
     };
 
     return (
-        <div ref={calRef} className="grid grid-rows-[auto_0.1fr] gap-6 w-full max-w-5xl mx-auto px-4 py-8">
+        <div ref={calRef} className="z-10 grid grid-rows-[auto_0.1fr] gap-6 w-full max-w-5xl mx-auto px-4 py-8">
             <div className="grid grid-cols-[1fr_250px] gap-6">
                 <div className="grid gap-4">
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-12">
@@ -208,7 +208,7 @@ export default function Cal() {
                     </div>
                     <div className="grid grid-cols-[0.2fr_0.8fr] gap-4">
                         <div className="bg-card p-2 rounded-lg shadow-md">
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="items-center justify-between mb-2">
                                 <span className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
@@ -262,7 +262,7 @@ export default function Cal() {
                     </div>
                     <div className="bg-card p-4 rounded-lg shadow-md">
                         <div className="grid grid-rows-[auto_1fr] gap-4">
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="items-center justify-between mb-2">
                                 <span className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item:any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
@@ -522,7 +522,7 @@ export default function Cal() {
                                         <BombIcon className="w-6 h-6 text-primary"/>
                                     </button>
                                 </PopoverTrigger>
-                                <div>
+                                <div className={"flex"}>
                                     <div className="text-sm font-medium">最终伤害</div>
                                     <div className="text-2xl font-bold">{roleValues.zzsh}%</div>
                                 </div>

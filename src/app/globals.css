@@ -4,6 +4,8 @@
 
   @layer base {
     :root {
+      --golden-border: rgba(255, 215, 0, 1); /* 标准的金色 */
+      --enhanced-golden-border: rgba(255, 215, 0, 0.8);
       --background: 0 0% 100%;
       --foreground: 224 71.4% 4.1%;
       --card: 0 0% 100%;
@@ -64,9 +66,9 @@
 
     .tabs-list {
       background-color: #fff;
-      position: sticky;
+      position: relative;
       top: 0;
-      z-index: 1; /* 确保它在其他元素之上 */
+      /*z-index: 1; !* 确保它在其他元素之上 *!*/
     }
 
     .tabs-content {
@@ -77,6 +79,7 @@
       padding-bottom: 100%; /* 保持1:1的比例 */
       position: relative;
     }
+
   }
 
   @layer base {
@@ -122,5 +125,46 @@
 
     .arrow-positioning .value.down {
       transform: translateY(2px); /* Adjust this value to control how much the text moves down */
+    }
+    .scrollable-tabs-list {
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    /* 定义金色发光及闪烁动画 */
+    .golden-glow {
+      border: 2px solid var(--enhanced-golden-border);
+      box-shadow:
+              0 0 10px var(--enhanced-golden-border),
+              0 0 10px var(--enhanced-golden-border),
+              0 0 10px var(--enhanced-golden-border),
+              0 0 10px var(--enhanced-golden-border);
+
+      animation: goldenBlink 1.5s infinite;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+    /* 定义闪烁动画 */
+    @keyframes goldenBlink {
+      0%, 100% {
+        opacity: 0.8;
+        box-shadow:
+                0 0 10px var(--enhanced-golden-border),
+                0 0 10px var(--enhanced-golden-border),
+                0 0 10px var(--enhanced-golden-border),
+                0 0 10px var(--enhanced-golden-border);
+      }
+      50% {
+        opacity: 0.6;
+        box-shadow:
+                0 0 5px var(--enhanced-golden-border),
+                0 0 5px var(--enhanced-golden-border),
+                0 0 5px var(--enhanced-golden-border),
+                0 0 5px var(--enhanced-golden-border);
+      }
+    }
+    @media (min-width: 768px) {
+      .scrollable-tabs-list {
+        overflow-x: hidden;
+      }
     }
   }
