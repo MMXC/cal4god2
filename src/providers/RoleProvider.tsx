@@ -31,9 +31,10 @@ export function RoleProvider({ children }: { children?: React.ReactNode }) {
 
     const calculateTotalScore = (values: ScoreValues) => {
         const maxBhsds = Math.max(values.bs??0, values.hs??0, values.ls??0, values.ds??0);
+        const zzbjl = Math.min(values.bjl ?? 0, 100);
         return ((values.gj??0) + 100) / 100 *
             (maxBhsds + (values.qsxsh??0) + 100) / 100 *
-            (values.bjl??0) / 100 *
+            Math.min(values.bjl ?? 0, 100) / 100 *
             ((values.bjsh??0) + 100) / 100 *
             ((values.yczs??0) + 100) / 100 *
             ((values.dbzs??0) + 100) / 100 *
