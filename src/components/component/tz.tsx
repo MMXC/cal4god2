@@ -71,7 +71,7 @@ export default function Tz() {
 
         try {
             if (!userSelections.tzSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.zbSelection.length + userSelections.tzSelection.reduce((acc:any, curr:any) => acc.num + curr.num, 0) < 10) {
+                if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc:any, curr:any) => acc + curr, 0)) < 10) {
                     setIsChecked((prevState: any) => ({
                         ...prevState,
                         [id]: true,

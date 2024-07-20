@@ -16,6 +16,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toggle": "^1.1.0",
     "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "fs": "^0.0.1-security",
