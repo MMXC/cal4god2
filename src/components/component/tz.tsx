@@ -71,7 +71,7 @@ export default function Tz() {
 
         try {
             if (!userSelections.tzSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.tzSelection.length < 2) {
+                if (userSelections.zbSelection.length + userSelections.tzSelection.reduce((acc:any, curr:any) => acc.num + curr.num, 0) < 10) {
                     setIsChecked((prevState: any) => ({
                         ...prevState,
                         [id]: true,
@@ -79,6 +79,7 @@ export default function Tz() {
                     await selectItem(category, card);
                     await updateRole(card.sx, '套装', 'add');
                 } else {
+                    alert('已选装备超出10件，请先移除后再重新选择！');
                     return;
                 }
             } else {

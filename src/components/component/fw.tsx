@@ -35,22 +35,18 @@ export default function Fw() {
     setLock(true);
     // 恢复状态
     if (userSelections.fwSelection.length > 0) {
-      userSelections.fwSelection.map((card:any) => {
-        if (userSelections.fwSelection.length > 0) {
-          const newQuantities = userSelections.fwSelection.reduce((acc:any, card:any) => {
-            acc[card.id] = (acc[card.id] || 0) + 1; // 如果不存在，则初始化为0，然后增加1
-            return acc;
-          }, {});
-
-          setCardQuantities((prevState:any) => ({ ...prevState, ...newQuantities }));
-        }
-      })
+      const cardQuantities = userSelections.fwSelection.reduce((acc, card) => {
+        acc[card.id] = (acc[card.id] || 0) + 1;
+        return acc;
+      }, {});
+      // Now cardQuantities contains the counts of each unique card.id
+      // To update state with these quantities:
+      setCardQuantities(cardQuantities);
     }
     setLock(false);
   }, [userSelections.fwSelection])
 
   const handleCardClick = async (event:any, category:any, card:any) => {
-    const id = card.id;
     if (lock) return;
     setLock(true);
     try {
@@ -71,17 +67,20 @@ export default function Fw() {
       newQuantity += operation;
       newQuantity = Math.max(newQuantity, 0);
 
-      setCardQuantities((prevState:any) => ({ ...prevState, [card.id]: newQuantity }));
       if (operation > 0) {
         // 检查数量限制
-        if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc:any, cur:any) => acc.num + cur.num, 0) >= 40 ||
-            userSelections.fwSelection.filter((item:any) => item.id === card.id).length >= 10) {
+        if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc:any, cur:any) => acc.num + cur.num, 0) + 1 > 40 ||
+            userSelections.fwSelection.filter((item:any) => item.id === card.id).length + 1 > 10 ||
+            userSelections.fwSelection.length + 1 > 10)
+        {
+          alert('已选总符文超出40或单类型符文超出10，请先移除后再重新选择！');
           return;
+        }else{
+          setCardQuantities((prevState:any) => ({ ...prevState, [card.id]: newQuantity }));
+          selectItem(category, card);
+          updateRole(card.sx, '符文', 'add');
         }
-        selectItem(category, card);
-        updateRole(card.sx, '符文', 'add');
       } else {
-
         if (userSelections.fwSelection.reduce((acc:any, cur:any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
           return
         } else {

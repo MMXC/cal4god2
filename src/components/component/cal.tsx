@@ -392,9 +392,10 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">主属伤</div>
-                                    <div
-                                        className="text-2xl font-bold">{Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh}%
-                                    </div>
+                                    {/*<div*/}
+                                    {/*    className="text-2xl font-bold">{Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh}%*/}
+                                    {/*</div>*/}
+                                    <RoleColorDisplay items={roleValues}/>
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
@@ -522,7 +523,7 @@ export default function Cal() {
                                         <BombIcon className="w-6 h-6 text-primary"/>
                                     </button>
                                 </PopoverTrigger>
-                                <div className={"flex"}>
+                                <div>
                                     <div className="text-sm font-medium">最终伤害</div>
                                     <div className="text-2xl font-bold">{roleValues.zzsh}%</div>
                                 </div>
@@ -744,6 +745,43 @@ function BoltIcon(props:any) {
     )
 }
 
+
+
+
+// Assuming roleValues is an object that gets updated and you want to re-render based on its changes.
+function RoleColorDisplay (props:any){
+    const { roleValues } = useContext(RoleContext);
+
+    const textMapping = {
+        bs: 'text-blue-500',
+        hs: 'text-red-500',
+        ls: 'text-yellow-500',
+        ds: 'text-green-500',
+    };
+    const colorMapping = {
+        bs: { color: "#07f5d6" },
+        hs: { color: "#ec1b1b" },
+        ls: { color: "#facf06" },
+        ds: { color: "#008000" },
+    };
+    let maxRole = 'bs';
+    let maxValue = -Infinity;
+
+    for (const key in roleValues) {
+        if (['bs', 'hs', 'ls', 'ds'].includes(key) && roleValues[key] > maxValue) {
+            maxRole = key;
+            maxValue = roleValues[key];
+        }
+    }
+
+    return (
+        <div
+            {...props}
+        >
+            <span className={"text-2xl font-bold ${textMapping[maxRole]}"} style={colorMapping[maxRole as keyof typeof colorMapping]}>{maxValue + (roleValues.qsxsh || 0)}%</span>
+        </div>
+    );
+}
 
 function BombIcon(props:any) {
     return (

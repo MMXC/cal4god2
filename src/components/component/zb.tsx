@@ -70,7 +70,7 @@ export default function Zb() {
 
     try {
       if (!userSelections.zbSelection.some((item:any) => item.id === card.id)) {
-        if (userSelections.zbSelection.length < 7) {
+        if (userSelections.zbSelection.length + userSelections.tzSelection.reduce((acc:any, curr:any) => acc.num + curr.num, 0) < 10) {
           if(userSelections.zbSelection.some((zb:any) => zb.type === card.type)){
             alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
             return;
@@ -82,6 +82,7 @@ export default function Zb() {
           await selectItem(category, card);
           await updateRole(card.sx, '装备', 'add');
         } else {
+          alert('已选装备超出10件，请先移除后再重新选择！');
           return;
         }
       } else {
