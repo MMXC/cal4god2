@@ -70,7 +70,7 @@ export default function Zb() {
 
     try {
       if (!userSelections.zbSelection.some((item:any) => item.id === card.id)) {
-        if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc:any, curr:any) => acc + curr, 0)) < 10) {
+        if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc:any, curr:any) => acc + curr, 0)) + card.num <= 10) {
           if(userSelections.zbSelection.some((zb:any) => zb.type === card.type)){
             alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
             return;
