@@ -28,13 +28,41 @@ import html2canvas from 'html2canvas';
 import {DownloadIcon} from "@radix-ui/react-icons";
 import {Card, CardContent} from "@/components/ui/card";
 import {uploadImage} from "@/services/api";
-import {LockIcon, ShareIcon, UnlockIcon, ArrowDownIcon, ArrowUpIcon} from "lucide-react";
+import {ArrowDownIcon, ArrowUpIcon, LockIcon, ShareIcon, UnlockIcon} from "lucide-react";
 import QRCode from 'qrcode.react'; // 导入QRCode组件
+
+function generateFilename(userSelections: any, nameRelections: { zkSelection: string; zbSelection: string; fwSelection: string; fwzySelection: string; jbSelection: string; tzSelection: string }, totalScore: any) {
+    let fileName = 'cal';
+    if (userSelections) {
+        // 假设userSelections是一个对象，我们将其转换为字符串并附加到文件名
+        fileName += '-' + Object.entries(userSelections)
+            .map(([key, cards]) => {
+                if (cards && Array.isArray(cards) && cards.length > 0) {
+                    return (nameRelections[key as keyof typeof nameRelections] || '') + '-' + cards
+                        .sort((cardA, cardB) => cardA.id - cardB.id) // Assuming ids are numeric and can be sorted directly
+                        .map(card => card.name || '')
+                        .join('|');
+                }
+                return '';
+            }).join('-');
+    }
+    fileName += '-' + totalScore.toFixed(0);
+    fileName += '.png';
+    return fileName;
+}
 
 // 假设这是你的UserContext
 export default function Cal() {
     const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
-    const {roleValues, sources, totalScore, toggleLock, isLocked, lockScoreSnapshot, scoreChangeRatio} = useContext(RoleContext);
+    const {
+        roleValues,
+        sources,
+        totalScore,
+        toggleLock,
+        isLocked,
+        lockScoreSnapshot,
+        scoreChangeRatio
+    } = useContext(RoleContext);
     const {updateRole} = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
     const nameRelections = {
@@ -53,12 +81,15 @@ export default function Cal() {
         "fwzySelection": "sx",
         "tzSelection": "sx"
     };
+    const {setLists} = useContext(RoleContext);
+
+
     useEffect(() => {
         let isMounted = true;
         // 只在组件挂载时运行一次
         isMounted && (async () => {
             const savedSelections: { zkSelection: any[], zbSelection: any[], jbSelection: any[], fwSelection: any[], fwzySelection: any[], tzSelection: any[] }
-                = JSON.parse(localStorage.getItem('userSelections')?? '{}');
+                = JSON.parse(localStorage.getItem('userSelections') ?? '{}');
             if (isMounted && savedSelections) {
                 let selections = savedSelections ? savedSelections : {
                     zkSelection: [],
@@ -68,10 +99,10 @@ export default function Cal() {
                     fwzySelection: [],
                     tzSelection: [],
                 };
-                Object.entries(selections).map(([category, items])=> {
+                Object.entries(selections).map(([category, items]) => {
                     if (items.length > 0) {
                         //Type error: Type '(category: keyof Selection, item: any) => void' is not assignable to type '(category: string, item: string) => void'.
-                        items.forEach((item:any) => {
+                        items.forEach((item: any) => {
                             selectItem(category, item);
                             const key = sxRelections[category as keyof typeof sxRelections];
                             if (key in item) {
@@ -92,12 +123,14 @@ export default function Cal() {
         };
     }, []); // 无依赖数组意味着此 effect 只在挂载时运行一次
 
-    const handleClickPrevCard = (category:keyof typeof sxRelections|keyof typeof nameRelections, card:any) => {
+    const handleClickPrevCard = (category: keyof typeof sxRelections | keyof typeof nameRelections, card: any) => {
 
-        if(category !== 'fwSelection'){
+        if (category !== 'fwSelection') {
             userSelections[category]
-                .filter((item:any) => {item.id=card.id})
-                .forEach((item:any) => {
+                .filter((item: any) => {
+                    item.id = card.id
+                })
+                .forEach((item: any) => {
                     deleteItem(category, card.id)
                     const key = sxRelections[category];
                     if (key in card) {
@@ -107,10 +140,12 @@ export default function Cal() {
                     }
                     return item;
                 })
-        }else{
+        } else {
             userSelections[category]
-                .filter((item:any) => {item.id=card.id})
-                .findLast((item:any) => {
+                .filter((item: any) => {
+                    item.id = card.id
+                })
+                .findLast((item: any) => {
                     deleteOneItem(category, card.id)
                     const key = sxRelections[category as keyof typeof sxRelections];
                     if (key in card) {
@@ -126,12 +161,7 @@ export default function Cal() {
 
     const handleExportToImage = () => {
         if (calRef.current) {
-            let fileName = 'cal';
-            if (userSelections) {
-                // 假设userSelections是一个对象，我们将其转换为字符串并附加到文件名
-                fileName += '-' + roleValues.totalScore + '-' + new Date().getTime();
-                fileName += '.png';
-            }
+            let fileName = generateFilename(userSelections, nameRelections, roleValues.totalScore);
             html2canvas(calRef.current)
                 .then(canvas => {
                     const imgDataUrl = canvas.toDataURL('image/png');
@@ -151,7 +181,8 @@ export default function Cal() {
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-12">
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2 font-bold">
-                                <span className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item:any) => item.name).join("-")}</span>
+                                <span
+                                    className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
@@ -170,7 +201,7 @@ export default function Cal() {
                                             height={48}
                                             alt={`主卡 ${i + 1}`}
                                             className="w-full h-full object-contain"
-                                            onClick={()=>handleClickPrevCard('zkSelection', userSelections.zkSelection[i])}
+                                            onClick={() => handleClickPrevCard('zkSelection', userSelections.zkSelection[i])}
                                         />)}
                                     </div>
                                 ))}
@@ -180,7 +211,8 @@ export default function Cal() {
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-4">
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item:any) => item.name).join("-")}</span>
+                                <span
+                                    className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
@@ -209,7 +241,8 @@ export default function Cal() {
                     <div className="grid grid-cols-[0.2fr_0.8fr] gap-4">
                         <div className="bg-card p-2 rounded-lg shadow-md">
                             <div className="items-center justify-between mb-2">
-                                <span className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item:any) => item.name).join("-")}</span>
+                                <span
+                                    className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(2,1fr)] gap-2">
@@ -235,7 +268,8 @@ export default function Cal() {
                         </div>
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium">装备&nbsp;&nbsp;{userSelections.zbSelection.map((item:any) => item.name).join("-")}</span>
+                                <span
+                                    className="text-sm font-medium">装备&nbsp;&nbsp;{userSelections.zbSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(6,1fr)] gap-2">
@@ -263,7 +297,8 @@ export default function Cal() {
                     <div className="bg-card p-4 rounded-lg shadow-md">
                         <div className="grid grid-rows-[auto_1fr] gap-4">
                             <div className="items-center justify-between mb-2">
-                                <span className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item:any) => item.name).join("-")}</span>
+                                <span
+                                    className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(5,0.6fr)] gap-0.5">
@@ -308,11 +343,11 @@ export default function Cal() {
                     <span className="text-lg font-medium">分值决定发挥基础攻击效率</span>
                     <div className="flex items-center justify-between mb-4">
                         {isLocked ? (
-                        <span className="text-lg font-large double-underline" style={{ color: "#b73030" }}>
+                            <span className="text-lg font-large double-underline" style={{color: "#b73030"}}>
                             {roleValues.totalScore?.toFixed(2)}
                         </span>
                         ) : (
-                        <span className="text-lg font-large double-underline" style={{ color: "#5de011" }}>
+                            <span className="text-lg font-large double-underline" style={{color: "#5de011"}}>
                             {roleValues.totalScore?.toFixed(2)}
                         </span>
                         )}
@@ -323,23 +358,25 @@ export default function Cal() {
                                 <>
                                     {scoreChangeRatio > 0 ? (
                                         <>
-                                            <ArrowUpIcon className="w-6 h-6 mr-0.1" style={{ color: "#FF0000" }} />
-                                            <span className="value up text-red-500" style={{ color: "#FF0000" }}>{scoreChangeRatio.toFixed(0)}%</span>
+                                            <ArrowUpIcon className="w-6 h-6 mr-0.1" style={{color: "#FF0000"}}/>
+                                            <span className="value up text-red-500"
+                                                  style={{color: "#FF0000"}}>{scoreChangeRatio.toFixed(0)}%</span>
                                         </>
                                     ) : (
                                         <>
-                                            <ArrowDownIcon className="w-6 h-6 mr-0.1" style={{ color: "#008000" }} />
-                                            <span className="value up text-green-500" style={{ color: "#008000" }}>{-scoreChangeRatio.toFixed(0)}%</span>
+                                            <ArrowDownIcon className="w-6 h-6 mr-0.1" style={{color: "#008000"}}/>
+                                            <span className="value up text-green-500"
+                                                  style={{color: "#008000"}}>{-scoreChangeRatio.toFixed(0)}%</span>
                                         </>
                                     )}
                                 </>
                             )}
                         </span>
 
-                        <Button variant="outline" size="icon" onClick={toggleLock} >
+                        <Button variant="outline" size="icon" onClick={toggleLock}>
                             {isLocked ? (
                                 <>
-                                    <LockIcon className="w-5 h-5" />
+                                    <LockIcon className="w-5 h-5"/>
                                     <span className="sr-only">解锁</span>
                                 </>
                             ) : (
@@ -569,11 +606,15 @@ export default function Cal() {
                             </Popover>
                         </div>
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
-                            <div style={{ marginTop: '1rem' }}>
-                                <div className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100) * 0.5).toFixed(2)} 万！远征伤害为
-                                    <span style={{ color: 'red' }}>{ (5 * roleValues.totalScore * 333 * 6 /10000).toFixed(2)} 亿！</span>
+                            <div style={{marginTop: '1rem'}}>
+                                <div
+                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100) * 0.5).toFixed(2)} 万！远征伤害为
+                                    <span
+                                        style={{color: 'red'}}>{(5 * roleValues.totalScore * 333 * 6 / 10000).toFixed(2)} 亿！</span>
                                 </div>
-                                <div className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）</div>
+                                <div
+                                    className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -614,7 +655,7 @@ export default function Cal() {
                             </Card>
                         </div>
                     </div>
-                {/*    //https://god2.note-chat.cn/ */}
+                    {/*    //https://god2.note-chat.cn/ */}
 
                 </div>
             </div>
@@ -637,9 +678,11 @@ async function dataURLToBlob(calRef: any, dataURL: string): Promise<Blob> {
     return new Blob([int8Array], {type: 'image/png'});
 }
 
-function ShareButton(props:any) {
+function ShareButton(props: any) {
     const {userSelections, selectItem} = useContext(UserSelectionsContext);
-    const [shareLinksCache, setShareLinksCache] = useState<{[key: string]: string}>({});
+    const {roleValues} = useContext(RoleContext);
+
+    const [shareLinksCache, setShareLinksCache] = useState<{ [key: string]: string }>({});
     const [shareLink, setShareLink] = useState<string | null>(null);
     const closeModal = () => setShareLink(null);
 
@@ -667,27 +710,13 @@ function ShareButton(props:any) {
                 const canvas = await html2canvas(props.calRef.current);
                 const imgDataUrl = canvas.toDataURL('image/png');
                 // 使用userSelections创建一个唯一的文件名
-                let fileName = 'cal';
-                if (userSelections) {
-                    // 假设userSelections是一个对象，我们将其转换为字符串并附加到文件名
-                    fileName += '-' + Object.entries(userSelections)
-                        .map(([key, cards]) => {
-                            if (cards && Array.isArray(cards) && cards.length > 0) {
-                                return (nameRelections[key as keyof typeof nameRelections] || '') + '-' + cards
-                                    .sort((cardA, cardB) => cardA.id - cardB.id) // Assuming ids are numeric and can be sorted directly
-                                    .map(card => card.name || '')
-                                    .join('|');
-                            }
-                            return '';
-                        }).join('-');
-                    fileName += '.png';
-                }
+                const fileName = generateFilename(userSelections, nameRelections, roleValues.totalScore);
                 // 检查链接是否已存在于缓存中
                 if (shareLinksCache[fileName]) {
                     setShareLink(shareLinksCache[fileName]);
                     return;
                 }
-                dataURLToBlob(props.calRef,imgDataUrl).then(async blob => {
+                dataURLToBlob(props.calRef, imgDataUrl).then(async blob => {
                     const formData = new FormData();
                     formData.append('image', blob, fileName);
                     // 调用uploadImage函数上传图片并获取分享链接
@@ -707,8 +736,8 @@ function ShareButton(props:any) {
     };
     return (
         <>
-            <Button variant="outline" size="icon"  onClick={handleExportAndShare}>
-                <ShareIcon className="w-5 h-5" />
+            <Button variant="outline" size="icon" onClick={handleExportAndShare}>
+                <ShareIcon className="w-5 h-5"/>
                 <span className="sr-only">分享</span>
             </Button>
             {shareLink && (
@@ -724,7 +753,7 @@ function ShareButton(props:any) {
     );
 }
 
-function BoltIcon(props:any) {
+function BoltIcon(props: any) {
     return (
         <svg
             {...props}
@@ -746,11 +775,9 @@ function BoltIcon(props:any) {
 }
 
 
-
-
 // Assuming roleValues is an object that gets updated and you want to re-render based on its changes.
-function RoleColorDisplay (props:any){
-    const { roleValues } = useContext(RoleContext);
+function RoleColorDisplay(props: any) {
+    const {roleValues} = useContext(RoleContext);
 
     const textMapping = {
         bs: 'text-blue-500',
@@ -759,10 +786,10 @@ function RoleColorDisplay (props:any){
         ds: 'text-green-500',
     };
     const colorMapping = {
-        bs: { color: "#07f5d6" },
-        hs: { color: "#ec1b1b" },
-        ls: { color: "#facf06" },
-        ds: { color: "#008000" },
+        bs: {color: "#07f5d6"},
+        hs: {color: "#ec1b1b"},
+        ls: {color: "#facf06"},
+        ds: {color: "#008000"},
     };
     let maxRole = 'bs';
     let maxValue = -Infinity;
@@ -778,12 +805,13 @@ function RoleColorDisplay (props:any){
         <div
             {...props}
         >
-            <span className={"text-2xl font-bold ${textMapping[maxRole]}"} style={colorMapping[maxRole as keyof typeof colorMapping]}>{maxValue + (roleValues.qsxsh || 0)}%</span>
+            <span className={"text-2xl font-bold ${textMapping[maxRole]}"}
+                  style={colorMapping[maxRole as keyof typeof colorMapping]}>{maxValue + (roleValues.qsxsh || 0)}%</span>
         </div>
     );
 }
 
-function BombIcon(props:any) {
+function BombIcon(props: any) {
     return (
         <svg
             {...props}
@@ -805,7 +833,7 @@ function BombIcon(props:any) {
 }
 
 
-function CloudLightningIcon(props:any) {
+function CloudLightningIcon(props: any) {
     return (
         <svg
             {...props}
@@ -826,7 +854,7 @@ function CloudLightningIcon(props:any) {
 }
 
 
-function CopyIcon(props:any) {
+function CopyIcon(props: any) {
     return (
         <svg
             {...props}
@@ -847,7 +875,7 @@ function CopyIcon(props:any) {
 }
 
 
-function FilterIcon(props:any) {
+function FilterIcon(props: any) {
     return (
         <svg
             {...props}
@@ -867,7 +895,7 @@ function FilterIcon(props:any) {
 }
 
 
-function FlameIcon(props:any) {
+function FlameIcon(props: any) {
     return (
         <svg
             {...props}
@@ -888,7 +916,7 @@ function FlameIcon(props:any) {
 }
 
 
-function HeartIcon(props:any) {
+function HeartIcon(props: any) {
     return (
         <svg
             {...props}
@@ -909,7 +937,7 @@ function HeartIcon(props:any) {
 }
 
 
-function PlusIcon(props:any) {
+function PlusIcon(props: any) {
     return (
         <svg
             {...props}
@@ -930,7 +958,7 @@ function PlusIcon(props:any) {
 }
 
 
-function ShieldIcon(props:any) {
+function ShieldIcon(props: any) {
     return (
         <svg
             {...props}
@@ -951,7 +979,7 @@ function ShieldIcon(props:any) {
 }
 
 
-function StarIcon(props:any) {
+function StarIcon(props: any) {
     return (
         <svg
             {...props}
@@ -972,7 +1000,7 @@ function StarIcon(props:any) {
 }
 
 
-function SwordIcon(props:any) {
+function SwordIcon(props: any) {
     return (
         <svg
             {...props}
@@ -995,7 +1023,7 @@ function SwordIcon(props:any) {
 }
 
 
-function XIcon(props:any) {
+function XIcon(props: any) {
     return (
         <svg
             {...props}

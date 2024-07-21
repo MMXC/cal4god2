@@ -28,27 +28,10 @@ import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 
 export default function Tz() {
     const [isChecked, setIsChecked] = useState<any>({})
-    const [tzList, setTzList] = useState<any[]>([]);
     const [lock, setLock] = useState(false);
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
-    const {updateRole} = useContext(RoleContext);
-
-    useEffect(() => {
-        let isMounted = true;
-        // 只在组件挂载时运行一次
-        (async () => {
-            const list = await fetchTzCards();
-            if (isMounted) {
-                setTzList(list);
-            }
-        })();
-
-        // 清理函数，确保在组件卸载前取消异步操作
-        return () => {
-            isMounted = false;
-        };
-    }, []); // 无依赖数组意味着此 effect 只在挂载时运行一次
-
+    const {updateRole,lists} = useContext(RoleContext);
+    const list = lists.tzList;
     useEffect(() => {
         // 恢复状态
         if (userSelections.tzSelection.length > 0) {
@@ -96,7 +79,7 @@ export default function Tz() {
     };
 
     const [searchTerm, setSearchTerm] = useState("")
-    const filteredZkCards = tzList.filter((card: any) =>
+    const filteredZkCards = list.filter((card: any) =>
         card.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 

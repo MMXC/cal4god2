@@ -30,6 +30,8 @@ export type RoleContextType = {
     updateRole: (updater: RoleType,  type: string, operation: 'add' | 'remove') => void;
     isLocked: boolean,
     toggleLock: any,
+    lists: any,
+    setLists: (any:any) => void,
     effectiveTotalScoreDisplay: number,
     effectiveScoreChangeRatio: number,
 };
