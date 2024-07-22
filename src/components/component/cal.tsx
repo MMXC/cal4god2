@@ -610,7 +610,7 @@ export default function Cal() {
                                 <div
                                     className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span
-                                        style={{color: 'red'}}>{(5 * roleValues.totalScore * 333 * 6 / 10000).toFixed(2)} 亿！</span>
+                                        style={{color: 'red'}}>{(5 * roleValues.totalScore * 333 * 6 / 10000 * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 亿！</span>
                                 </div>
                                 <div
                                     className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）
