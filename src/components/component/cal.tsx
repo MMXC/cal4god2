@@ -412,6 +412,47 @@ export default function Cal() {
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
+                                                <p key={'装备'} className="text-sm">
+                                                    <br/>装备: 30%
+                                                </p>
+                                            }
+                                        </div>
+                                        <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
+                                            {/* Use flex column to automatically*/
+                                                sources && Object.entries(sources).map(([type, properties]) => (
+                                                    (properties && typeof properties === 'object' && type === '主卡' && (
+                                                            (properties as { bs: number }).bs !== 0 ||
+                                                            (properties as { hs: number }).hs !== 0 ||
+                                                            (properties as { ls: number }).ls !== 0 ||
+                                                            (properties as { ds: number }).ds !== 0
+                                                        ) && (
+                                                            <p key={type} className="text-sm">
+                                                                <br/>{type}: {Math.max(((properties as { bs: number }).bs??0),((properties as { hs: number }).hs??0),((properties as { ls: number }).ls??0),((properties as { ds: number }).ds??0)).toFixed(0)}%
+                                                            </p>
+                                                        )
+                                                    ))
+                                                )
+                                            }
+                                        </div>
+                                        <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
+                                            {/* Use flex column to automatically*/
+                                                sources && Object.entries(sources).map(([type, properties]) => (
+                                                    (properties && typeof properties === 'object' && type === '万物之母' && (
+                                                            (properties as { bs: number }).bs !== 0 ||
+                                                            (properties as { hs: number }).hs !== 0 ||
+                                                            (properties as { ls: number }).ls !== 0 ||
+                                                            (properties as { ds: number }).ds !== 0
+                                                        ) && (
+                                                            <p key={type} className="text-sm">
+                                                                <br/>{type}: {(((properties as { bs: number }).bs??0)+((properties as { hs: number }).hs??0)+((properties as { ls: number }).ls??0)+((properties as { ds: number }).ds??0)).toFixed(0)}%
+                                                            </p>
+                                                        )
+                                                    ))
+                                                )
+                                            }
+                                        </div>
+                                        <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
+                                            {/* Use flex column to automatically*/
                                                 sources && Object.entries(sources).map(([type, properties]) => (
                                                     (properties && typeof properties === 'object' && ('qsxsh' in properties)) && ((properties as { qsxsh: number }).qsxsh !== 0) && (
                                                         <p key={type} className="text-sm">
@@ -421,6 +462,7 @@ export default function Cal() {
                                                 ))
                                             }
                                         </div>
+
                                     </PopoverContent>
                                 </div>
                             </Popover>
