@@ -713,7 +713,7 @@ export default function Cal() {
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{marginTop: '1rem'}}>
                                 <div
-                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * (roleValues?.totalScore??0.86) * 1.5 * (1 + 0.175*2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰'))?0.83:0)) / (1 + (roleValues?.yczs??0) / 100) * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 万！远征伤害为
+                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * (roleValues?.totalScore??0.86) * 1.5 * (1 + 0.175*2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰'))?0.83:0)) / (1 + (roleValues?.yczs??0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span
                                         style={{color: 'red'}}>{(5 * (roleValues?.totalScore??0.86) * 333 * 6 / 10000 * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 亿！</span>
                                 </div>
