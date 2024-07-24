@@ -26,54 +26,20 @@ import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {RoleContext} from "@/contexts/RoleContext";
 
 export default function Fwzy() {
-    const [isChecked, setIsChecked] = useState<any>({})
-
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
     const {updateRole, lists} = useContext(RoleContext);
-    const [lock, setLock] = useState(false);
     const list = lists.fwzyList;
-    useEffect(() => {
-        setLock(true);
-        // 恢复状态
-        if (userSelections.fwzySelection.length > 0) {
-            userSelections.fwzySelection.map((card: any) => {
-                if (userSelections.fwzySelection.some((item: any) => item.id === card.id)) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [card.id]: true,
-                    }))
-                }
-            })
-        }
-        setLock(false);
-    }, [userSelections.fwzySelection])
 
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
-        if (lock) return;
-
-        setLock(true);
-
-        try {
-            if (!userSelections.fwzySelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.fwzySelection.length < 10) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [id]: true,
-                    }));
-                    selectItem(category, card);
-                } else {
-                    return;
-                }
+        if (!userSelections.fwzySelection.some((item: any) => item.id === card.id)) {
+            if (userSelections.fwzySelection.length < 10) {
+                selectItem(category, card);
             } else {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [id]: false,
-                }));
-                deleteItem(category, card.id);
+                return;
             }
-        } finally {
-            setLock(false);
+        } else {
+            deleteItem(category, card.id);
         }
     };
 
@@ -102,11 +68,9 @@ export default function Fwzy() {
                     <Card
                         key={card.id}
                         className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            isChecked[card.id]
+                            userSelections.fwzySelection.some((item: any) => item.id === card.id)
                                 ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : userSelections.fwzySelection.some((item: any) => item.id === card.id)
-                                    ? "border-2 border-gold"
-                                    : ""
+                                : "border-2 border-gold"
                         }`}
                         onClick={() => handleCardClick('fwzySelection', card)}
                     >

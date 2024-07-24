@@ -289,7 +289,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
     };
 
 
-    const updateRole = (userSelections: Selection|{}) => {
+    const updateRole = async (userSelections: Selection|{}) => {
         if (!isLocked) {
             setOldRoleValues(roleValues);
         }

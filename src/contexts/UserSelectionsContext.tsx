@@ -26,9 +26,9 @@ export const UserSelectionsContext = createContext<UserSelectionContextType>({
         fwzySelection: [],
         tzSelection: [],
     },
-    selectItem: () => { },
-    deleteItem: () => { },
-    deleteOneItem: () => { },
+    selectItem: async () => { },
+    deleteItem: async () => { },
+    deleteOneItem: async () => { },
 });
 
 export function useUserSelections() {

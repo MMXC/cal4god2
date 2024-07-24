@@ -18,7 +18,7 @@
  - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
  **/
 
-import {useContext, useEffect, useState} from "react"
+import {useContext, useState} from "react"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent} from "@/components/ui/card"
@@ -30,52 +30,19 @@ export default function Jb() {
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
     const {updateRole, lists} = useContext(RoleContext);
     const list = lists.jbList;
-    useEffect(() => {
-        setLock(true);
-        // 恢复状态
-        if (userSelections.jbSelection.length > 0) {
-            userSelections.jbSelection.map((card: any) => {
-                if (userSelections.jbSelection.some((item: any) => item.id === card.id)) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [card.id]: true,
-                    }))
-                }
-            })
-        }
-        setLock(false);
-    }, [userSelections.jbSelection])
-
-    const [lock, setLock] = useState(false);
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
-        if (lock) return;
-
-        setLock(true);
-
-        try {
-            if (!userSelections.jbSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.jbSelection.map((jb: any) => jb.num).reduce(
-                    (a: number, b: number) => a + b,
-                    0
-                ) + card.num <= 12) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [id]: true,
-                    }));
-                    selectItem(category, card);
-                } else {
-                    return;
-                }
+        if (!userSelections.jbSelection.some((item: any) => item.id === card.id)) {
+            if (userSelections.jbSelection.map((jb: any) => jb.num).reduce(
+                (a: number, b: number) => a + b,
+                0
+            ) + card.num <= 12) {
+                selectItem(category, card);
             } else {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [id]: false,
-                }));
-                deleteItem(category, card.id);
+                return;
             }
-        } finally {
-            setLock(false);
+        } else {
+            deleteItem(category, card.id);
         }
     };
     const [searchTerm, setSearchTerm] = useState("")
@@ -99,15 +66,13 @@ export default function Jb() {
             </div>
             <div
                 className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 p-4">
-                {filteredJbCards.map((card:any) => (
+                {filteredJbCards.map((card: any) => (
                     <Card
                         key={card.id}
                         className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            isChecked[card.id]
+                            userSelections.jbSelection.some((item: any) => item.id === card.id)
                                 ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : userSelections.jbSelection.some((item: any) => item.id === card.id)
-                                    ? "border-2 border-gold"
-                                    : ""
+                                : "border-2 border-gold"
                         }`}
                         onClick={() => handleCardClick('jbSelection', card)}
                     >

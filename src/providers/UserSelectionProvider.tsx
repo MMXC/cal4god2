@@ -25,27 +25,20 @@ export function UserSelectionProvider({ children }: Props) {
     }, [userSelections]);
 
     const selectItem = async (category: keyof Selection, item: any) => {
-        if (userSelections[category].length < 12) {
-            await setUserSelections((prevState) => ({
-                ...prevState,
-                [category]: [...prevState[category], item],
-            }));
-            console.log('card pic:', item.pic); // 打印更新前的状态
-
-        }
+        setUserSelections((prevState) => ({
+            ...prevState,
+            [category]: [...prevState[category], item],
+        }));
     };
 
     const deleteItem = async (category: keyof Selection, itemId: string) => {
         console.log('Before deletion:', userSelections); // 打印更新前的状态
-
-        await setUserSelections((prevState) => {
+        setUserSelections((prevState) => {
             const updatedState = {
                 ...prevState,
                 [category]: prevState[category].filter(item => item.id !== itemId),
             };
-
             console.log('Updated state before setting:', updatedState); // 打印即将设置的状态
-
             return updatedState;
         });
 
@@ -54,7 +47,7 @@ export function UserSelectionProvider({ children }: Props) {
     const deleteOneItem = async (category: keyof Selection, itemId: string) => {
         console.log('Before deletion:', userSelections); // 打印更新前的状态
 
-        await setUserSelections((prevState) => {
+        setUserSelections((prevState) => {
             const index = prevState[category].findIndex(item => item.id === itemId);
             let updatedCategoryItems = [...prevState[category]];
 

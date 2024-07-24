@@ -11,66 +11,44 @@ export default function Fw() {
 
     const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
     const {updateRole, lists} = useContext(RoleContext);
-    const [lock, setLock] = useState(false);
     const list = lists.fwList;
-    useEffect(() => {
-        setLock(true);
-        // 恢复状态
-        if (userSelections.fwSelection.length > 0) {
-            const cardQuantities = userSelections.fwSelection.reduce((acc, card) => {
-                acc[card.id] = (acc[card.id] || 0) + 1;
-                return acc;
-            }, {});
-            // Now cardQuantities contains the counts of each unique card.id
-            // To update state with these quantities:
-            setCardQuantities(cardQuantities);
-        }
-        setLock(false);
-    }, [userSelections.fwSelection])
 
     const handleCardClick = async (event: any, category: any, card: any) => {
-        if (lock) return;
-        setLock(true);
-        try {
-            const cardRect = event.currentTarget.getBoundingClientRect();
-            const clickX = event.clientX - cardRect.left;
-            const cardWidth = cardRect.width;
-            const threshold = cardWidth / 2; // 设定阈值，一半宽度
+        const cardRect = event.currentTarget.getBoundingClientRect();
+        const clickX = event.clientX - cardRect.left;
+        const cardWidth = cardRect.width;
+        const threshold = cardWidth / 2; // 设定阈值，一半宽度
 
-            let newQuantity = (card.id in cardQuantities) ? cardQuantities[card.id] : 0;
-            let operation = 1;
-            if (clickX < threshold) {
-                // 左侧点击，增加数量
-                operation = 1
-            } else {
-                // 右侧点击，减少数量
-                operation = -1
-            }
-            newQuantity += operation;
-            newQuantity = Math.max(newQuantity, 0);
-
-            if (operation > 0) {
-                // 检查数量限制
-                if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc: any, cur: any) => acc.num + cur.num, 0) + 1 > 40 ||
-                    userSelections.fwSelection.filter((item: any) => item.id === card.id).length + 1 > 10 ||
-                    userSelections.fwSelection.length + 1 > 10) {
-                    alert('已选总符文超出40或单类型符文超出10，请先移除后再重新选择！');
-                    return;
-                } else {
-                    setCardQuantities((prevState: any) => ({...prevState, [card.id]: newQuantity}));
-                    selectItem(category, card);
-                }
-            } else {
-                if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
-                    return
-                } else {
-                    deleteOneItem(category, card.id);
-                }
-            }
-        } finally {
-            setLock(false);
+        let newQuantity = (card.id in cardQuantities) ? cardQuantities[card.id] : 0;
+        let operation = 1;
+        if (clickX < threshold) {
+            // 左侧点击，增加数量
+            operation = 1
+        } else {
+            // 右侧点击，减少数量
+            operation = -1
         }
+        newQuantity += operation;
+        newQuantity = Math.max(newQuantity, 0);
 
+        if (operation > 0) {
+            // 检查数量限制
+            if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc: any, cur: any) => acc.num + cur.num, 0) + 1 > 40 ||
+                userSelections.fwSelection.filter((item: any) => item.id === card.id).length + 1 > 10 ||
+                userSelections.fwSelection.length + 1 > 10) {
+                alert('已选总符文超出40或单类型符文超出10，请先移除后再重新选择！');
+                return;
+            } else {
+                setCardQuantities((prevState: any) => ({...prevState, [card.id]: newQuantity}));
+                selectItem(category, card);
+            }
+        } else {
+            if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
+                return
+            } else {
+                deleteOneItem(category, card.id);
+            }
+        }
     };
 
     const [searchTerm, setSearchTerm] = useState("");

@@ -18,7 +18,7 @@
  - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
  **/
 
-import {useContext, useEffect, useState} from "react"
+import {useContext, useState} from "react"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent} from "@/components/ui/card"
@@ -27,52 +27,21 @@ import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {RoleContext} from "@/contexts/RoleContext";
 
 export default function Zk() {
-    const [isChecked, setIsChecked] = useState<any>({})
     const [activeTab, setActiveTab] = useState("active")
-    const [lock, setLock] = useState(false);
     const contextValue = useContext(UserSelectionsContext);
     const {userSelections, selectItem, deleteItem} = contextValue;
     const {updateRole, lists} = useContext(RoleContext);
 
-    useEffect(() => {
-        // 恢复状态
-        if (userSelections.zkSelection.length > 0) {
-            userSelections.zkSelection.forEach((card: any) => {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [card.id]: true,
-                }));
-            });
-        }
-    }, [userSelections.zkSelection]); // 添加依赖数组
-
-
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
-        if (lock) return;
-
-        setLock(true);
-
-        try {
-            if (!userSelections.zkSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.zkSelection.length < 12) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [id]: true,
-                    }));
-                    await selectItem(category, card);
-                } else {
-                    return;
-                }
+        if (!userSelections.zkSelection.some((item: any) => item.id === card.id)) {
+            if (userSelections.zkSelection.length < 12) {
+                selectItem(category, card);
             } else {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [id]: false,
-                }));
-                await deleteItem(category, card.id);
+                return;
             }
-        } finally {
-            setLock(false);
+        } else {
+            deleteItem(category, card.id);
         }
     };
 
@@ -97,15 +66,13 @@ export default function Zk() {
             </div>
             <div
                 className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-6 p-4">
-                {filteredZkCards.map((card:any) => (
+                {filteredZkCards.map((card: any) => (
                     <Card
                         key={card.id}
                         className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            isChecked[card.id]
+                            userSelections.zkSelection.some((item: any) => item.id === card.id)
                                 ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : userSelections.zkSelection.some((item: any) => item.id === card.id)
-                                    ? "border-2 border-gold"
-                                    : ""
+                                : "border-2 border-gold"
                         }`}
                         onClick={() => handleCardClick('zkSelection', card)}
                     >

@@ -29,7 +29,13 @@ import {DownloadIcon} from "@radix-ui/react-icons";
 import {Card, CardContent} from "@/components/ui/card";
 import {uploadImage} from "@/services/api";
 import {ArrowDownIcon, ArrowUpIcon, LockIcon, ShareIcon, UnlockIcon} from "lucide-react";
-import QRCode from 'qrcode.react'; // 导入QRCode组件
+import QRCode from 'qrcode.react';
+import Zk from "@/components/component/zk";
+import Jb from "@/components/component/jb";
+import Tz from "@/components/component/tz";
+import Zb from "@/components/component/zb";
+import Fwzy from "@/components/component/fwzy";
+import Fw from "@/components/component/fw"; // 导入QRCode组件
 
 function generateFilename(userSelections: any, nameRelections: { zkSelection: string; zbSelection: string; fwSelection: string; fwzySelection: string; jbSelection: string; tzSelection: string }, totalScore: any) {
     let fileName = 'cal';
@@ -114,23 +120,19 @@ export default function Cal() {
     }, []); // 无依赖数组意味着此 effect 只在挂载时运行一次
 
     const handleClickPrevCard = (category: keyof typeof sxRelections | keyof typeof nameRelections, card: any) => {
+        console.log("category:{}, card", category, card);
         if (category !== 'fwSelection') {
             userSelections[category]
-                .filter((item: any) => {
-                    item.id = card.id
-                })
+                .filter((item: any) => item.id === card.id)
                 .forEach((item: any) => {
+                    console.log("item:", item)
                     deleteItem(category, card.id)
-                    return item;
                 })
         } else {
             userSelections[category]
-                .filter((item: any) => {
-                    item.id = card.id
-                })
+                .filter((item: any) => item.id === card.id)
                 .findLast((item: any) => {
                     deleteOneItem(category, card.id)
-                    return item;
                 })
         }
     }
@@ -171,14 +173,27 @@ export default function Cal() {
                                             alt={userSelections.zkSelection[i].name}
                                             title={userSelections.zkSelection[i].name}
                                             className="w-full h-full object-contain"
-                                        />) : (<img
-                                            src="/placeholder.svg"
-                                            width={48}
-                                            height={48}
-                                            alt={`主卡 ${i + 1}`}
-                                            className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('zkSelection', userSelections.zkSelection[i])}
-                                        />)}
+                                            onClick={() => handleClickPrevCard('zkSelection', userSelections.zkSelection[i])} // 添加点击事件处理器
+                                        />) : (
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <button className="btn btn-primary">
+                                                        <img
+                                                            src="/placeholder.svg"
+                                                            width={48}
+                                                            height={48}
+                                                            alt={`主卡 ${i + 1}`}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                    </button>
+                                                </PopoverTrigger>
+                                                <div className="w-full h-full object-contain justify-center">
+                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                        <Zk />
+                                                    </PopoverContent>
+                                                </div>
+                                            </Popover>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -201,13 +216,28 @@ export default function Cal() {
                                             alt={userSelections.jbSelection[i].name}
                                             title={userSelections.jbSelection[i].name}
                                             className="w-full h-full object-contain"
-                                        />) : (<img
-                                            src="/placeholder.svg"
-                                            width={28}
-                                            height={28}
-                                            alt={`羁绊 ${i + 1}`}
-                                            className="w-full h-full object-contain"
-                                        />)}
+                                            onClick={() => handleClickPrevCard('jbSelection', userSelections.jbSelection[i])}
+                                        />) : (
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <button className="btn btn-primary">
+                                                        <img
+                                                            src="/placeholder.svg"
+                                                            width={28}
+                                                            height={28}
+                                                            alt={`羁绊 ${i + 1}`}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                    </button>
+                                                </PopoverTrigger>
+                                                <div className="w-full h-full object-contain justify-center">
+                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                        <Jb />
+                                                    </PopoverContent>
+                                                </div>
+                                            </Popover>
+
+                                            )}
                                     </div>
                                 ))}
                             </div>
@@ -231,13 +261,27 @@ export default function Cal() {
                                             alt={userSelections.tzSelection[i].name}
                                             title={userSelections.tzSelection[i].name}
                                             className="w-full h-full object-contain"
-                                        />) : (<img
-                                            src="/placeholder.svg"
-                                            width={48}
-                                            height={48}
-                                            alt={`套装 ${i + 1}`}
-                                            className="w-full h-full object-contain"
-                                        />)}
+                                            onClick={() => handleClickPrevCard('tzSelection', userSelections.tzSelection[i])}
+                                        />) : (
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <button className="btn btn-primary">
+                                                        <img
+                                                            src="/placeholder.svg"
+                                                            width={48}
+                                                            height={48}
+                                                            alt={`套装 ${i + 1}`}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                    </button>
+                                                </PopoverTrigger>
+                                                <div className="w-full h-full object-contain justify-center">
+                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                        <Tz />
+                                                    </PopoverContent>
+                                                </div>
+                                            </Popover>
+                                            )}
                                     </div>
                                 ))}
                             </div>
@@ -258,13 +302,28 @@ export default function Cal() {
                                             alt={userSelections.zbSelection[i].name}
                                             title={userSelections.zbSelection[i].name}
                                             className="w-full h-full object-contain"
-                                        />) : (<img
-                                            src="/placeholder.svg"
-                                            width={48}
-                                            height={48}
-                                            alt={`装备 ${i + 1}`}
-                                            className="w-full h-full object-contain"
-                                        />)}
+                                            onClick={() => handleClickPrevCard('zbSelection', userSelections.zbSelection[i])}
+                                        />) : (
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <button className="btn btn-primary">
+                                                        <img
+                                                            src="/placeholder.svg"
+                                                            width={48}
+                                                            height={48}
+                                                            alt={`装备 ${i + 1}`}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                    </button>
+                                                </PopoverTrigger>
+                                                <div className="w-full h-full object-contain justify-center">
+                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                        <Zb />
+                                                    </PopoverContent>
+                                                </div>
+                                            </Popover>
+
+                                            )}
                                     </div>
                                 ))}
                             </div>
@@ -281,13 +340,28 @@ export default function Cal() {
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.fwzySelection[i] ?
-                                            (<span className="text-sm font-medium"
-                                                   title={userSelections.fwzySelection[i].name}>
-                            {userSelections.fwzySelection[i].name}
-                          </span>) :
-                                            (<span className="text-sm font-medium">
-                            符文之语{i}
-                          </span>)
+                                            (<span className="text-sm font-medium" title={userSelections.fwzySelection[i].name}
+                                                   onClick={() => handleClickPrevCard('fwzySelection', userSelections.fwzySelection[i])}
+                                            >
+                                                {userSelections.fwzySelection[i].name}
+                                            </span>) :
+                                            (
+                                                <Popover>
+                                                    <PopoverTrigger asChild>
+                                                        <button className="btn btn-primary text-align-center">
+                                                        <span className="text-sm align-center font-medium">
+                                                            空
+                                                        </span>
+                                                        </button>
+                                                    </PopoverTrigger>
+                                                    <div className="w-full h-full object-contain justify-center">
+                                                        <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                            <Fwzy />
+                                                        </PopoverContent>
+                                                    </div>
+                                                </Popover>
+
+                                                )
                                         }
                                     </div>
                                 ))}
@@ -303,13 +377,26 @@ export default function Cal() {
                                         alt={userSelections.fwSelection[i].name}
                                         title={userSelections.fwSelection[i].name}
                                         className="w-full h-full object-contain"
-                                    />) : (<img
-                                        src="/placeholder.svg"
-                                        width={48}
-                                        height={48}
-                                        alt={`符文 ${i + 1}`}
-                                        className="w-full h-full object-contain"
-                                    />)}
+                                        onClick={() => handleClickPrevCard('fwSelection', userSelections.fwSelection[i])}
+                                    />) : (
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <img
+                                                    src="/placeholder.svg"
+                                                    width={48}
+                                                    height={48}
+                                                    alt={`符文 ${i + 1}`}
+                                                    className="w-full h-full object-contain"
+                                                />
+                                            </PopoverTrigger>
+                                            <div className="w-full h-full object-contain justify-center">
+                                                <PopoverContent className="w-full max-w-4xl object-contain justify-center">
+                                                    <Fw />
+                                                </PopoverContent>
+                                            </div>
+                                        </Popover>
+
+                                        )}
                                 </div>
                             ))}
                         </div>

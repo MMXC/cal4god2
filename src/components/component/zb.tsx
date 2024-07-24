@@ -30,53 +30,25 @@ export default function Zb() {
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
     const {updateRole, lists} = useContext(RoleContext);
     const list = lists.zbList;
-    useEffect(() => {
-        // 恢复状态
-        if (userSelections.zbSelection.length > 0) {
-            userSelections.zbSelection.map((card: any) => {
-                if (userSelections.zbSelection.some((item: any) => item.id === card.id)) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [card.id]: true,
-                    }))
-                }
-            })
-        }
-    }, [userSelections.zbSelection])
 
-    const [lock, setLock] = useState(false);
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
-        if (lock) return;
 
-        setLock(true);
-
-        try {
-            if (!userSelections.zbSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc: any, curr: any) => acc + curr, 0)) + card.num <= 10) {
-                    if (userSelections.zbSelection.some((zb: any) => zb.type === card.type)) {
-                        alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
-                        return;
-                    }
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [id]: true,
-                    }));
-                    selectItem(category, card);
-                } else {
-                    alert('已选装备超出10件，请先移除后再重新选择！');
+        if (!userSelections.zbSelection.some((item: any) => item.id === card.id)) {
+            if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc: any, curr: any) => acc + curr, 0)) + card.num <= 10) {
+                if (userSelections.zbSelection.some((zb: any) => zb.type === card.type)) {
+                    alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
                     return;
                 }
+                selectItem(category, card);
             } else {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [id]: false,
-                }));
-                deleteItem(category, card.id);
+                alert('已选装备超出10件，请先移除后再重新选择！');
+                return;
             }
-        } finally {
-            setLock(false);
+        } else {
+            deleteItem(category, card.id);
         }
+
     };
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -104,11 +76,9 @@ export default function Zb() {
                     <Card
                         key={card.id}
                         className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            isChecked[card.id]
+                            userSelections.zbSelection.some((item: any) => item.id === card.id)
                                 ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : userSelections.zbSelection.some((item: any) => item.id === card.id)
-                                    ? "border-2 border-gold"
-                                    : ""
+                                : "border-2 border-gold"
                         }`}
                         onClick={() => handleCardClick('zbSelection', card)}
                     >

@@ -27,52 +27,22 @@ import {RoleContext} from "@/contexts/RoleContext";
 import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 
 export default function Tz() {
-    const [isChecked, setIsChecked] = useState<any>({})
     const [lock, setLock] = useState(false);
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
     const {updateRole,lists} = useContext(RoleContext);
     const list = lists.tzList;
-    useEffect(() => {
-        // 恢复状态
-        if (userSelections.tzSelection.length > 0) {
-            userSelections.tzSelection.map((card: any) => {
-                if (userSelections.tzSelection.some((item: any) => item.id === card.id)) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [card.id]: true,
-                    }))
-                }
-            })
-        }
-    }, [userSelections.tzSelection])
 
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
-        if (lock) return;
-
-        setLock(true);
-
-        try {
-            if (!userSelections.tzSelection.some((item: any) => item.id === card.id)) {
-                if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc:any, curr:any) => acc + curr, 0)) + card.num <= 10) {
-                    setIsChecked((prevState: any) => ({
-                        ...prevState,
-                        [id]: true,
-                    }));
-                    selectItem(category, card);
-                } else {
-                    alert('已选装备超出10件，请先移除后再重新选择！');
-                    return;
-                }
+        if (!userSelections.tzSelection.some((item: any) => item.id === card.id)) {
+            if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc:any, curr:any) => acc + curr, 0)) + card.num <= 10) {
+                selectItem(category, card);
             } else {
-                setIsChecked((prevState: any) => ({
-                    ...prevState,
-                    [id]: false,
-                }));
-                deleteItem(category, card.id);
+                alert('已选装备超出10件，请先移除后再重新选择！');
+                return;
             }
-        } finally {
-            setLock(false);
+        } else {
+            deleteItem(category, card.id);
         }
     };
 
@@ -100,11 +70,9 @@ export default function Tz() {
                     <Card
                         key={card.id}
                         className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            isChecked[card.id]
+                            userSelections.tzSelection.some((item: any) => item.id === card.id)
                                 ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : userSelections.tzSelection.some((item: any) => item.id === card.id)
-                                    ? "border-2 border-gold"
-                                    : ""
+                                : "border-2 border-gold"
                         }`}
                         onClick={() => handleCardClick('tzSelection', card)}
                     >
