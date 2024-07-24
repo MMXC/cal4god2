@@ -194,7 +194,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         Object.keys(nameReflection).forEach((type:any) => {
             const filter = type === 'jbSelection' ? (item:any) => item.level !== undefined : undefined;
             const {updatedRoleValues, updatedSources} = handleSelectionType(userSelections[type as keyof (Selection|{})], type as keyof (Selection|{}), newRoleValues, newSources, filter);
-            Object.entries(updatedRoleValues ?? {}).forEach((key:any, value: number) => {
+            Object.entries(updatedRoleValues ?? {}).forEach(([key, value]:[any, any]) => {
                 newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType] ?? 0) + value;
             });
 
