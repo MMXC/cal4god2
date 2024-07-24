@@ -167,7 +167,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                                 item.level === '一级' ? item.first : item.forth;
                 }
 
-                Object.entries(sx).forEach((key:any, value:number) => {
+                Object.entries(sx).forEach(([key, value]:[any,any]) => {
                     if (key in newRoleValues) {
                         newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType] ?? 0) + value;
                         newSources[nameReflection[type]][key as keyof RoleType] = (newSources[nameReflection[type]][key as keyof RoleType] ?? 0) + value;
