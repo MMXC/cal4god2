@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import {cn} from "@/lib/utils";
+import {useEffect} from "react";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 const fontHeading = Inter({
@@ -27,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en">
+      <html lang="zh">
         <body
             className={cn(
                 'antialiased',
@@ -37,6 +39,17 @@ export default function RootLayout({
             )}
         >
         {children}
+        <Script
+            strategy="lazyOnload"
+            src={`https://www.googletagmanager.com/gtag/js?id=G-8WN21R19QV`}
+        />
+        <Script id="google-analytics" strategy="lazyOnload">
+            {`            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8WN21R19QV');
+          `}
+        </Script>
         </body>
       </html>
   )

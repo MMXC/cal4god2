@@ -2,8 +2,9 @@
     "code":  0,
     "success": "true",
     "list": [
-        {"id": 1,"name":"自残属攻", "num": 1, "type":"sj", "sx":{"gj": 12,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh": 12,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/圣物_180.png"},
-        {"id": 2,"name":"连击终伤", "num": 1, "type":"sj", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 10,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/混沌_60.png"},
-        {"id": 3,"name":"满血终伤", "num": 1, "type":"sj", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 10,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/混沌_180.png"},
+        {"id": 1,"name":"自残属攻", "num": 1, "type":"sj","cx":10, "lq": 10, "sx":{"gj": 12,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh": 12,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/圣物_180.png"},
+        {"id": 2,"name":"连击终伤", "num": 1, "type":"sj","cx": 5, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 10,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/混沌_60.png"},
+        {"id": 3,"name":"满血终伤", "num": 1, "type":"sj","cx":10, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 10,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/混沌_180.png"},
+        {"id": 4,"name":"暴击异伤", "num": 1, "type":"sj","cx": 5, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs": 18,"dbzs":  0,"zzsh": 10,"dzdbzs":  0,"pf":  0},"pre":"/assets/zb/pre/","pic":"/assets/zb/混沌_180.png"}
     ]
 }

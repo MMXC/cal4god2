@@ -63,8 +63,7 @@ export default function Jb() {
                         ...prevState,
                         [id]: true,
                     }));
-                    await selectItem(category, card);
-                    await updateRole(card.forth, '羁绊', 'add');
+                    selectItem(category, card);
                 } else {
                     return;
                 }
@@ -73,8 +72,7 @@ export default function Jb() {
                     ...prevState,
                     [id]: false,
                 }));
-                await deleteItem(category, card.id);
-                await updateRole(card.forth, '羁绊', 'remove');
+                deleteItem(category, card.id);
             }
         } finally {
             setLock(false);

@@ -20,7 +20,7 @@
 import {Button} from "@/components/ui/button"
 import {useContext, useEffect, useRef, useState} from 'react';
 import {UserSelectionsContext} from '@/contexts/UserSelectionsContext';
-import {RoleContext} from "@/contexts/RoleContext";
+import {RoleContext, RoleType} from "@/contexts/RoleContext";
 import {PopoverTrigger} from "@radix-ui/react-popover";
 import {Popover, PopoverContent} from "@/components/ui/popover";
 
@@ -33,19 +33,19 @@ import QRCode from 'qrcode.react'; // 导入QRCode组件
 
 function generateFilename(userSelections: any, nameRelections: { zkSelection: string; zbSelection: string; fwSelection: string; fwzySelection: string; jbSelection: string; tzSelection: string }, totalScore: any) {
     let fileName = 'cal';
-    if (userSelections) {
-        // 假设userSelections是一个对象，我们将其转换为字符串并附加到文件名
-        fileName += '-' + Object.entries(userSelections)
-            .map(([key, cards]) => {
-                if (cards && Array.isArray(cards) && cards.length > 0) {
-                    return (nameRelections[key as keyof typeof nameRelections] || '') + '-' + cards
-                        .sort((cardA, cardB) => cardA.id - cardB.id) // Assuming ids are numeric and can be sorted directly
-                        .map(card => card.name || '')
-                        .join('|');
-                }
-                return '';
-            }).join('-');
-    }
+    // if (userSelections) {
+    //     // 假设userSelections是一个对象，我们将其转换为字符串并附加到文件名
+    //     fileName += '-' + Object.entries(userSelections)
+    //         .map(([key, cards]) => {
+    //             if (cards && Array.isArray(cards) && cards.length > 0) {
+    //                 return (nameRelections[key as keyof typeof nameRelections] || '') + '-' + cards
+    //                     .sort((cardA, cardB) => cardA.id - cardB.id) // Assuming ids are numeric and can be sorted directly
+    //                     .map(card => card.name || '')
+    //                     .join('|');
+    //             }
+    //             return '';
+    //         }).join('-');
+    // }
     fileName += '-' + totalScore.toFixed(0);
     fileName += '.png';
     return fileName;
@@ -57,13 +57,10 @@ export default function Cal() {
     const {
         roleValues,
         sources,
-        totalScore,
         toggleLock,
         isLocked,
-        lockScoreSnapshot,
         scoreChangeRatio
     } = useContext(RoleContext);
-    const {updateRole} = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
     const nameRelections = {
         "zkSelection": "主卡",
@@ -104,16 +101,9 @@ export default function Cal() {
                         //Type error: Type '(category: keyof Selection, item: any) => void' is not assignable to type '(category: string, item: string) => void'.
                         items.forEach((item: any) => {
                             selectItem(category, item);
-                            const key = sxRelections[category as keyof typeof sxRelections];
-                            if (key in item) {
-                                updateRole(item[key], nameRelections[category as keyof typeof nameRelections], 'add');
-                            } else {
-                                console.error(`Key ${key} not found in item.`);
-                            }
                         });
                     }
                 })
-
             }
         })();
         toggleLock();
@@ -124,7 +114,6 @@ export default function Cal() {
     }, []); // 无依赖数组意味着此 effect 只在挂载时运行一次
 
     const handleClickPrevCard = (category: keyof typeof sxRelections | keyof typeof nameRelections, card: any) => {
-
         if (category !== 'fwSelection') {
             userSelections[category]
                 .filter((item: any) => {
@@ -132,12 +121,6 @@ export default function Cal() {
                 })
                 .forEach((item: any) => {
                     deleteItem(category, card.id)
-                    const key = sxRelections[category];
-                    if (key in card) {
-                        updateRole(card[key], nameRelections[category], 'remove');
-                    } else {
-                        console.error(`Key ${key} not found in item.`);
-                    }
                     return item;
                 })
         } else {
@@ -147,16 +130,9 @@ export default function Cal() {
                 })
                 .findLast((item: any) => {
                     deleteOneItem(category, card.id)
-                    const key = sxRelections[category as keyof typeof sxRelections];
-                    if (key in card) {
-                        updateRole(card[key], nameRelections[category as keyof typeof nameRelections], 'remove');
-                    } else {
-                        console.error(`Key ${key} not found in item.`);
-                    }
                     return item;
                 })
         }
-
     }
 
     const handleExportToImage = () => {
@@ -608,9 +584,9 @@ export default function Cal() {
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{marginTop: '1rem'}}>
                                 <div
-                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * roleValues.totalScore * 1.5 * 2 / (1 + roleValues.yczs / 100) * 0.5).toFixed(2)} 万！远征伤害为
+                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * (roleValues?.totalScore??0.86) * 1.5 * (1 + 0.175*2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰'))?0.83:0)) / (1 + (roleValues?.yczs??0) / 100) * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 万！远征伤害为
                                     <span
-                                        style={{color: 'red'}}>{(5 * roleValues.totalScore * 333 * 6 / 10000 * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 亿！</span>
+                                        style={{color: 'red'}}>{(5 * (roleValues?.totalScore??0.86) * 333 * 6 / 10000 * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 亿！</span>
                                 </div>
                                 <div
                                     className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）
@@ -795,9 +771,10 @@ function RoleColorDisplay(props: any) {
     let maxValue = -Infinity;
 
     for (const key in roleValues) {
-        if (['bs', 'hs', 'ls', 'ds'].includes(key) && roleValues[key] > maxValue) {
+        if (['bs', 'hs', 'ls', 'ds'].includes(key) && typeof roleValues[key as keyof RoleType] === 'number' &&
+            (roleValues[key as keyof RoleType]??maxValue) > maxValue) {
             maxRole = key;
-            maxValue = roleValues[key];
+            maxValue = roleValues[key as keyof RoleType]??maxValue;
         }
     }
 
@@ -806,7 +783,7 @@ function RoleColorDisplay(props: any) {
             {...props}
         >
             <span className={"text-2xl font-bold ${textMapping[maxRole]}"}
-                  style={colorMapping[maxRole as keyof typeof colorMapping]}>{maxValue + (roleValues.qsxsh || 0)}%</span>
+                  style={colorMapping[maxRole as keyof typeof colorMapping]}>{(maxValue + (roleValues.qsxsh || 0)).toFixed(0)}%</span>
         </div>
     );
 }

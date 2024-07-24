@@ -62,8 +62,7 @@ export default function Zb() {
                         ...prevState,
                         [id]: true,
                     }));
-                    await selectItem(category, card);
-                    await updateRole(card.sx, '装备', 'add');
+                    selectItem(category, card);
                 } else {
                     alert('已选装备超出10件，请先移除后再重新选择！');
                     return;
@@ -73,8 +72,7 @@ export default function Zb() {
                     ...prevState,
                     [id]: false,
                 }));
-                await deleteItem(category, card.id);
-                await updateRole(card.sx, '装备', 'remove');
+                deleteItem(category, card.id);
             }
         } finally {
             setLock(false);

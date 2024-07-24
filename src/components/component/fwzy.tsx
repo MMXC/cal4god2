@@ -61,8 +61,7 @@ export default function Fwzy() {
                         ...prevState,
                         [id]: true,
                     }));
-                    await selectItem(category, card);
-                    await updateRole(card.sx, '符文之语', 'add');
+                    selectItem(category, card);
                 } else {
                     return;
                 }
@@ -71,8 +70,7 @@ export default function Fwzy() {
                     ...prevState,
                     [id]: false,
                 }));
-                await deleteItem(category, card.id);
-                await updateRole(card.sx, '符文之语', 'remove');
+                deleteItem(category, card.id);
             }
         } finally {
             setLock(false);

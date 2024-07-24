@@ -59,14 +59,12 @@ export default function Fw() {
                 } else {
                     setCardQuantities((prevState: any) => ({...prevState, [card.id]: newQuantity}));
                     selectItem(category, card);
-                    updateRole(card.sx, '符文', 'add');
                 }
             } else {
                 if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
                     return
                 } else {
                     deleteOneItem(category, card.id);
-                    updateRole(card.sx, '符文', 'remove');
                 }
             }
         } finally {

@@ -22,21 +22,29 @@ export type RoleType = {
     totalScore?: number;
 };
 
-export type SourcesType = Record<string, Record<keyof RoleType, any>>;
+export type SourcesType = Record<string, Record<string, any>>;
 
 export type RoleContextType = {
     roleValues: RoleType;
     sources: SourcesType;
-    updateRole: (updater: RoleType,  type: string, operation: 'add' | 'remove') => void;
+    updateRole: (userSelections: Selection|{}) => void;
     isLocked: boolean,
     toggleLock: any,
     lists: any,
-    setLists: (any:any) => void,
-    effectiveTotalScoreDisplay: number,
-    effectiveScoreChangeRatio: number,
+    setLists: (any: any) => void,
+    scoreChangeRatio: any
 };
 
-export const RoleContext = createContext<any>(null);
+export const RoleContext = createContext<RoleContextType>({
+    roleValues: {},
+    sources: {},
+    updateRole: ({}) => {},
+    isLocked: false,
+    toggleLock: () => {},
+    lists: [],
+    setLists: () => {},
+    scoreChangeRatio: 0
+});
 
 // 创建角色数值的上下文
 export function useRole() {

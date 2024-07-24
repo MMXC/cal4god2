@@ -61,7 +61,6 @@ export default function Zk() {
                         [id]: true,
                     }));
                     await selectItem(category, card);
-                    await updateRole(card.sx, '主卡', 'add');
                 } else {
                     return;
                 }
@@ -71,7 +70,6 @@ export default function Zk() {
                     [id]: false,
                 }));
                 await deleteItem(category, card.id);
-                await updateRole(card.sx, '主卡', 'remove');
             }
         } finally {
             setLock(false);

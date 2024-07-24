@@ -1,10 +1,11 @@
 // providers/UserSelectionProvider.tsx
 
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserSelectionsContext,Selection} from "@/contexts/UserSelectionsContext"
 type Props = {
     children: React.ReactNode;
 };
+import {RoleContext} from "@/contexts/RoleContext"
 
 export function UserSelectionProvider({ children }: Props) {
     const [userSelections, setUserSelections] = useState<Selection>({
@@ -15,14 +16,17 @@ export function UserSelectionProvider({ children }: Props) {
         fwzySelection: [],
         tzSelection: [],
     });
+    const {updateRole} = useContext(RoleContext);
     useEffect(() => {
         // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
+        updateRole(userSelections);
+        localStorage.clear();
         localStorage.setItem('userSelections', JSON.stringify(userSelections));
     }, [userSelections]);
 
-    const selectItem = (category: keyof Selection, item: any) => {
+    const selectItem = async (category: keyof Selection, item: any) => {
         if (userSelections[category].length < 12) {
-            setUserSelections((prevState) => ({
+            await setUserSelections((prevState) => ({
                 ...prevState,
                 [category]: [...prevState[category], item],
             }));
@@ -31,10 +35,10 @@ export function UserSelectionProvider({ children }: Props) {
         }
     };
 
-    const deleteItem = (category: keyof Selection, itemId: string) => {
+    const deleteItem = async (category: keyof Selection, itemId: string) => {
         console.log('Before deletion:', userSelections); // 打印更新前的状态
 
-        setUserSelections((prevState) => {
+        await setUserSelections((prevState) => {
             const updatedState = {
                 ...prevState,
                 [category]: prevState[category].filter(item => item.id !== itemId),
@@ -47,10 +51,10 @@ export function UserSelectionProvider({ children }: Props) {
 
         console.log('After deletion:', userSelections); // 尝试打印更新后的状态，但这可能不会立即反映最新状态
     };
-    const deleteOneItem = (category: keyof Selection, itemId: string) => {
+    const deleteOneItem = async (category: keyof Selection, itemId: string) => {
         console.log('Before deletion:', userSelections); // 打印更新前的状态
 
-        setUserSelections((prevState) => {
+        await setUserSelections((prevState) => {
             const index = prevState[category].findIndex(item => item.id === itemId);
             let updatedCategoryItems = [...prevState[category]];
 
