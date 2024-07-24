@@ -620,7 +620,7 @@ export default function Cal() {
                                 </CardContent>
                                 <div className="relative flex items-end">
                                     <img
-                                        src={'/assets/qrcode/wx-qrcode-725.png'}
+                                        src={'/assets/qrcode/wx-qrcode-731.png'}
                                         alt={'微信群入口'}
                                         width={40}
                                         height={40}

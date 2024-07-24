@@ -9,18 +9,6 @@ import {fetchFwCards, fetchFwzyCards, fetchJbCards, fetchTzCards, fetchZbCards, 
 interface ScoreValues extends RoleType {
 }
 
-function setSx(cards: any, type: string, newRoleValues: RoleType, newSources: SourcesType) {
-    cards.forEach((item: any) => {
-        Object.entries(item.sx).forEach((key: any, value: number) => {
-            if (key in newRoleValues) {
-                newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType] ?? 0) + value;
-                newSources[type][key as keyof RoleType] = (newSources[type][key as keyof RoleType] ?? 0) + value;
-            }
-        })
-    });
-    return {newRoleValues, newSources}
-}
-
 export function RoleProvider({children}: { children?: React.ReactNode }) {
     const [roleValues, setRoleValues] = useState<RoleType>({
         gj: 0,
@@ -134,17 +122,18 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             hx: 0,
             bjl: 19,
             bjsh: 170,
-            qsxsh: 3,
+            qsxsh: 38,
             yczs: 0,
             dbzs: 0,
             zzsh: 21,
             dzdbzs: 0,
-            pf: 0
+            pf: 0,
+            totalScore: 0.86,
         };
         let newSources: SourcesType = {
             '强化': {qsxsh: 3, bjl: 9, bjsh: 20, zzsh: 6,},
-            '天赋': {},
             '基础': {bjsh: 150, bjl: 10,},
+            '天赋': {},
             '主卡': {},
             '套装': {},
             '羁绊': {},
@@ -153,7 +142,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             '符文之语': {},
             '深空星海': {},
             '万物之母': {},
-        }; // Ensure deep copy if necessary
+        };
 
         const nameReflection = {
             "zkSelection": "主卡",
@@ -164,10 +153,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             "tzSelection": "套装",
         };
 
-        const processSelections = (type: keyof (Selection|{}), specialCondition?: (item: any) => boolean) => {
-            const items:any[] = userSelections[type as keyof (Selection|{})];
+        const processSelections = (items: any[], type: keyof Selection, specialCondition?: (item: any) => boolean) => {
             for (const item of items) {
-                if (specialCondition && !specialCondition(item)) continue; // Skip if not meeting special condition
+                if (specialCondition && !specialCondition(item)) continue;
+
                 let sx = item.sx;
                 if (type === 'jbSelection') {
                     sx = item.level === '四级' ? item.forth :
@@ -175,9 +164,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                             item.level === '二级' ? item.second :
                                 item.level === '一级' ? item.first : item.forth;
                 }
-                Object.entries(sx).forEach((key:any, value:number) => {
+
+                Object.entries(sx).forEach((key: keyof RoleType|any, value:any) => {
                     if (key in newRoleValues) {
-                        newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType]??0) + value;
+                        newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType] ?? 0) + value;
                         newSources[nameReflection[type]][key as keyof RoleType] = (newSources[nameReflection[type]][key as keyof RoleType] ?? 0) + value;
                     }
                 });
@@ -185,19 +175,31 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         };
 
         // Process all selections except 'jbSelection'
-        Object.keys(nameReflection).forEach(type => {
-            if (type !== 'jbSelection') processSelections(type as keyof (Selection|{}));
+        function handleSelectionType(items: any[], type: keyof Selection, filter?: (item: any) => boolean) {
+            try {
+                if (type === 'jbSelection') {
+                    processSelections(items, type, filter);
+                } else {
+                    processSelections(items, type);
+                }
+            } catch (error) {
+                console.error(`Error processing selections for type ${type}:`, error);
+                throw error;
+            }
+        }
+
+        Object.keys(nameReflection).forEach((type:any) => {
+            const filter = type === 'jbSelection' ? (item:any) => item.level !== undefined : undefined;
+            handleSelectionType(userSelections[type as keyof (Selection|{})], type as keyof (Selection|{}), filter);
         });
 
-        // Process 'jbSelection' separately
-        processSelections('jbSelection' as keyof (Selection|{}), item => item.level !== undefined);
-
         // Special handling for '深空星海' and '万物之母'
-        const zkSelection = (userSelections['zkSelection' as keyof (Selection|{})]);
+        const zkSelection = userSelections['zkSelection' as keyof (Selection|{})];
         const jbSelectionContains = (name: string) => {
             const jbSelection = userSelections['jbSelection' as keyof (Selection|{})];
             return (jbSelection as Array<{name: string}>)?.some(item => item.name === name) ?? false;
         };
+
         if (jbSelectionContains('深空星海')) {
             let gj = 0;
             let qsxsh = 0;
@@ -213,60 +215,17 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                     qsxsh += 2.5;
                 }
             });
-            newRoleValues.gj = (newRoleValues.gj??0) + gj;
-            newRoleValues.qsxsh = (newRoleValues.qsxsh??0) + qsxsh;
+            newRoleValues.gj = (newRoleValues.gj ?? 0) + gj;
+            newRoleValues.qsxsh = (newRoleValues.qsxsh ?? 0) + qsxsh;
             newSources['深空星海'].gj = (newSources['深空星海'].gj ?? 0) + gj;
             newSources['深空星海'].qsxsh = (newSources['深空星海'].qsxsh ?? 0) + qsxsh;
         }
 
+        // Continue with the rest of your calculations...
 
-        const oldMaxSx = Math.max(newRoleValues.bs??0, newRoleValues.hs??0, newRoleValues.ls??0, newRoleValues.ds??0);
-        const bs = (newRoleValues.bs??0) + (newRoleValues.bm??0) * 0.65;
-        const hs = (newRoleValues.hs??0) + (newRoleValues.hm??0) * 0.65;
-        const ls = (newRoleValues.ls??0) + (newRoleValues.lm??0) * 0.65;
-        const ds = (newRoleValues.ds??0) + (newRoleValues.dm??0) * 0.65;
-        const midMaxSx = Math.max(bs, hs, ls, ds);
-        const otherSums = (newRoleValues.qsxsh??0) * 3 + 15 * 4 + 10 * 2 * 2 * 0.65;
-        if (jbSelectionContains('万物之母')) {
-            switch (midMaxSx) {
-                case bs:
-                    newSources['万物之母'].bs = otherSums * 0.2 + (10 * 2 + (newRoleValues.bm??0)) * 0.65;
-                    newRoleValues.bs = (newRoleValues.bs??0) + otherSums * 0.2 + (10 * 2 + (newRoleValues.bm??0)) * 0.65;
-                    break;
-                case hs:
-                    newSources['万物之母'].hs = otherSums * 0.2 + (10 * 2 + (newRoleValues.hm??0)) * 0.65;
-                    newRoleValues.hs = (newRoleValues.hs??0) + otherSums * 0.2 + (10 * 2 + (newRoleValues.hm??0)) * 0.65;
-                    break;
-                case ls:
-                    newSources['万物之母'].ls = otherSums * 0.2 + (10 * 2 + (newRoleValues.lm??0)) * 0.65;
-                    newRoleValues.ls = (newRoleValues.ls??0) + otherSums * 0.2 + (10 * 2 + (newRoleValues.lm??0)) * 0.65;
-                    break;
-                case ds:
-                    newSources['万物之母'].ds = otherSums * 0.2 + (10 * 2 + (newRoleValues.dm??0)) * 0.65;
-                    newRoleValues.ds = (newRoleValues.ds??0) + otherSums * 0.2 + (10 * 2 + (newRoleValues.dm??0)) * 0.65;
-                    break;
-            }
-        }
-        switch (midMaxSx){
-            case bs:
-                newSources['装备'].bs += 15 * 2;
-                newRoleValues.bs = (newRoleValues.bs??0) + 15 * 2;
-                break;
-            case hs:
-                newSources['装备'].hs += 15 * 2;
-                newRoleValues.hs = (newRoleValues.hs??0) + 15 * 2;
-                break;
-            case ls:
-                newSources['装备'].ls += 15 * 2;
-                newRoleValues.ls = (newRoleValues.ls??0) + 15 * 2;
-                break;
-            case ds:
-                newSources['装备'].ds += 15 * 2;
-                newRoleValues.ds = (newRoleValues.ds??0) + 15 * 2;
-                break;
-        }
-
+        // Update totalScore after all calculations are done
         newRoleValues.totalScore = calculateTotalScore(newRoleValues);
+
         return { newRoleValues, newSources };
     };
 
@@ -275,16 +234,16 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         if (!isLocked) {
             setOldRoleValues(roleValues);
         }
-        const { newRoleValues, newSources } = recalculateRoleAndSources(userSelections);
-        setRoleValues(newRoleValues);
-        setSources(newSources);
+        const {newRoleValues, newSources} = recalculateRoleAndSources(userSelections);
+        setRoleValues((prevState:any) => ({ ...prevState, ...newRoleValues }));
+        setSources((prevState:any) => ({ ...prevState, ...newSources }));
         // Calculate score change ratio if needed
-        const ratio = (((newRoleValues.totalScore ?? 0) - (oldRoleValues.totalScore ?? 0.86)) / (oldRoleValues.totalScore ?? 0.86)) * 100;
+        const ratio = (((roleValues.totalScore ?? 0) - (oldRoleValues.totalScore ?? 0.86)) / (oldRoleValues.totalScore ?? 0.86)) * 100;
         setScoreChangeRatio(ratio);
     };
 
     const toggleLock = () => {
-        setOldRoleValues((prevState) => {
+        setOldRoleValues((prevState:any) => {
             const newState = { ...prevState };
             Object.keys(roleValues).forEach(key => {
                 newState[key as keyof RoleType] = roleValues[key as keyof RoleType]??0;
