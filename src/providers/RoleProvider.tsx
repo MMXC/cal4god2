@@ -195,13 +195,13 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             const filter = type === 'jbSelection' ? (item:any) => item.level !== undefined : undefined;
             const {updatedRoleValues, updatedSources} = handleSelectionType(userSelections[type as keyof (Selection|{})], type as keyof (Selection|{}), newRoleValues, newSources, filter);
             Object.entries(updatedRoleValues ?? {}).forEach(([key, value]:[any, any]) => {
-                newRoleValues[key as keyof RoleType] = (newRoleValues[key as keyof RoleType] ?? 0) + value;
+                newRoleValues[key as keyof RoleType] = value;
             });
 
             Object.entries(updatedSources ?? {}).forEach(([sourceKey, sourceValue]) => {
                 newSources[sourceKey as string] = newSources[sourceKey as string] || {};
                 Object.entries(sourceValue ?? {}).forEach(([roleKey, roleValue]) => {
-                    (newSources[sourceKey as string])[roleKey as string] = (newSources[sourceKey as string][roleKey as string] || 0) + roleValue;
+                    (newSources[sourceKey as string])[roleKey as string] = roleValue;
                 });
             });
         });
