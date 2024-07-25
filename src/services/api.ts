@@ -85,6 +85,23 @@ export async function fetchFwCards(): Promise<any[]> {
 }
 
 // 模拟API请求
+export async function fetchTtCards(): Promise<any[]> {
+    try {
+        // 假设你有一个HTTP服务器运行在 http://localhost:3000/
+        // 并且你的JSON文件可以通过 /src/data/zk.json 访问
+        const response = await fetch('/data/tt.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching tt cards:', error);
+        throw error;
+    }
+}
+
+// 模拟API请求
 export async function fetchTzCards(): Promise<any[]> {
     try {
         // 假设你有一个HTTP服务器运行在 http://localhost:3000/

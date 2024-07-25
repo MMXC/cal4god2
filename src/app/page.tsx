@@ -12,6 +12,8 @@ import Fwzy from "@/components/component/fwzy";
 import Jb from "@/components/component/jb";
 import Zb from "@/components/component/zb";
 import Tz from "@/components/component/tz";
+import Tt from "@/components/component/tt";
+import Bd from "@/components/component/bd";
 
 
 export default function Home() {
@@ -43,14 +45,20 @@ export default function Home() {
                 priority
               />
               {/*清空缓存并重新加载网页*/}
-              <button id="clearStorageBtn" onClick={() => {localStorage.clear(); window.location.reload();}}>重置</button>
+              <button id="clearStorageBtn" onClick={() => {
+                  localStorage.removeItem('userSelections');
+                  // localStorage.clear();
+                  window.location.reload();
+                }
+              }>重置</button>
 
             </a>
           </div>
         </div>
-
-        <div className="bottom-0 left-0 sm:h-58 h-68 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+        <div className="grid grid-cols-[2fr_8fr_2fr] gap-6 bottom-0 left-0 sm:h-58 h-68 w-200 items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+          <Tt />
           <Cal />
+          <Bd />
         </div>
 
 

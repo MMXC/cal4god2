@@ -3,7 +3,15 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {RoleContext, RoleType, SourcesType} from '@/contexts/RoleContext';
 import {UserSelectionsContext, Selection} from "@/contexts/UserSelectionsContext";
-import {fetchFwCards, fetchFwzyCards, fetchJbCards, fetchTzCards, fetchZbCards, fetchZkCards} from "@/services/api";
+import {
+    fetchFwCards,
+    fetchFwzyCards,
+    fetchJbCards,
+    fetchTtCards,
+    fetchTzCards,
+    fetchZbCards,
+    fetchZkCards
+} from "@/services/api";
 
 // Define specific types for calculateTotalScore
 interface ScoreValues extends RoleType {
@@ -39,6 +47,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         zbList: [],
         tzList: [],
         fwzyList: [],
+        ttList: [],
     });
     useEffect(() => {
         Promise.all([
@@ -48,7 +57,8 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             fetchZbCards(),
             fetchTzCards(),
             fetchFwzyCards(),
-        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList]) => {
+            fetchTtCards()
+        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList, ttList]) => {
             // 更新状态
             setLists({
                 zkList: zkList,
@@ -57,6 +67,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                 zbList: zbList,
                 tzList: tzList,
                 fwzyList: fwzyList,
+                ttList: ttList
             });
         }).catch(error => {
             console.error('Error fetching data:', error);

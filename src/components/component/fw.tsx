@@ -28,15 +28,19 @@ export default function Fw() {
 
         if (operation > 0) {
             // 检查数量限制
-            if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc: any, cur: any) => acc.num + cur.num, 0) + 1 > 40 ||
+            const types:string[] = userSelections.fwSelection.filter((item: any) => ['jm', 'ty', 'j'].includes(item.type)).map((item: any) => item.type);
+            if (userSelections.fwSelection.length + userSelections.fwzySelection.reduce((acc: any, cur: any) => acc + cur.num, 0) + 1 > 40 ||
                 userSelections.fwSelection.filter((item: any) => item.id === card.id).length + 1 > 10 ) {
                 alert('已选总符文超出40或单类型符文超出10，请先移除后再重新选择！');
                 return;
-            } else {
+            }else if(['jm', 'ty', 'j'].includes(card.type)&&types&&types.length>0&&!types.includes(card.type)){
+                alert('增伤符文请选择同种类（太阳/寂灭/剑）！');
+                return;
+            }else {
                 selectItem(category, card);
             }
         } else {
-            if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc.id === card.id ? 1 : 0 + cur.id === card.id ? 1 : 0, 0) === 0) {
+            if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc + (cur.id === card.id ? 1 : 0), 0) === 0) {
                 return
             } else {
                 deleteOneItem(category, card.id);
@@ -69,7 +73,12 @@ export default function Fw() {
                 {filteredFwCards.map((card:any) => (
                     <Card
                         key={card.id}
-                        className={`relative overflow-hidden rounded-lg shadow-lg ${userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0) > 0 ? "border-2 golden-glow ring-4 ring-primary-foreground" : ""}`}
+                        className={
+                            `relative overflow-hidden rounded-lg shadow-lg 
+                            ${userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0) > 0 ? 
+                                "border-2 golden-glow ring-4 ring-primary-foreground" : 
+                                ""}`
+                        }
                         onClick={event => handleCardClick(event, 'fwSelection', card)}
                     >
                         <div className="relative">
@@ -84,7 +93,10 @@ export default function Fw() {
                         <CardContent className="p-4 bg-background">
                             <h3 className="text-xl font-bold">{card.name}</h3>
                             <div className="mt-2 flex justify-between items-center">
-                                <span className="text-sm">选中数量: {userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}</span>                            </div>
+                                <span className="text-sm">
+                                    选中数量: {userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
+                                </span>
+                            </div>
                         </CardContent>
                     </Card>
                 ))}

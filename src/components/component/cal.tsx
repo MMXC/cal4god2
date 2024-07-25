@@ -28,7 +28,7 @@ import html2canvas from 'html2canvas';
 import {DownloadIcon} from "@radix-ui/react-icons";
 import {Card, CardContent} from "@/components/ui/card";
 import {uploadImage} from "@/services/api";
-import {ArrowDownIcon, ArrowUpIcon, LockIcon, ShareIcon, UnlockIcon} from "lucide-react";
+import {ArrowDownIcon, ArrowUpIcon, Icon, LockIcon, SaveIcon, ShareIcon, UnlockIcon} from "lucide-react";
 import QRCode from 'qrcode.react';
 import Zk from "@/components/component/zk";
 import Jb from "@/components/component/jb";
@@ -56,6 +56,7 @@ function generateFilename(userSelections: any, nameRelections: { zkSelection: st
     fileName += '.png';
     return fileName;
 }
+
 
 // 假设这是你的UserContext
 export default function Cal() {
@@ -129,11 +130,14 @@ export default function Cal() {
                     deleteItem(category, card.id)
                 })
         } else {
-            userSelections[category]
-                .filter((item: any) => item.id === card.id)
-                .findLast((item: any) => {
-                    deleteOneItem(category, card.id)
-                })
+            if (userSelections[category]
+                .filter((item: any) => item.id === card.id)) {
+                if (userSelections.fwSelection.reduce((acc: any, cur: any) => acc + (cur.id === card.id ? 1 : 0), 0) === 0) {
+                    return
+                } else {
+                    deleteOneItem(category, card.id);
+                }
+            }
         }
     }
 
@@ -152,6 +156,27 @@ export default function Cal() {
         }
     };
 
+    const handleSave = () => {
+        console.log("开始保存")
+        const fa = {
+            id: new Date().getTime(),
+            name: 'cal-' + roleValues?.totalScore?.toFixed(0),
+            author: "",
+            description: "",
+            totalScore: roleValues?.totalScore,
+            selections: {...userSelections}
+        };
+
+        // 检查 window 对象是否存在，确保我们是在浏览器环境中
+        if (typeof window !== 'undefined') {
+            const localList = JSON.parse(localStorage.getItem('localList') || '[]');
+            localList.push(fa);
+            localStorage.setItem('localList', JSON.stringify(localList));
+        } else {
+            // 如果不在浏览器环境中，可以使用其他存储方式，例如 Node.js 中的文件系统
+            console.warn('localStorage is not available in this environment.');
+        }
+    }
     return (
         <div ref={calRef} className="z-10 grid grid-rows-[auto_0.1fr] gap-6 w-full max-w-5xl mx-auto px-4 py-8">
             <div className="grid grid-cols-[1fr_250px] gap-6">
@@ -188,8 +213,9 @@ export default function Cal() {
                                                     </button>
                                                 </PopoverTrigger>
                                                 <div className="w-full h-full object-contain justify-center">
-                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                        <Zk />
+                                                    <PopoverContent
+                                                        className="w-full max-w-4xl object-contain justify-center">
+                                                        <Zk/>
                                                     </PopoverContent>
                                                 </div>
                                             </Popover>
@@ -231,13 +257,14 @@ export default function Cal() {
                                                     </button>
                                                 </PopoverTrigger>
                                                 <div className="w-full h-full object-contain justify-center">
-                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                        <Jb />
+                                                    <PopoverContent
+                                                        className="w-full max-w-4xl object-contain justify-center">
+                                                        <Jb/>
                                                     </PopoverContent>
                                                 </div>
                                             </Popover>
 
-                                            )}
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -276,12 +303,13 @@ export default function Cal() {
                                                     </button>
                                                 </PopoverTrigger>
                                                 <div className="w-full h-full object-contain justify-center">
-                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                        <Tz />
+                                                    <PopoverContent
+                                                        className="w-full max-w-4xl object-contain justify-center">
+                                                        <Tz/>
                                                     </PopoverContent>
                                                 </div>
                                             </Popover>
-                                            )}
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -317,13 +345,14 @@ export default function Cal() {
                                                     </button>
                                                 </PopoverTrigger>
                                                 <div className="w-full h-full object-contain justify-center">
-                                                    <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                        <Zb />
+                                                    <PopoverContent
+                                                        className="w-full max-w-4xl object-contain justify-center">
+                                                        <Zb/>
                                                     </PopoverContent>
                                                 </div>
                                             </Popover>
 
-                                            )}
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -340,7 +369,8 @@ export default function Cal() {
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.fwzySelection[i] ?
-                                            (<span className="text-sm font-medium" title={userSelections.fwzySelection[i].name}
+                                            (<span className="text-sm font-medium"
+                                                   title={userSelections.fwzySelection[i].name}
                                                    onClick={() => handleClickPrevCard('fwzySelection', userSelections.fwzySelection[i])}
                                             >
                                                 {userSelections.fwzySelection[i].name}
@@ -355,13 +385,14 @@ export default function Cal() {
                                                         </button>
                                                     </PopoverTrigger>
                                                     <div className="w-full h-full object-contain justify-center">
-                                                        <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                            <Fwzy />
+                                                        <PopoverContent
+                                                            className="w-full max-w-4xl object-contain justify-center">
+                                                            <Fwzy/>
                                                         </PopoverContent>
                                                     </div>
                                                 </Popover>
 
-                                                )
+                                            )
                                         }
                                     </div>
                                 ))}
@@ -390,13 +421,14 @@ export default function Cal() {
                                                 />
                                             </PopoverTrigger>
                                             <div className="w-full h-full object-contain justify-center">
-                                                <PopoverContent className="w-full max-w-4xl object-contain justify-center">
-                                                    <Fw />
+                                                <PopoverContent
+                                                    className="w-full max-w-4xl object-contain justify-center">
+                                                    <Fw/>
                                                 </PopoverContent>
                                             </div>
                                         </Popover>
 
-                                        )}
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -453,7 +485,11 @@ export default function Cal() {
                             <DownloadIcon className="w-5 h-5"/>
                             <span className="sr-only">导出</span>
                         </Button>
-                        <ShareButton calRef={calRef}/>
+                        {/*<ShareButton calRef={calRef}/>*/}
+                        <Button variant="outline" size="icon" onClick={handleSave}>
+                            <SaveIcon className="w-5 h-5"/>
+                            <span className="sr-only">保存</span>
+                        </Button>
                     </div>
 
                     <div className="grid gap-4">
@@ -514,7 +550,7 @@ export default function Cal() {
                                                             (properties as { ds: number }).ds !== 0
                                                         ) && (
                                                             <p key={type} className="text-sm">
-                                                                <br/>{type}: {Math.max(((properties as { bs: number }).bs??0),((properties as { hs: number }).hs??0),((properties as { ls: number }).ls??0),((properties as { ds: number }).ds??0)).toFixed(0)}%
+                                                                <br/>{type}: {Math.max(((properties as { bs: number }).bs ?? 0), ((properties as { hs: number }).hs ?? 0), ((properties as { ls: number }).ls ?? 0), ((properties as { ds: number }).ds ?? 0)).toFixed(0)}%
                                                             </p>
                                                         )
                                                     ))
@@ -531,7 +567,7 @@ export default function Cal() {
                                                             (properties as { ds: number }).ds !== 0
                                                         ) && (
                                                             <p key={type} className="text-sm">
-                                                                <br/>{type}: {(((properties as { bs: number }).bs??0)+((properties as { hs: number }).hs??0)+((properties as { ls: number }).ls??0)+((properties as { ds: number }).ds??0)).toFixed(0)}%
+                                                                <br/>{type}: {(((properties as { bs: number }).bs ?? 0) + ((properties as { hs: number }).hs ?? 0) + ((properties as { ls: number }).ls ?? 0) + ((properties as { ds: number }).ds ?? 0)).toFixed(0)}%
                                                             </p>
                                                         )
                                                     ))
@@ -713,9 +749,9 @@ export default function Cal() {
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{marginTop: '1rem'}}>
                                 <div
-                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * (roleValues?.totalScore??0.86) * 1.5 * (1 + 0.175*2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰'))?0.83:0)) / (1 + (roleValues?.yczs??0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
+                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(5 * (roleValues?.totalScore ?? 0.86) * 1.5 * (1 + 0.175 * 2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰')) ? 0.83 : 0)) / (1 + (roleValues?.yczs ?? 0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span
-                                        style={{color: 'red'}}>{(5 * (roleValues?.totalScore??0.86) * 333 * 6 / 10000 * (1-(0.4*((userSelections.jbSelection.some((item) => item.name === '宿命歧路'))?0.5:1)))).toFixed(2)} 亿！</span>
+                                        style={{color: 'red'}}>{(5 * (roleValues?.totalScore ?? 0.86) * 333 * 6 / 10000 * (1 - (0.4 * ((userSelections.jbSelection.some((item) => item.name === '宿命歧路')) ? 0.5 : 1))) * ((userSelections.zkSelection.some((item) => item.name === '躯壳')) ? 1 : 0.9) * ((userSelections.zkSelection.some((item) => item.name === '海妖')) ? 1 : 0.88)).toFixed(2)} 亿！</span>
                                 </div>
                                 <div
                                     className="text-sm text-gray-500 mt-2">基于基础攻击5w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）
@@ -901,9 +937,9 @@ function RoleColorDisplay(props: any) {
 
     for (const key in roleValues) {
         if (['bs', 'hs', 'ls', 'ds'].includes(key) && typeof roleValues[key as keyof RoleType] === 'number' &&
-            (roleValues[key as keyof RoleType]??maxValue) > maxValue) {
+            (roleValues[key as keyof RoleType] ?? maxValue) > maxValue) {
             maxRole = key;
-            maxValue = roleValues[key as keyof RoleType]??maxValue;
+            maxValue = roleValues[key as keyof RoleType] ?? maxValue;
         }
     }
 

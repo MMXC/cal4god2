@@ -20,7 +20,7 @@ export function UserSelectionProvider({ children }: Props) {
     useEffect(() => {
         // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
         updateRole(userSelections);
-        localStorage.clear();
+        localStorage.removeItem('userSelections');
         localStorage.setItem('userSelections', JSON.stringify(userSelections));
     }, [userSelections]);
 
