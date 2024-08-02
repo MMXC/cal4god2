@@ -264,8 +264,8 @@ export default function Self() {
     const progressJjRef = useRef<HTMLDivElement>(null); // 创建一个 ref
 
     const handleGetRect = (myRef: any) => {
-        if (progressLevelRef.current) {
-            return progressLevelRef.current.getBoundingClientRect();
+        if (myRef.current) {
+            return myRef.current.getBoundingClientRect();
         }
         return null;
     };
@@ -422,7 +422,7 @@ export default function Self() {
                         </div>
                         <div>
                             <p>攻击: {
-                                calAttack(selectedCard)
+                                calAttack(selectedCard).toFixed(0)
                             }</p>
                         </div>
                         <div>
