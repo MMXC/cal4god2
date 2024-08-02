@@ -461,8 +461,8 @@ export default function Self() {
                                 }}/>
                                 <span>{((selectedCard.fnbfb ?? 0) * 100).toFixed(2)}%</span>
                             </div> :
-                            <div className="grid grid-cols-2 gap-4"><Input value={calculateBaseAttack(selectedCard) *
-                                calculateQualityBonus(selectedCard)*(selectedCard.fnbfb??0)} type={"number"} disabled/><span>{((selectedCard.fnbfb ?? 0) * 100).toFixed(2)}%</span></div>
+                            <div className="grid grid-cols-2 gap-4"><Input value={(calculateBaseAttack(selectedCard) *
+                                calculateQualityBonus(selectedCard)*(selectedCard.fnbfb??0)).toFixed(0)} type={"number"} disabled/><span>{((selectedCard.fnbfb ?? 0) * 100).toFixed(2)}%</span></div>
                         }
                     </div>
                     <div className="mb-4 flex items-center">
