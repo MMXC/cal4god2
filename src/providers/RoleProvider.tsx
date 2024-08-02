@@ -224,26 +224,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             return (jbSelection as Array<{name: string}>)?.some(item => item.name === name) ?? false;
         };
 
-        if (jbSelectionContains('深空星海')) {
-            let gj = 0;
-            let qsxsh = 0;
-            (zkSelection as any[])?.forEach(item => {
-                if (item.type === '神话' && item.quality === '至臻') {
-                    gj += 4;
-                    qsxsh += 4;
-                } else if (item.type === '神话' || (item.type === '原初' && item.quality === '至臻')) {
-                    gj += 3;
-                    qsxsh += 3;
-                } else if (item.type === '原初') {
-                    gj += 2.5;
-                    qsxsh += 2.5;
-                }
-            });
-            newRoleValues.gj = (newRoleValues.gj ?? 0) + gj;
-            newRoleValues.qsxsh = (newRoleValues.qsxsh ?? 0) + qsxsh;
-            newSources['深空星海'].gj = (newSources['深空星海'].gj ?? 0) + gj;
-            newSources['深空星海'].qsxsh = (newSources['深空星海'].qsxsh ?? 0) + qsxsh;
-        }
+
 
         // Continue with the rest of your calculations...
         const midMaxSx = Math.max(newRoleValues?.bs??0, newRoleValues?.hs??0, newRoleValues?.ls??0, newRoleValues?.ds??0);
@@ -266,31 +247,48 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                 break;
         }
         if (jbSelectionContains('万物之母')) {
-            newRoleValues.bs = (newRoleValues.bs!) + (10*2 + newRoleValues.bm!) * 0.65;
-            newRoleValues.hs = (newRoleValues.hs!) + (10*2 + newRoleValues.hm!) * 0.65;
-            newRoleValues.ls = (newRoleValues.ls!) + (10*2 + newRoleValues.lm!) * 0.65;
-            newRoleValues.ds = (newRoleValues.ds!) + (10*2 + newRoleValues.dm!) * 0.65;
             const lastMaxSx = Math.max(newRoleValues?.bs!, newRoleValues?.hs!, newRoleValues?.ls!, newRoleValues?.ds!);
             const otherSums = (newRoleValues?.qsxsh??0) * 3 + 15 * 4 + (newRoleValues?.bs!) + (newRoleValues?.hs!) + (newRoleValues?.ls!) + (newRoleValues?.ds!) - lastMaxSx - 13;
-
             switch (lastMaxSx) {
                 case newRoleValues.bs:
                     newSources['万物之母'].bs = otherSums * 0.2 + (10 * 2 + (newRoleValues?.bm!)) * 0.65;
-                    newRoleValues.bs = (newRoleValues?.bs!) + otherSums * 0.2;
+                    newRoleValues.bs = (newRoleValues?.bs!) + newSources['万物之母'].bs;
                     break;
                 case newRoleValues.hs:
                     newSources['万物之母'].hs = otherSums * 0.2 + (10 * 2 + (newRoleValues?.hm!)) * 0.65;
-                    newRoleValues.hs = (newRoleValues?.hs!) + otherSums * 0.2;
+                    newRoleValues.hs = (newRoleValues?.hs!) + newSources['万物之母'].hs;
                     break;
                 case newRoleValues.ls:
                     newSources['万物之母'].ls = otherSums * 0.2 + (10 * 2 + (newRoleValues?.lm!)) * 0.65;
-                    newRoleValues.ls = (newRoleValues?.ls!) + otherSums * 0.2;
+                    newRoleValues.ls = (newRoleValues?.ls!) + newSources['万物之母'].ls;
                     break;
                 case newRoleValues.ds:
                     newSources['万物之母'].ds = otherSums * 0.2 + (10 * 2 + (newRoleValues?.dm!)) * 0.65;
-                    newRoleValues.ds = (newRoleValues?.ds!) + otherSums * 0.2;
+                    newRoleValues.ds = (newRoleValues?.ds!) + newSources['万物之母'].ds;
                     break;
             }
+
+        }
+
+        if (jbSelectionContains('深空星海')) {
+            let gj = 0;
+            let qsxsh = 0;
+            (zkSelection as any[])?.forEach(item => {
+                if (item.type === '神话' && item.quality === '至臻') {
+                    gj += 4;
+                    qsxsh += 4;
+                } else if (item.type === '神话' || (item.type === '原初' && item.quality === '至臻')) {
+                    gj += 3;
+                    qsxsh += 3;
+                } else if (item.type === '原初') {
+                    gj += 2.5;
+                    qsxsh += 2.5;
+                }
+            });
+            newRoleValues.gj = (newRoleValues.gj ?? 0) + gj;
+            newRoleValues.qsxsh = (newRoleValues.qsxsh ?? 0) + qsxsh;
+            newSources['深空星海'].gj = (newSources['深空星海'].gj ?? 0) + gj;
+            newSources['深空星海'].qsxsh = (newSources['深空星海'].qsxsh ?? 0) + qsxsh;
         }
 
         // Update totalScore after all calculations are done

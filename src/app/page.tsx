@@ -14,10 +14,12 @@ import Zb from "@/components/component/zb";
 import Tz from "@/components/component/tz";
 import Tt from "@/components/component/tt";
 import Bd from "@/components/component/bd";
+import Self from "@/components/component/self";
 
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("zk"); // 将 "active" 改为 "zk" 或其他tab的值
+  const [self, setSelf] = useState(false);
   return (
       <RoleProvider><UserSelectionProvider>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -25,39 +27,39 @@ export default function Home() {
           <p className="flex sm:flex left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
             <code className="font-mono font-bold">不俍人: </code>
             <span style={{fontSize: "12px", color: "#999"}} title={"注：(符文之语默认9级 符文默认8级 会心暂时按50:1折算暴击率)"}> &nbsp;古魂角色搭配模拟器&nbsp; </span>
-
           </p>
 
-          <div className="bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By:{" "}
-              <Image
-                src="/pr.svg"
-                alt="不俍人出品"
-                className="dark:invert"
-                width={100}
-                height={24}
-                priority
-              />
-              {/*清空缓存并重新加载网页*/}
-              <button id="clearStorageBtn" onClick={() => {
-                  localStorage.removeItem('userSelections');
-                  // localStorage.clear();
-                  window.location.reload();
-                }
-              }>重置</button>
+          <div className="bottom-0 left-0 flex place-items-center h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+              <div className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0">
+                  By:{" "}
+                  <Image
+                    src="/pr.svg"
+                    alt="不俍人出品"
+                    className="dark:invert"
+                    width={100}
+                    height={24}
+                    priority
+                  />
+                  <button id="self" onClick={() => {
+                      setSelf(!self);
+                  }
+                  }>我的</button>
+                  {/*清空缓存并重新加载网页*/}
+                  <button id="clearStorageBtn" onClick={() => {
+                      self? localStorage.removeItem('selflist'):localStorage.removeItem('userSelections');
+                      // localStorage.clear();
+                      window.location.reload();
+                    }
+                  }>重置</button>
 
-            </a>
+              </div>
           </div>
         </div>
         <div className="grid grid-cols-[2fr_8fr_2fr] gap-6 bottom-0 left-0 sm:h-58 h-68 w-200 items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           <Tt />
-          <Cal />
+          {
+            !self?<Cal />:<Self />
+          }
           <Bd />
         </div>
 
