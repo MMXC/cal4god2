@@ -277,7 +277,7 @@ export default function Self() {
         const percentage:number = Math.min(100, Math.max(0, (mouseX / rect?.width) * 100));
         setSelectedCard((prevState: any) => ({
                 ...prevState,
-                level: Math.max(1, (percentage * 300/100)).toFixed(0)
+                level: parseInt(Math.max(1, (percentage * 300/100)).toFixed(0))
             }
         ))
     };
@@ -289,7 +289,7 @@ export default function Self() {
 
         setSelectedCard((prevState: any) => ({
                 ...prevState,
-                jj: Math.max(0, (percentage * 10/100)).toFixed(0)
+                jj: parseInt(Math.max(0, (percentage * 10/100)).toFixed(0))
             }
         ))
     };
@@ -320,7 +320,7 @@ export default function Self() {
         console.log(delta);
         setSelectedCard((prevState: any) => ({
             ...prevState,
-            star: Math.min(Math.max(prevState.star + delta, 2), 16)
+            star: parseInt((Math.min(Math.max(prevState.star + delta, 2), 16)).toFixed(0))
         }));
     };
 

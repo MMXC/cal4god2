@@ -8,7 +8,10 @@
         {"id": 4,"name":"塔征2", "num":2, "sx":{"gj": 12,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/塔征2.png"},
         {"id": 5,"name":"炼金2", "num":2, "sx":{"gj": 16,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/炼金2.png"},
         {"id": 6,"name":"魔狼2", "num":2, "sx":{"gj": 18,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/魔狼2.png"},
-        {"id": 7,"name":"魔狼6", "num":6, "sx":{"gj": 18,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/魔狼2.png"}
+        {"id": 7,"name":"魔狼6", "num":6, "sx":{"gj": 18,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/魔狼2.png"},
+        {"id": 8,"name":"织物2", "num":0, "sx":{"gj":  5,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/织物2.png"},
+        {"id": 9,"name":"织物4", "num":0, "sx":{"gj":  5,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh": 10,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/织物4.png"},
+        {"id":10,"name":"织物6", "num":0, "sx":{"gj":  5,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl": 20,"bjsh":  0,"qsxsh": 10,"yczs":  0,"dbzs":  0,"zzsh":  8,"dzdbzs":  0,"pf":  0},"pic":"/assets/tz/织物6.png"}
 
     ]
 }

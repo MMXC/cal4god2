@@ -32,6 +32,12 @@
         {"id":28,"name":"轮回之塔","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh":15,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/轮回之塔.png"},
         {"id":29,"name":"轮回转生","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/轮回转生.png"},
         {"id":30,"name":"魔狼追刃","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh":12,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/魔狼追刃.png"},
-        {"id":31,"name":"黄昏之兆","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/黄昏之兆.png"}
+        {"id":31,"name":"黄昏之兆","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/黄昏之兆.png"},
+        {"id":32,"name":"转瞬即逝","num": 2,  "sx":{"gj":10,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/转瞬即逝.png"},
+        {"id":33,"name":"风暴寂静","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 20,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/风暴寂静.png"},
+        {"id":34,"name":"死亡笼罩","num": 2,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":12,"bjsh": 0,"qsxsh": 0,"yczs":15,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/死亡笼罩.png"},
+        {"id":35,"name":"黑暗侵蚀","num": 3,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 10,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/黑暗侵蚀.png"},
+        {"id":36,"name":"永恒灭日","num": 3,  "sx":{"gj":0,"bs":0,"hs":0,"ds":0,"ls":0,"bm": 0,"dm": 0,"lm": 0,"hm": 0,"hx":0,"bjl":0,"bjsh": 0,"qsxsh": 0,"yczs":0,"dbzs": 0,"zzsh":0,"dzdbzs":0,"pf":0},"pic":"/assets/fwzy/永恒灭日.png"}
+
     ]
 }

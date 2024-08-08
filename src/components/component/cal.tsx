@@ -278,8 +278,8 @@ export default function Cal() {
                                     className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
-                            <div className="grid grid-cols-[repeat(2,1fr)] gap-2">
-                                {Array.from({length: 2}).map((_, i) => (
+                            <div className="grid grid-cols-[repeat(3,1fr)] gap-2">
+                                {Array.from({length: 3}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.tzSelection[i] ? (<img
                                             src={userSelections.tzSelection[i].pic}
@@ -785,7 +785,7 @@ export default function Cal() {
                                 </CardContent>
                                 <div className="relative flex items-end">
                                     <img
-                                        src={'/assets/qrcode/wx-qrcode-809.png'}
+                                        src={'/assets/qrcode/wx-qrcode-815.jpg'}
                                         alt={'微信群入口'}
                                         width={40}
                                         height={40}
