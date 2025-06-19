@@ -67,8 +67,32 @@ export default function Fwzy() {
         card.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const [fwzyDJ, setFwzyDJ] = useState(9);
+
     return (
         <div>
+            {/* 添加一个1-10的输入框，用于选择卡片列表中符文之语等级(限定上限10 下限1 默认9) 选择后将对应符文之语card列表中sxn赋值给sx 如 sx=sx9 */}
+            <div className="flex items-center gap-4">
+                <Input
+                    type="number"
+                    placeholder="输入等级(默认9)"
+                    min={1}
+                    max={10}
+                    value={fwzyDJ}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value);
+                        if (value >= 1 && value <= 10) {
+                            setFwzyDJ(value);
+                        }
+                        list.forEach((card: any) => {
+                            if(card[`sx${value}`]!==undefined){
+                                card.sx = card[`sx${value}`];
+                            }
+                        });
+                    }}
+                    className="flex-1"
+                />
+            </div>
             <div className="bg-background p-4 mb-6 rounded-lg shadow-lg">
                 <div className="flex items-center gap-4">
                     <Input
@@ -115,7 +139,13 @@ export default function Fwzy() {
                                 <h3 className="text-xl font-bold">{card.name}</h3>
                                 <div className="mt-2 flex justify-between items-center">
                                     <span className="text-sm">
-                                        选中数量: {userSelections.fwzySelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
+                                        已选: {userSelections.fwzySelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
+                                    </span>
+
+                                </div>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <span className="text-sm">
+                                        等级: {fwzyDJ}
                                     </span>
                                 </div>
                             </CardContent>
