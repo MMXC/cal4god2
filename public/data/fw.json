@@ -10,6 +10,12 @@
         {"id": 6,"name":"诵者",  "type": "sz", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  8,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/诵者.png"},
         {"id": 7,"name":"雾之国", "type": "wzg", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  8,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/雾之国.png"},
         {"id": 8,"name":"驾驭",  "type": "jy", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/驾驭.png"},
-        {"id": 9,"name":"黄昏",  "type": "hh", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  8,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/黄昏.png"}
+        {"id": 9,"name":"黄昏",  "type": "hh", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  8,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/黄昏.png"},
+        
+        {"id":10,"name":"末日",  "type": "mr", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/末日.png"},
+        {"id":11,"name":"信使",  "type": "xs", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/信使.png"},
+        {"id":12,"name":"鹰",  "type": "ying", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/鹰.png"},
+        {"id":13,"name":"一",  "type": "yi",   "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pic":"/assets/fw/一.png"}
+    
     ]
 }

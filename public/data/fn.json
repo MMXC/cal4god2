@@ -1,0 +1,13 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"id": 1,"name":"首领特攻14%",  "type": "fn", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs": 14,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/首领特攻.png","pic":"/assets/fn/首领特攻.png"},
+        {"id": 2,"name":"异常特攻13%",  "type": "fn", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 13,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/异常特攻.png","pic":"/assets/fn/异常特攻.png"},
+        {"id": 3,"name":"力体共生10.5%攻击",  "type": "fn", "sx":{"gj":10.5,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/力体共生.png","pic":"/assets/fn/力体共生.png"},
+        {"id": 4,"name":"全属伤17%",  "type": "fn", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh": 17,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/属伤特攻.png","pic":"/assets/fn/属伤特攻.png"},
+        {"id": 5,"name":"全减免17%",  "type": "fn", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm": 17,"dm": 17,"lm": 17,"hm": 17,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/属伤减免.png","pic":"/assets/fn/属伤减免.png"},
+        {"id": 8,"name":"攻击力20%",  "type": "fn", "sx":{"gj": 20,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0},"pre": "/assets/fn/攻击力.png","pic":"/assets/fn/攻击力.png"},
+        {"id": 9,"name":"技能伤害18%",  "type": "fn", "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "jn": 18, "hj": 0},"pre": "/assets/fn/技能伤害.png","pic":"/assets/fn/技能伤害.png"}
+    ]
+}

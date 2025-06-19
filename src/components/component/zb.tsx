@@ -28,14 +28,14 @@ import {RoleContext} from "@/contexts/RoleContext";
 export default function Zb() {
     const [isChecked, setIsChecked] = useState<any>({})
     const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
-    const {updateRole, lists} = useContext(RoleContext);
+    const {updateRole, lists, calculateDamageIncrease} = useContext(RoleContext);
     const list = lists.zbList;
 
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
 
         if (!userSelections.zbSelection.some((item: any) => item.id === card.id)) {
-            if (userSelections.zbSelection.length + (userSelections.tzSelection.map((item: any) => item.num).reduce((acc: any, curr: any) => acc + curr, 0)) + card.num <= 10) {
+            if (userSelections.zbSelection.length <= 10) {
                 if (userSelections.zbSelection.some((zb: any) => zb.type === card.type)) {
                     alert('已有相同位置【' + card.type + '】装备，请勿重复选择！');
                     return;
@@ -72,33 +72,43 @@ export default function Zb() {
             </div>
             <div
                 className="flex grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-12 gap-6 p-4">
-                {filteredZbCards.map((card:any) => (
-                    <Card
-                        key={card.id}
-                        className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            userSelections.zbSelection.some((item: any) => item.id === card.id)
-                                ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : "border-2 border-gold"
-                        }`}
-                        onClick={() => handleCardClick('zbSelection', card)}
-                    >
-                        <div className="relative">
-                            <img
-                                src={card.pic}
-                                alt={card.name}
-                                width={600}
-                                height={400}
-                                className="object-cover w-full h-48"
-                            />
-                        </div>
-                        <CardContent className="p-4 bg-background">
-                            <h3 className="text-xl font-bold">{card.name}</h3>
-                            <div className="mt-2">
-                                {card.description}
+                {filteredZbCards.map((card:any) => {
+                    const increase = calculateDamageIncrease('zbSelection', card, userSelections);
+                    const isSelected = userSelections.zbSelection.some((selected: any) => selected.id === card.id);
+
+                    return (
+                        <Card
+                            key={card.id}
+                            className={`relative overflow-hidden rounded-lg shadow-lg ${
+                                isSelected
+                                    ? "border-2 golden-glow ring-4 ring-primary-foreground"
+                                    : "border-2 border-gold"
+                            }`}
+                            onClick={() => handleCardClick('zbSelection', card)}
+                        >
+                            <div className="relative">
+                                <img
+                                    src={card.pic}
+                                    alt={card.name}
+                                    width={600}
+                                    height={400}
+                                    className={`object-cover w-full h-48 ${isSelected ? 'opacity-50' : ''}`}
+                                />
+                                {!isSelected && increase !== 0 && (
+                                    <div className={`absolute bottom-0 right-0 bg-black bg-opacity-70 px-1 py-0.5 text-xs rounded font-bold ${increase > 0 ? 'text-[#5de011]' : 'text-[#b73030]'}`}>
+                                        {increase > 0 ? `+${increase}%` : `${increase}%`}
+                                    </div>
+                                )}
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            <CardContent className="p-4 bg-background">
+                                <h3 className="text-xl font-bold">{card.name}</h3>
+                                <div className="mt-2">
+                                    {card.description}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
             </div>
         </div>
     )

@@ -119,6 +119,76 @@ export async function fetchTzCards(): Promise<any[]> {
 }
 
 // 模拟API请求
+export async function fetchFnCards(): Promise<any[]> {
+    try {
+        // 假设你有一个HTTP服务器运行在 http://localhost:3000/
+        // 并且你的JSON文件可以通过 /src/data/zk.json 访问
+        const response = await fetch('/data/fn.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching fn cards:', error);
+        throw error;
+    }
+}
+
+// 模拟API请求
+
+// 模拟API请求
+export async function fetchYgCards(): Promise<any[]> {
+    try {
+        // 假设你有一个HTTP服务器运行在 http://localhost:3000/
+        // 并且你的JSON文件可以通过 /src/data/zk.json 访问
+        const response = await fetch('/data/yg.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching yg cards:', error);
+        throw error;
+    }
+}
+
+// 模拟API请求
+export async function fetchHyCards(): Promise<any[]> {
+    try {
+        // 假设你有一个HTTP服务器运行在 http://localhost:3000/
+        // 并且你的JSON文件可以通过 /src/data/zk.json 访问
+        const response = await fetch('/data/hy.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching hy cards:', error);
+        throw error;
+    }
+}
+
+// 模拟API请求
+export async function fetchJnCards(): Promise<any[]> {
+    try {
+        // 假设你有一个HTTP服务器运行在 http://localhost:3000/
+        // 并且你的JSON文件可以通过 /src/data/zk.json 访问
+        const response = await fetch('/data/jn.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching jn cards:', error);
+        throw error;
+    }
+}
+
+// 模拟API请求
 export async function uploadImage(formData: FormData): Promise<string> {
     try {
         let link="";

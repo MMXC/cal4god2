@@ -10,7 +10,11 @@ import {
     fetchTtCards,
     fetchTzCards,
     fetchZbCards,
-    fetchZkCards
+    fetchZkCards,
+    fetchFnCards,
+    fetchYgCards,
+    fetchHyCards,
+    fetchJnCards
 } from "@/services/api";
 
 // Define specific types for calculateTotalScore
@@ -37,6 +41,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         zzsh: 21,
         dzdbzs: 0,
         pf: 0,
+        ct: 8,
+        jn: 12,
+        hj: 0,
         totalScore: 0.86,
     });
 
@@ -48,6 +55,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         tzList: [],
         fwzyList: [],
         ttList: [],
+        fnList: [],
+        ygList: [],
+        hyList: [],
+        jnList: []
     });
     useEffect(() => {
         Promise.all([
@@ -57,8 +68,11 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             fetchZbCards(),
             fetchTzCards(),
             fetchFwzyCards(),
-            fetchTtCards()
-        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList, ttList]) => {
+            fetchTtCards(),
+            fetchFnCards(),
+            fetchYgCards(),
+            fetchHyCards()
+        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList, ttList, fnList, ygList, hyList]) => {
             // 更新状态
             setLists({
                 zkList: zkList,
@@ -67,7 +81,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                 zbList: zbList,
                 tzList: tzList,
                 fwzyList: fwzyList,
-                ttList: ttList
+                ttList: ttList,
+                fnList: fnList,
+                ygList: ygList,
+                hyList: hyList
             });
         }).catch(error => {
             console.error('Error fetching data:', error);
@@ -79,11 +96,11 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         return ((values.gj ?? 0) + 100) / 100 *
             (maxBhsds + (values.qsxsh ?? 0) + 100) / 100 *
             Math.min(values.bjl ?? 0, 100) / 100 *
-            ((values.bjsh ?? 0) + 100) / 100 *
+            ((values.bjsh ?? 0)) / 100 *
             ((values.yczs ?? 0) + 100) / 100 *
-            ((values.dbzs ?? 0) + 100) / 100 *
+            ((values.dbzs ?? 0) + (values.dzdbzs ?? 0) + 100) / 100 *
             ((values.zzsh ?? 0) + 100) / 100 *
-            ((values.dzdbzs ?? 0) + 100) / 100;
+            ((values.jn ?? 0) + 100) / 100;
     };
     // // 一个简单的深拷贝实现，用于复制对象
     // const deepCopy = (obj: any): any => {
@@ -111,6 +128,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         '装备': {zzsh: 15},
         '符文': {},
         '符文之语': {},
+        '赋能': {},
+        '黄印词条': {},
+        '远古词条': {},
         '深空星海': {},
         '万物之母': {},
     });
@@ -127,8 +147,8 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             ds: 0,
             ls: 0,
             bm: 5.3,
-            dm: 5.3,
-            lm: 5.3,
+            dm: 0,
+            lm: 0,
             hm: 5.3,
             hx: 0,
             bjl: 19,
@@ -139,6 +159,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             zzsh: 21,
             dzdbzs: 0,
             pf: 0,
+            ct: 8,
+            jn: 12,
+            hj: 0,
             totalScore: 0.86,
         };
         let newSources: SourcesType = {
@@ -150,7 +173,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             '羁绊': {},
             '装备': { zzsh: 15},
             '符文': {},
+            '赋能': {},
             '符文之语': {},
+            '黄印词条': {},
+            '远古词条': {},
             '深空星海': {},
             '万物之母': {},
         };
@@ -162,6 +188,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             "fwSelection": "符文",
             "fwzySelection": "符文之语",
             "tzSelection": "套装",
+            "fnSelection": "赋能",
+            "ygSelection": "远古词条",
+            "hySelection": "黄印词条",
         };
 
 
@@ -223,7 +252,10 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             const jbSelection = userSelections['jbSelection' as keyof (Selection|{})];
             return (jbSelection as Array<{name: string}>)?.some(item => item.name === name) ?? false;
         };
-
+        const zbSelectionContains = (name: string) => {
+            const zbSelection = userSelections['zbSelection' as keyof (Selection|{})];
+            return (zbSelection as Array<{name: string}>)?.some(item => item.name === name) ?? false;
+        };
 
 
         // Continue with the rest of your calculations...
@@ -289,6 +321,14 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             newRoleValues.qsxsh = (newRoleValues.qsxsh ?? 0) + qsxsh;
             newSources['深空星海'].gj = (newSources['深空星海'].gj ?? 0) + gj;
             newSources['深空星海'].qsxsh = (newSources['深空星海'].qsxsh ?? 0) + qsxsh;
+
+
+        }
+
+        // 针对装备圣骸遗骨特殊处理 暴击伤害提升为原总暴击伤害的50%
+        if (zbSelectionContains('圣骸遗骨     ')) {
+            newSources['装备'].bjsh = (newSources['装备'].bjsh ?? 0) - 50 + ((newRoleValues.bjsh ?? 0) - 50) * 0.5;
+            newRoleValues.bjsh = ((newRoleValues.bjsh ?? 0) - 50) * 1.5;
         }
 
         // Update totalScore after all calculations are done
@@ -322,16 +362,45 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         setIsLocked(!isLocked);
     };
 
+    // 计算伤害提升幅度
+    const calculateDamageIncrease = (category: keyof Selection, item: any, currentSelections: Selection): number => {
+        const newSelections = { ...currentSelections } as Selection;
+        if (category === 'fwSelection') {
+            newSelections[category] = [...(currentSelections[category] || []), item];
+        } else {
+            newSelections[category] = [...(currentSelections[category] || []), item];
+        }
+        // 复用本文件的 recalculateRoleAndSources
+        const { newRoleValues: after } = recalculateRoleAndSources(newSelections);
+        const { newRoleValues: before } = recalculateRoleAndSources(currentSelections);
+        if (!before.totalScore) return 0;
+        const increase = ((after.totalScore - before.totalScore) / before.totalScore) * 100;
+        return Number(increase.toFixed(1));
+    };
+
+    // 计算技能伤害（示例实现，可根据实际需求调整）
+    const calculateJnDamage = (jn: any) => {
+        if (!jn) return 0;
+        // 假设技能伤害 = 倍率 * 技能等级 * 基础攻击（这里用 roleValues.gj 代替）
+        const base = roleValues.gj || 0;
+        const multiplier = jn.multiplier || 1;
+        const level = jn.level || 1;
+        return Math.round(base * multiplier * level * 100);
+    };
+
     return (
         <RoleContext.Provider value={{
             roleValues,
             sources,
-            updateRole,
-            isLocked,
             lists,
             setLists,
+            updateRole,
+            recalculateRoleAndSources,
             toggleLock,
-            scoreChangeRatio
+            isLocked,
+            scoreChangeRatio: scoreChangeRatio ?? 0,
+            calculateDamageIncrease,
+            calculateJnDamage,
         }}>
             {children}
         </RoleContext.Provider>

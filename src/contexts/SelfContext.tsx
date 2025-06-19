@@ -7,6 +7,10 @@ export type SelfType = {
     fwList: any[];
     fwzyList: any[];
     tzList: any[];
+    fnList: any[];
+    ygList: any[];
+    hyList: any[];
+    jnList: any[];
 };
 
 export type SelfContextType = {
@@ -21,6 +25,10 @@ export const SelfContext = createContext<SelfContextType>({
         fwList: [],
         fwzyList: [],
         tzList: [],
+        fnList: [],
+        ygList: [],
+        hyList: [],
+        jnList: []
     }
 } as SelfContextType);
 

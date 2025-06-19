@@ -14,6 +14,9 @@ import Zb from "@/components/component/zb";
 import Tz from "@/components/component/tz";
 import Tt from "@/components/component/tt";
 import Bd from "@/components/component/bd";
+import Hy from "@/components/component/hy";
+import Yg from "@/components/component/yg";
+import Fn from "@/components/component/fn";
 import Self from "@/components/component/self";
 
 
@@ -25,13 +28,13 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="flex sm:flex w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
           <p className="flex sm:flex left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            <code className="font-mono font-bold">不俍人: </code>
-            <span style={{fontSize: "12px", color: "#999"}} title={"注：(符文之语默认9级 符文默认8级 会心暂时按50:1折算暴击率)"}> &nbsp;古魂角色搭配模拟器&nbsp; </span>
+            <code className="font-mono font-bold">不俍人&冰与火之歌: </code>
+            <span style={{fontSize: "12px", color: "#999"}} title={"注：(符文之语默认9级 符文默认8级 会心暂时按50:1折算暴击率)"}> &nbsp;古魂经典服角色搭配模拟器V2&nbsp; </span>
           </p>
 
           <div className="bottom-0 left-0 flex place-items-center h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
               <div className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0">
-                  By:{" "}
+                  By:{"未来·诗寇蒂"}
                   <Image
                     src="/pr.svg"
                     alt="不俍人出品"
@@ -68,14 +71,20 @@ export default function Home() {
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="scrollable-tabs-list tabs-list flex justify-center">
               <TabsTrigger value="zk">主卡</TabsTrigger>
+              <TabsTrigger value="fn">赋能</TabsTrigger>
               <TabsTrigger value="jb">羁绊</TabsTrigger>
               <TabsTrigger value="tz">套装</TabsTrigger>
               <TabsTrigger value="zb">装备</TabsTrigger>
+              <TabsTrigger value="yg">远古词条</TabsTrigger>
+              <TabsTrigger value="hy">黄印词条</TabsTrigger>
               <TabsTrigger value="fw">符文</TabsTrigger>
               <TabsTrigger value="fwzy">符文之语</TabsTrigger>
             </TabsList>
             <TabsContent value="zk" className="tabs-content">
               <Zk />
+            </TabsContent>
+            <TabsContent value="fn" className="tabs-content">
+              <Fn />
             </TabsContent>
             <TabsContent value="jb" className="tabs-content">
               <Jb />
@@ -85,6 +94,12 @@ export default function Home() {
             </TabsContent>
             <TabsContent value="zb" className="tabs-content">
               <Zb />
+            </TabsContent>
+            <TabsContent value="yg" className="tabs-content">
+              <Yg />
+            </TabsContent>
+            <TabsContent value="hy" className="tabs-content">
+              <Hy />
             </TabsContent>
             <TabsContent value="fwzy" className="tabs-content">
               <Fwzy />

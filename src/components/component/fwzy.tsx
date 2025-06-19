@@ -26,20 +26,39 @@ import {UserSelectionsContext} from "@/contexts/UserSelectionsContext";
 import {RoleContext} from "@/contexts/RoleContext";
 
 export default function Fwzy() {
-    const {userSelections, selectItem, deleteItem} = useContext(UserSelectionsContext);
-    const {updateRole, lists} = useContext(RoleContext);
+    const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
+    const {updateRole, lists, calculateDamageIncrease} = useContext(RoleContext);
     const list = lists.fwzyList;
 
-    const handleCardClick = async (category: any, card: any) => {
-        const id = card.id;
-        if (!userSelections.fwzySelection.some((item: any) => item.id === card.id)) {
-            if (userSelections.fwzySelection.length < 10) {
-                selectItem(category, card);
-            } else {
+    const handleCardClick = async (event: any, category: any, card: any) => {
+        const cardRect = event.currentTarget.getBoundingClientRect();
+        const clickX = event.clientX - cardRect.left;
+        const cardWidth = cardRect.width;
+        const threshold = cardWidth / 2; // 设定阈值，一半宽度
+
+        let operation = 1;
+        if (clickX < threshold) {
+            // 左侧点击，增加数量
+            operation = 1
+        } else {
+            // 右侧点击，减少数量
+            operation = -1
+        }
+
+        if (operation > 0) {
+            // 检查数量限制
+            if (userSelections.fwzySelection.length + 1 > 10 ) {
+                alert('已选符文之语超出10，请先移除后再重新选择！');
                 return;
+            }else {
+                selectItem(category, card);
             }
         } else {
-            deleteItem(category, card.id);
+            if (userSelections.fwzySelection.reduce((acc: any, cur: any) => acc + (cur.id === card.id ? 1 : 0), 0) === 0) {
+                return
+            } else {
+                deleteOneItem(category, card.id);
+            }
         }
     };
 
@@ -64,33 +83,45 @@ export default function Fwzy() {
             </div>
             <div
                 className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-12 gap-6 p-4">
-                {filteredFwzyCards.map((card: any) => (
-                    <Card
-                        key={card.id}
-                        className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            userSelections.fwzySelection.some((item: any) => item.id === card.id)
-                                ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : "border-2 border-gold"
-                        }`}
-                        onClick={() => handleCardClick('fwzySelection', card)}
-                    >
-                        <div className="relative">
-                            <img
-                                src={card.pic}
-                                alt={card.name}
-                                width={600}
-                                height={400}
-                                className="object-cover w-full h-48"
-                            />
-                        </div>
-                        <CardContent className="p-4 bg-background">
-                            <h3 className="text-xl font-bold">{card.name}</h3>
-                            <div className="mt-2">
+                {filteredFwzyCards.map((card: any) => {
+                    const increase = calculateDamageIncrease('fwzySelection', card, userSelections);
+                    const isSelected = userSelections.fwzySelection.some((selected: any) => selected.id === card.id);
 
+                    return (
+                        <Card
+                            key={card.id}
+                            className={`relative overflow-hidden rounded-lg shadow-lg ${
+                                isSelected
+                                    ? "border-2 golden-glow ring-4 ring-primary-foreground"
+                                    : "border-2 border-gold"
+                            }`}
+                            onClick={(event) => handleCardClick(event, 'fwzySelection', card)}
+                        >
+                            <div className="relative">
+                                <img
+                                    src={card.pic}
+                                    alt={card.name}
+                                    width={600}
+                                    height={400}
+                                    className="object-cover w-full h-48"
+                                />
+                                {(
+                                    <div className={`absolute bottom-0 right-0 bg-black bg-opacity-70 px-1 py-0.5 text-xs rounded font-bold ${increase > 0 ? 'text-[#5de011]' : 'text-[#b73030]'}`}>
+                                        {increase > 0 ? `+${increase}%` : `${increase}%`}
+                                    </div>
+                                )}
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            <CardContent className="p-4 bg-background">
+                                <h3 className="text-xl font-bold">{card.name}</h3>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <span className="text-sm">
+                                        选中数量: {userSelections.fwzySelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
+                                    </span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
             </div>
         </div>
     )

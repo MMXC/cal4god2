@@ -1,5 +1,5 @@
 // contexts/UserSelectionContext.tsx
-import { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 export type Selection = {
     zkSelection: any[];
@@ -8,6 +8,10 @@ export type Selection = {
     fwSelection: any[];
     fwzySelection: any[];
     tzSelection: any[];
+    fnSelection: any[];
+    ygSelection: any[];
+    hySelection: any[];
+    jnSelection: any[];
 };
 
 type UserSelectionContextType = {
@@ -15,6 +19,7 @@ type UserSelectionContextType = {
     selectItem: (category: any, item: any) => void;
     deleteItem: (category: any, item: any) => void;
     deleteOneItem: (category: any, item: any) => void;
+    setUserSelections: (selections: Selection) => void;
 };
 
 export const UserSelectionsContext = createContext<UserSelectionContextType>({
@@ -25,10 +30,15 @@ export const UserSelectionsContext = createContext<UserSelectionContextType>({
         fwSelection: [],
         fwzySelection: [],
         tzSelection: [],
+        fnSelection: [],
+        ygSelection: [],
+        hySelection: [],
+        jnSelection: []
     },
     selectItem: async () => { },
     deleteItem: async () => { },
     deleteOneItem: async () => { },
+    setUserSelections: () => {},
 });
 
 export function useUserSelections() {

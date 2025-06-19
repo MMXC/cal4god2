@@ -1,0 +1,13 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"id": 1,"name":"攻击10% ", "num": 1, "type":"hy","cx":10, "lq": 10, "sx":{"gj": 10,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct": 0, "jn": 0},"pre":"/assets/hy/pre/","pic":"/assets/hy/攻击.png"},
+        {"id": 2,"name":"穿透30% ", "num": 1, "type":"hy","cx": 5, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct":30, "jn": 0},"pre":"/assets/hy/pre/","pic":"/assets/hy/穿透.png"},
+        {"id": 3,"name":"技能50% ", "num": 1, "type":"hy","cx":10, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct": 0, "jn":50},"pre":"/assets/hy/pre/","pic":"/assets/hy/技能伤害.png"},
+        {"id": 4,"name":"技能150%", "num": 1, "type":"hy","cx": 5, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct": 0, "jn":150},"pre":"/assets/hy/pre/","pic":"/assets/hy/技能伤害.png"},
+        {"id": 5,"name":"穿透10% ", "num": 1, "type":"hy","cx":10, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct":10, "jn": 0},"pre":"/assets/hy/pre/","pic":"/assets/hy/穿透.png"},
+        {"id": 6,"name":"最终30% ", "num": 1, "type":"hy","cx":10, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh":  0,"yczs":  0,"dbzs":  0,"zzsh": 30,"dzdbzs":  0,"pf":  0, "ct": 0, "jn": 0},"pre":"/assets/hy/pre/","pic":"/assets/hy/最终伤害.png"},
+        {"id": 7,"name":"属伤15% ", "num": 1, "type":"hy","cx":10, "lq": 10, "sx":{"gj":  0,"bs":  0,"hs":  0,"ds":  0,"ls":  0,"bm":  0,"dm":  0,"lm":  0,"hm":  0,"hx":  0,"bjl":  0,"bjsh":  0,"qsxsh": 15,"yczs":  0,"dbzs":  0,"zzsh":  0,"dzdbzs":  0,"pf":  0, "ct": 0, "jn": 0},"pre":"/assets/hy/pre/","pic":"/assets/hy/属伤.png"}
+    ]
+}

@@ -19,8 +19,8 @@ const fontBody = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "不俍人",
-  description: "角色搭配模拟器",
+  title: "冰与火之歌",
+  description: "古魂经典服角色搭配模拟器V2",
 };
 
 export default function RootLayout({

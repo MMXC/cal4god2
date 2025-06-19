@@ -30,7 +30,7 @@ export default function Zk() {
     const [activeTab, setActiveTab] = useState("active")
     const contextValue = useContext(UserSelectionsContext);
     const {userSelections, selectItem, deleteItem} = contextValue;
-    const {updateRole, lists} = useContext(RoleContext);
+    const {updateRole, lists, calculateDamageIncrease} = useContext(RoleContext);
 
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
@@ -66,48 +66,59 @@ export default function Zk() {
             </div>
             <div
                 className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-6 p-4">
-                {filteredZkCards.map((card: any) => (
-                    <Card
-                        key={card.id}
-                        className={`relative overflow-hidden rounded-lg shadow-lg ${
-                            userSelections.zkSelection.some((item: any) => item.id === card.id)
-                                ? "border-2 golden-glow ring-4 ring-primary-foreground"
-                                : "border-2 border-gold"
-                        }`}
-                        onClick={() => handleCardClick('zkSelection', card)}
-                    >
-                        <div className="relative">
-                            <img
-                                src={card.pic}
-                                alt={card.name}
-                                width={600}
-                                height={400}
-                                className="object-cover w-full h-48"
-                            />
-                        </div>
-                        <CardContent className="p-4 bg-background">
-                            <h3 className="text-xl font-bold">{card.name}</h3>
-                            <div className="mt-2">
-                                <Tabs onValueChange={setActiveTab}>
-                                    <TabsList>
-                                        <TabsTrigger value="zd">主动</TabsTrigger>
-                                        <TabsTrigger value="cz">常驻</TabsTrigger>
-                                        <TabsTrigger value="ls">临时</TabsTrigger>
-                                    </TabsList>
-                                    <TabsContent value="zd">
-                                        <p className="text-sm text-muted-foreground">{card.zd}</p>
-                                    </TabsContent>
-                                    <TabsContent value="cz">
-                                        <p className="text-sm text-muted-foreground">{card.cz}</p>
-                                    </TabsContent>
-                                    <TabsContent value="ls">
-                                        <p className="text-sm text-muted-foreground">{card.ls}</p>
-                                    </TabsContent>
-                                </Tabs>
+                {filteredZkCards.map((card: any) => {
+                    // 计算该卡片的伤害提升幅度
+                    const increase = calculateDamageIncrease('zkSelection', card, userSelections);
+                    const isSelected = userSelections.zkSelection.some((selected: any) => selected.id === card.id);
+
+                    return (
+                        <Card
+                            key={card.id}
+                            className={`relative overflow-hidden rounded-lg shadow-lg ${
+                                isSelected
+                                    ? "border-2 golden-glow ring-4 ring-primary-foreground"
+                                    : "border-2 border-gold"
+                            }`}
+                            onClick={() => handleCardClick('zkSelection', card)}
+                        >
+                            <div className="relative">
+                                <img
+                                    src={card.pic}
+                                    alt={card.name}
+                                    width={600}
+                                    height={400}
+                                    className={`object-cover w-full h-48 ${isSelected ? 'opacity-50' : ''}`}
+                                />
+                                {!isSelected && increase !== 0 && (
+                                    <div className={`absolute bottom-0 right-0 bg-black bg-opacity-70 px-1 py-0.5 text-xs rounded font-bold ${increase > 0 ? 'text-[#5de011]' : 'text-[#b73030]'}`}>
+                                        {increase > 0 ? `+${increase}%` : `${increase}%`}
+                                    </div>
+                                )}
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            <CardContent className="p-4 bg-background">
+                                <h3 className="text-xl font-bold">{card.name}</h3>
+                                <div className="mt-2">
+                                    <Tabs onValueChange={setActiveTab}>
+                                        <TabsList>
+                                            <TabsTrigger value="zd">主动</TabsTrigger>
+                                            <TabsTrigger value="cz">常驻</TabsTrigger>
+                                            <TabsTrigger value="ls">临时</TabsTrigger>
+                                        </TabsList>
+                                        <TabsContent value="zd">
+                                            <p className="text-sm text-muted-foreground">{card.zd}</p>
+                                        </TabsContent>
+                                        <TabsContent value="cz">
+                                            <p className="text-sm text-muted-foreground">{card.cz}</p>
+                                        </TabsContent>
+                                        <TabsContent value="ls">
+                                            <p className="text-sm text-muted-foreground">{card.ls}</p>
+                                        </TabsContent>
+                                    </Tabs>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
             </div>
         </div>
     )

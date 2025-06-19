@@ -8,7 +8,7 @@ import {Button} from "@/components/ui/button";
 
 export default function Fw() {
     const {userSelections, selectItem, deleteItem, deleteOneItem} = useContext(UserSelectionsContext);
-    const {updateRole, lists} = useContext(RoleContext);
+    const {updateRole, lists, calculateDamageIncrease} = useContext(RoleContext);
     const list = lists.fwList;
 
     const handleCardClick = async (event: any, category: any, card: any) => {
@@ -70,36 +70,46 @@ export default function Fw() {
             {/* Cards grid */}
             <div
                 className="flex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-9 gap-6 p-4">
-                {filteredFwCards.map((card:any) => (
-                    <Card
-                        key={card.id}
-                        className={
-                            `relative overflow-hidden rounded-lg shadow-lg 
-                            ${userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0) > 0 ? 
-                                "border-2 golden-glow ring-4 ring-primary-foreground" : 
-                                ""}`
-                        }
-                        onClick={event => handleCardClick(event, 'fwSelection', card)}
-                    >
-                        <div className="relative">
-                            <img
-                                src={card.pic}
-                                alt={card.name}
-                                width={600}
-                                height={400}
-                                className="object-cover w-full h-48"
-                            />
-                        </div>
-                        <CardContent className="p-4 bg-background">
-                            <h3 className="text-xl font-bold">{card.name}</h3>
-                            <div className="mt-2 flex justify-between items-center">
-                                <span className="text-sm">
-                                    选中数量: {userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
-                                </span>
+                {filteredFwCards.map((card:any) => {
+                    const increase = calculateDamageIncrease('fwSelection', card, userSelections);
+                    const isSelected = userSelections.fwSelection.some((selected: any) => selected.id === card.id);
+
+                    return (
+                        <Card
+                            key={card.id}
+                            className={
+                                `relative overflow-hidden rounded-lg shadow-lg 
+                                ${userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0) > 0 ? 
+                                    "border-2 golden-glow ring-4 ring-primary-foreground" : 
+                                    ""}`
+                            }
+                            onClick={event => handleCardClick(event, 'fwSelection', card)}
+                        >
+                            <div className="relative">
+                                <img
+                                    src={card.pic}
+                                    alt={card.name}
+                                    width={600}
+                                    height={400}
+                                    className={`object-cover w-full h-48 ${isSelected ? 'opacity-50' : ''}`}
+                                />
+                                {(
+                                    <div className={`absolute bottom-0 right-0 bg-black bg-opacity-70 px-1 py-0.5 text-xs rounded font-bold ${increase > 0 ? 'text-[#5de011]' : 'text-[#b73030]'}`}>
+                                        {increase > 0 ? `+${increase}%` : `${increase}%`}
+                                    </div>
+                                )}
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            <CardContent className="p-4 bg-background">
+                                <h3 className="text-xl font-bold">{card.name}</h3>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <span className="text-sm">
+                                        选中数量: {userSelections.fwSelection.reduce((acc, cur) => acc + (cur.id === card.id ? 1 : 0), 0)}
+                                    </span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
             </div>
         </div>
     );
