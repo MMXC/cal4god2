@@ -10,6 +10,10 @@ export type RoleType = {
     dbzs: number;
     zzsh: number;
     dzdbzs: number;
+    bm?: number;
+    hm?: number;
+    lm?: number;
+    dm?: number;
     bs?: number;
     hs?: number;
     ls?: number;
@@ -35,6 +39,10 @@ export type SourcesType = {
         hs?: number;
         ls?: number;
         ds?: number;
+        bm?: number;
+        hm?: number;
+        lm?: number;
+        dm?: number;
         qsxsh?: number;
         ct?: number;
         jn?: number;
