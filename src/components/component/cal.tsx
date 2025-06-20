@@ -82,7 +82,8 @@ export default function Cal() {
         "fwzySelection": "符文之语",
         "tzSelection": "套装",
         "fnSelection": "赋能",
-        "ygSelection": "远古词条"
+        "ygSelection": "远古词条",
+        "hySelection": "黄印词条"
     };
     const sxRelections = {
         "zkSelection": "sx",
@@ -92,7 +93,8 @@ export default function Cal() {
         "fwzySelection": "sx",
         "tzSelection": "sx",
         "fnSelection": "sx",
-        "ygSelection": "sx"
+        "ygSelection": "sx",
+        "hySelection": "sx"
     };
     const {setLists} = useContext(RoleContext);
     const [exporting, setExporting] = useState(false); // loading 状态
