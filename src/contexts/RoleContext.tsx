@@ -18,6 +18,7 @@ export type RoleType = {
     ct?: number;
     jn?: number;
     hj?: number;
+    jk?: number;
 };
 
 export type SourcesType = {
@@ -37,6 +38,7 @@ export type SourcesType = {
         ct?: number;
         jn?: number;
         hj?: number;
+        jk?: number;
     };
 };
 
@@ -51,7 +53,8 @@ const defaultRoleValues: RoleType = {
     dzdbzs: 0,
     ct: 0,
     jn: 0,
-    hj: 0
+    hj: 0,
+    jk: 0
 };
 
 const defaultLists = {

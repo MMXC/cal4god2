@@ -44,6 +44,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         ct: 8,
         jn: 12,
         hj: 0,
+        jk: 0,
         totalScore: 0.86,
     });
 
@@ -71,8 +72,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             fetchTtCards(),
             fetchFnCards(),
             fetchYgCards(),
-            fetchHyCards()
-        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList, ttList, fnList, ygList, hyList]) => {
+            fetchHyCards(),
+            fetchJnCards()
+        ]).then(([zkList, jbList, fwList, zbList, tzList, fwzyList, ttList, fnList, ygList, hyList, jnList]) => {
             // 更新状态
             setLists({
                 zkList: zkList,
@@ -84,7 +86,8 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
                 ttList: ttList,
                 fnList: fnList,
                 ygList: ygList,
-                hyList: hyList
+                hyList: hyList,
+                jnList: jnList
             });
         }).catch(error => {
             console.error('Error fetching data:', error);
@@ -100,7 +103,12 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             ((values.yczs ?? 0) + 100) / 100 *
             ((values.dbzs ?? 0) + (values.dzdbzs ?? 0) + 100) / 100 *
             ((values.zzsh ?? 0) + 100) / 100 *
-            ((values.jn ?? 0) + 100) / 100;
+            ((values.jn ?? 0) + 100) / 100 *
+            // 穿透
+            (100 - 30 * (100 - (values.ct ?? 0))/100) / 100 *
+            // 减抗
+            (100 - 15 + (values.jk ?? 0)) / 100
+            ;
     };
     // // 一个简单的深拷贝实现，用于复制对象
     // const deepCopy = (obj: any): any => {

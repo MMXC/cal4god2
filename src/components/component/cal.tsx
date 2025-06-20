@@ -83,7 +83,8 @@ export default function Cal() {
         "tzSelection": "套装",
         "fnSelection": "赋能",
         "ygSelection": "远古词条",
-        "hySelection": "黄印词条"
+        "hySelection": "黄印词条",
+        "jnSelection": "技能"
     };
     const sxRelections = {
         "zkSelection": "sx",
@@ -94,7 +95,8 @@ export default function Cal() {
         "tzSelection": "sx",
         "fnSelection": "sx",
         "ygSelection": "sx",
-        "hySelection": "sx"
+        "hySelection": "sx",
+        "jnSelection": "sx"
     };
     const {setLists} = useContext(RoleContext);
     const [exporting, setExporting] = useState(false); // loading 状态
@@ -978,15 +980,15 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">技能增伤</div>
-                                    <div className="text-2xl font-bold">{roleValues.dzdbzs}%</div>
+                                    <div className="text-2xl font-bold">{roleValues.jn}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                (properties && typeof properties === 'object' && ('dzdbzs' in properties)) && ((properties as { dzdbzs: number }).dzdbzs !== 0) && (
+                                                (properties && typeof properties === 'object' && ('jn' in properties)) && ((properties as { jn: number }).jn !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {(properties as { dzdbzs: number }).dzdbzs}%
+                                                        <br/>{type}: {(properties as { jn: number }).jn}%
                                                     </p>
                                                 )
                                             ))
@@ -1004,15 +1006,15 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">穿透</div>
-                                    <div className="text-2xl font-bold">{roleValues.dzdbzs}%</div>
+                                    <div className="text-2xl font-bold">{roleValues.ct}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                (properties && typeof properties === 'object' && ('dzdbzs' in properties)) && ((properties as { dzdbzs: number }).dzdbzs !== 0) && (
+                                                (properties && typeof properties === 'object' && ('ct' in properties)) && ((properties as { ct: number }).ct !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {(properties as { dzdbzs: number }).dzdbzs}%
+                                                        <br/>{type}: {(properties as { ct: number }).ct}%
                                                     </p>
                                                 )
                                             ))
@@ -1030,15 +1032,15 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">减抗</div>
-                                    <div className="text-2xl font-bold">{roleValues.dzdbzs}%</div>
+                                    <div className="text-2xl font-bold">{roleValues.jk}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                         {/* Use flex column to automatically*/
                                             sources && Object.entries(sources).map(([type, properties]) => (
-                                                (properties && typeof properties === 'object' && ('dzdbzs' in properties)) && ((properties as { dzdbzs: number }).dzdbzs !== 0) && (
+                                                (properties && typeof properties === 'object' && ('jk' in properties)) && ((properties as { jk: number }).jk !== 0) && (
                                                     <p key={type} className="text-sm">
-                                                        <br/>{type}: {(properties as { dzdbzs: number }).dzdbzs}%
+                                                        <br/>{type}: {(properties as { jk: number }).jk}%
                                                     </p>
                                                 )
                                             ))
@@ -1134,7 +1136,11 @@ function ShareButton(props: any) {
         "jbSelection": "羁绊",
         "fwSelection": "符文",
         "fwzySelection": "符文之语",
-        "tzSelection": "套装"
+        "tzSelection": "套装",
+        "jnSelection": "技能",
+        "hySelection": "黄印",
+        "fnSelection": "赋能",
+        "ygSelection": "远古词条",
     };
     const sxRelections = {
         "zkSelection": "sx",
@@ -1142,7 +1148,11 @@ function ShareButton(props: any) {
         "jbSelection": "forth",
         "fwSelection": "sx",
         "fwzySelection": "sx",
-        "tzSelection": "sx"
+        "tzSelection": "sx",
+        "jnSelection": "sx",
+        "hySelection": "sx",
+        "fnSelection": "sx",
+        "ygSelection": "sx"
     };
 
     const handleExportAndShare = async () => {
