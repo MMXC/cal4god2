@@ -102,7 +102,7 @@ export default function Cal() {
         let isMounted = true;
         // 只在组件挂载时运行一次
         isMounted && (async () => {
-            const savedSelections: { zkSelection: any[], zbSelection: any[], jbSelection: any[], fwSelection: any[], fwzySelection: any[], tzSelection: any[], fnSelection: any[], ygSelection: any[], jnSelection: any[] }
+            const savedSelections: { zkSelection: any[], zbSelection: any[], jbSelection: any[], fwSelection: any[], fwzySelection: any[], tzSelection: any[], hySelection: any[], fnSelection: any[], ygSelection: any[], jnSelection: any[] }
                 = JSON.parse(localStorage.getItem('userSelections') ?? '{}');
             if (isMounted && savedSelections) {
                 let selections = savedSelections ? savedSelections : {
@@ -112,6 +112,7 @@ export default function Cal() {
                     fwSelection: [],
                     fwzySelection: [],
                     tzSelection: [],
+                    hySelection: [],
                     fnSelection: [],
                     ygSelection: [],
                     jnSelection: []
