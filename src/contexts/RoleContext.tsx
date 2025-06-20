@@ -10,6 +10,7 @@ export type RoleType = {
     dbzs: number;
     zzsh: number;
     dzdbzs: number;
+    hx?: number;
     bm?: number;
     hm?: number;
     lm?: number;
@@ -24,6 +25,7 @@ export type RoleType = {
     hj?: number;
     jk?: number;
     jf?: number;
+    pf?: number;
 };
 
 export type SourcesType = {
@@ -35,6 +37,7 @@ export type SourcesType = {
         dbzs?: number;
         zzsh?: number;
         dzdbzs?: number;
+        hx?: number;
         bs?: number;
         hs?: number;
         ls?: number;
@@ -49,6 +52,7 @@ export type SourcesType = {
         hj?: number;
         jk?: number;
         jf?: number;
+        pf?: number;
     };
 };
 
@@ -61,11 +65,17 @@ const defaultRoleValues: RoleType = {
     dbzs: 0,
     zzsh: 0,
     dzdbzs: 0,
+    hx: 0,
+    bm: 0,
+    hm: 0,
+    lm: 0,
+    dm: 0,
     ct: 0,
     jn: 0,
     hj: 0,
     jk: 0,
-    jf: 0
+    jf: 0,
+    pf: 0
 };
 
 const defaultLists = {

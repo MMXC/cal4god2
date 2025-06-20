@@ -149,7 +149,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
     const [scoreChangeRatio, setScoreChangeRatio] = useState<number | null>(null); // Store the ratio of change since unlock
     const [oldRoleValues, setOldRoleValues] = useState<RoleType>(roleValues);
 
-    const recalculateRoleAndSources = (userSelections: Selection|{}): { newRoleValues: RoleType, newSources: SourcesType } => {
+    const recalculateRoleAndSources = (userSelections: Selection): { newRoleValues: RoleType, newSources: SourcesType } => {
         let newRoleValues: RoleType = {
             gj: 0,
             bs: 0,
@@ -201,6 +201,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             "fnSelection": "赋能",
             "ygSelection": "远古词条",
             "hySelection": "黄印词条",
+            "jnSelection": "技能"
         };
 
 
@@ -251,7 +252,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             Object.entries(updatedSources ?? {}).forEach(([sourceKey, sourceValue]) => {
                 newSources[sourceKey as string] = newSources[sourceKey as string] || {};
                 Object.entries(sourceValue ?? {}).forEach(([roleKey, roleValue]) => {
-                    (newSources[sourceKey as string])[roleKey as string] = roleValue;
+                    (newSources[sourceKey as string] as any)[roleKey as string] = roleValue;
                 });
             });
         });
@@ -272,19 +273,19 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         const midMaxSx = Math.max(newRoleValues?.bs??0, newRoleValues?.hs??0, newRoleValues?.ls??0, newRoleValues?.ds??0);
         switch (midMaxSx){
             case newRoleValues.bs:
-                newSources['装备'].bs += 15 * 2;
+                newSources['装备'].bs = (newSources['装备'].bs??0) + 15 * 2;
                 newRoleValues.bs = (newRoleValues.bs??0) + 15 * 2;
                 break;
             case newRoleValues.hs:
-                newSources['装备'].hs += 15 * 2;
+                newSources['装备'].hs = (newSources['装备'].hs??0) + 15 * 2;
                 newRoleValues.hs = (newRoleValues.hs??0) + 15 * 2;
                 break;
             case newRoleValues.ls:
-                newSources['装备'].ls += 15 * 2;
+                newSources['装备'].ls = (newSources['装备'].ls??0) + 15 * 2;
                 newRoleValues.ls = (newRoleValues.ls??0) + 15 * 2;
                 break;
             case newRoleValues.ds:
-                newSources['装备'].ds += 15 * 2;
+                newSources['装备'].ds = (newSources['装备'].ds??0) + 15 * 2;
                 newRoleValues.ds = (newRoleValues.ds??0) + 15 * 2;
                 break;
         }
@@ -348,7 +349,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
     };
 
 
-    const updateRole = async (userSelections: Selection|{}) => {
+    const updateRole = async (userSelections: Selection) => {
         if (!isLocked) {
             setOldRoleValues(roleValues);
         }
@@ -405,7 +406,13 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             lists,
             setLists,
             updateRole,
-            recalculateRoleAndSources,
+            recalculateRoleAndSources: (userSelections: Selection) => {
+                const result = recalculateRoleAndSources(userSelections);
+                return {
+                    roleValues: result.newRoleValues,
+                    sources: result.newSources
+                };
+            },
             toggleLock,
             isLocked,
             scoreChangeRatio: scoreChangeRatio ?? 0,

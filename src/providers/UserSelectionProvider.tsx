@@ -18,7 +18,8 @@ export function UserSelectionProvider({ children }: Props) {
         tzSelection: [],
         fnSelection: [],
         ygSelection: [],
-        hySelection: []
+        hySelection: [],
+        jnSelection: []
     });
     const {updateRole} = useContext(RoleContext);
     useEffect(() => {

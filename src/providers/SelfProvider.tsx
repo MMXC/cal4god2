@@ -17,7 +17,8 @@ export function SelfProvider({children}: Props) {
         tzList: [],
         fnList: [],
         ygList: [],
-        hyList: []
+        hyList: [],
+        jnList: []
     });
     useEffect(() => {
         // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
