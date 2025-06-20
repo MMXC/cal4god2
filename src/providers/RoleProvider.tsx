@@ -45,6 +45,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         jn: 12,
         hj: 0,
         jk: 0,
+        jf: 0,
         totalScore: 0.86,
     });
 
@@ -96,6 +97,7 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
     const calculateTotalScore = (values: ScoreValues) => {
         const maxBhsds = Math.max(values.bs ?? 0, values.hs ?? 0, values.ls ?? 0, values.ds ?? 0);
         const zzbjl = Math.min(values.bjl ?? 0, 100);
+        const fy = Math.max((50 - (values.ct ?? 0)), 0);
         return ((values.gj ?? 0) + 100) / 100 *
             (maxBhsds + (values.qsxsh ?? 0) + 100) / 100 *
             Math.min(values.bjl ?? 0, 100) / 100 *
@@ -104,9 +106,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             ((values.dbzs ?? 0) + (values.dzdbzs ?? 0) + 100) / 100 *
             ((values.zzsh ?? 0) + 100) / 100 *
             ((values.jn ?? 0) + 100) / 100 *
-            // 穿透
-            (100 - 30 * (100 - (values.ct ?? 0))/100) / 100 *
-            // 减抗
+            // 防御区
+            ((100 - fy)) / 100 *
+            // 抗性区
             (100 - 15 + (values.jk ?? 0)) / 100
             ;
     };
