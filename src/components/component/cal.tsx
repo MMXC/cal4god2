@@ -622,7 +622,7 @@ export default function Cal() {
                                                         {userSelections.jnSelection[i].name}
                                                     </div>
                                                     <div className="text-lg font-bold text-red-600">
-                                                        {calculateJnDamage(userSelections.jnSelection[i]).toLocaleString()}
+                                                        {calculateJnDamage(userSelections.jnSelection[i]).toLocaleString()} 亿
                                                     </div>
                                                     <div className="text-xs text-gray-500">
                                                         预计伤害
