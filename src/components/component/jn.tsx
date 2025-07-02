@@ -33,10 +33,7 @@ export default function Jn({ profession }: { profession: string }) {
     const handleCardClick = async (category: any, card: any) => {
         const id = card.id;
         if (!userSelections.jnSelection.some((item: any) => item.id === card.id)) {
-            if (userSelections.jnSelection.map((jn: any) => jn.num).reduce(
-                (a: number, b: number) => a + b,
-                0
-            ) + card.num <= 8) {
+            if (userSelections.jnSelection.length < 14) {
                 selectItem(category, card);
             } else {
                 return;

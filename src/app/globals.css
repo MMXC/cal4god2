@@ -168,3 +168,34 @@
       }
     }
   }
+
+  /* 北欧神话风格页面背景 */
+  .myth-bg-group {
+    background: url('/assets/bg-nordic-guild.jpg') center/cover no-repeat, linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  }
+  .myth-bg-profile {
+    background: url('/assets/bg-nordic-profile.jpg') center/cover no-repeat, linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  }
+  .myth-bg-simulator {
+    background: url('/assets/bg-nordic-simulator.jpg') center/cover no-repeat, linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  }
+  .myth-nav button {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 8px #00a8ff, 0 0 4px #fbc531;
+    transition: all 0.2s;
+  }
+  .myth-nav button:hover {
+    box-shadow: 0 0 16px #fbc531, 0 0 8px #00a8ff;
+    transform: scale(1.08);
+  }
+
+  /* 卡片区域半透明冰晶风格 */
+  .myth-card-area {
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 24px;
+    box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);
+    backdrop-filter: blur(6px);
+    padding: 24px 0;
+  }

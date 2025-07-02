@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "success": "true",
+  "profile": {
+    "id": 1,
+    "nickname": "冰霜之心",
+    "avatar": "/assets/profile/avatar-placeholder.png",
+    "signature": "冰与火的传承者",
+    "role": "法师",
+    "level": 99
+  }
+} 

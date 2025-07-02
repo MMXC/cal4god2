@@ -2,15 +2,16 @@
     "code":  0,
     "success": "true",
     "list": [
-        {"id": 1,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 2,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 3,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 4,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 5,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 6,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 7,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 8,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15, "pic":"/assets/tz/不死2.png"},
-        {"id": 9,"name":"龙弹·极", "level": 1, "type": "zh-pg", "time": 1, "gjds": 3, "multiplier":  50, "increase":  0, "pic":"/assets/tz/不死2.png"},
-        {"id":10,"name":"龙弹·极", "level": 1, "type": "zh-ay", "time": 4, "gjds": 1, "multiplier": 900, "increase": 60, "pic":"/assets/tz/不死2.png"}
+        {"id": 1,"name":"龙连爆·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 400, "increase": 15,  "pic":"/assets/tz/不死2.png"},
+        {"id": 2,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 360, "increase": 15,  "pic":"/assets/tz/不死2.png"},
+        {"id": 3,"name":"岚风刺·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 370, "increase": 14,  "pic":"/assets/tz/不死2.png"},
+        {"id": 4,"name":"疾风斩·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 270, "increase": 20,  "pic":"/assets/tz/不死2.png"},
+        {"id": 5,"name":"虚空龙闪·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 240, "increase": 18,  "pic":"/assets/tz/不死2.png"},
+        {"id": 6,"name":"闪突裂空·灭", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 320, "increase": 15,  "pic":"/assets/tz/不死2.png"},
+        {"id": 7,"name":"龙卷玄刃·灭", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 240, "increase": 14,  "pic":"/assets/tz/不死2.png"},
+        {"id": 8,"name":"龙弹·极", "level": 1, "type": "zh-qw-jn", "time": 1, "gjds": 3, "multiplier": 325, "increase": 15,  "pic":"/assets/tz/不死2.png"},
+        {"id": 9,"name":"斩魂·普攻", "level": 1, "type": "zh-pg", "time": 1, "gjds": 3, "multiplier":  50, "increase":  0,  "pic":"/assets/tz/不死2.png"},
+        {"id":10,"name":"斩魂·奥义", "level": 1, "type": "zh-ay", "time": 4, "gjds": 1, "multiplier": 900, "increase": 60,  "pic":"/assets/tz/不死2.png"},
+        {"id":11,"name":"斩魂·轻切", "level": 1, "type": "zh-qz", "time": 4, "gjds": 1, "multiplier": 150, "increase": 0,  "pic":"/assets/tz/不死2.png"}
     ]
 }

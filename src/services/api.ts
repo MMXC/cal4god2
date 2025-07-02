@@ -334,3 +334,29 @@ export async function fetchImages(page: number, order: string, q: string): Promi
         throw error;
     }
 }
+
+// 获取旅团信息
+export async function fetchGroupInfo(): Promise<any> {
+    try {
+        const response = await fetch('/data/group.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data.list[0];
+    } catch (error) {
+        console.error('Error fetching group info:', error);
+        throw error;
+    }
+}
+
+// 获取个人信息
+export async function fetchProfileInfo(): Promise<any> {
+    try {
+        const response = await fetch('/data/profile.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data.profile;
+    } catch (error) {
+        console.error('Error fetching profile info:', error);
+        throw error;
+    }
+}

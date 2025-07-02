@@ -194,16 +194,16 @@ export default function Cal() {
     }
 
     return (
-        <div ref={calRef} className="z-10 grid grid-rows-[auto_0.1fr] gap-6 w-full max-w-5xl mx-auto px-4 py-8">
+        <div ref={calRef} className="z-10 grid grid-rows-[auto_0.1fr] gap-0 w-full max-w-8xl mx-auto px-1 py-1">
             {exporting && (
                 <div style={{position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(255,255,255,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <span style={{fontSize: 24}}>图片导出中，请稍候...</span>
                 </div>
             )}
-            <div className="grid grid-cols-[1fr_250px] gap-6">
+            <div className="grid grid-cols-[1fr_250px] gap-6 ">
                 <div className="grid gap-4">
                     <div className="grid grid-cols-[repeat(1,1fr)] gap-12">
-                        <div className="bg-card p-4 rounded-lg shadow-md">
+                        <div className="bg-card p-4 rounded-lg shadow-md ">
                             <div className="flex items-center justify-between mb-2 font-bold">
                                 <span
                                     className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item: any) => item.name).join("-")}</span>
@@ -214,7 +214,7 @@ export default function Cal() {
                                     className="text-sm font-medium">赋能:&nbsp;&nbsp;{userSelections.fnSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
-                            <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
+                            <div className="grid grid-cols-[repeat(12,0.3fr)] gap-2">
                                 {Array.from({length: 12}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.zkSelection[i] ? (<img
@@ -293,13 +293,13 @@ export default function Cal() {
                                     className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
-                            <div className="grid grid-cols-[repeat(6,0.3fr)] gap-2">
+                            <div className="grid grid-cols-[repeat(12,0.3fr)] gap-2">
                                 {Array.from({length: 6}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.jbSelection[i] ? (<img
                                             src={userSelections.jbSelection[i].pre}
-                                            width={600}
-                                            height={400}
+                                            width={300}
+                                            height={200}
                                             alt={userSelections.jbSelection[i].name}
                                             title={userSelections.jbSelection[i].name}
                                             className="w-full h-full object-contain"
@@ -339,7 +339,7 @@ export default function Cal() {
                                     className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
-                            <div className="grid grid-cols-[repeat(2,1fr)] gap-2">
+                            <div className="grid grid-cols-[repeat(3,1fr)] gap-2">
                                 {Array.from({length: 11}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.tzSelection[i] ? (<img
@@ -391,7 +391,7 @@ export default function Cal() {
                                     className="text-sm font-medium">黄印词条:&nbsp;&nbsp;{userSelections.hySelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
-                            <div className="grid grid-cols-[repeat(5,1fr)] gap-2">
+                            <div className="grid grid-cols-[repeat(10,1fr)] gap-2">
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                         {userSelections.zbSelection[i] ? (<img
@@ -539,7 +539,7 @@ export default function Cal() {
                                 ))}
                             </div>
                         </div>
-                        <div className="grid grid-cols-[repeat(7,1fr)] gap-2 mt-4">
+                        <div className="grid grid-cols-[repeat(14,1fr)] gap-2 mt-4">
                             {Array.from({length: 14}).map((_, i) => (
                                 <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
                                     {userSelections.fwSelection[i] ? (<img
@@ -593,8 +593,8 @@ export default function Cal() {
                         
                         {/* 技能卡片区域 */}
                         <div className="flex-1">
-                            <div className="grid grid-cols-[repeat(5,1fr)] gap-2 mb-4">
-                                {Array.from({length: 10}).map((_, i) => (
+                            <div className="grid grid-cols-[repeat(14,1fr)] gap-2 mb-4">
+                                {Array.from({length: 14}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex flex-col items-center justify-center">
                                         {userSelections.jnSelection?.[i] ? (
                                             <>
@@ -1054,7 +1054,7 @@ export default function Cal() {
                                 <div
                                     className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(9 * (roleValues?.totalScore ?? 0.86) * 1.5 * (1 + 0.175 * 2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰')) ? 0.83 : 0)) / (1 + (roleValues?.yczs ?? 0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span
-                                        style={{color: 'red'}}>{(9 * (roleValues?.totalScore ?? 0.86) * 333 * 6 / 10000).toFixed(2)} 亿！</span>
+                                        style={{color: 'red'}}>{(9 * (roleValues?.totalScore ?? 0.86) * 333 * 3 * 6 / 10000).toFixed(2)} 亿！</span>
                                 </div>
                                 <div
                                     className="text-sm text-gray-500 mt-2">基于基础攻击9w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）

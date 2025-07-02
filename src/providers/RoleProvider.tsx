@@ -207,10 +207,12 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
 
         function processSelections(items: any[], type: keyof Selection, newRoleValues: any, newSources: any, specialCondition?: (item: any) => boolean): { updatedRoleValues: any, updatedSources: any } {
             for (const item of items) {
-                // ... (保留原有逻辑)
                 if (specialCondition && !specialCondition(item)) continue;
 
                 let sx = item.sx;
+                if (type === 'jnSelection') {
+                    sx = {};
+                }
                 if (type === 'jbSelection') {
                     sx = item.level === '四级' ? item.forth :
                         item.level === '三级' ? item.third :
@@ -392,11 +394,11 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
     // 计算技能伤害（示例实现，可根据实际需求调整）
     const calculateJnDamage = (jn: any) => {
         if (!jn) return 0;
-        // 假设技能伤害 = 倍率 * 技能等级 * 基础攻击（这里用 roleValues.gj 代替）
-        const base = roleValues.gj || 0;
+        // 防御：roleValues或gj为undefined时返回0
+        const base = roleValues.totalScore * 10 / 10000;
         const multiplier = jn.multiplier || 1;
         const level = jn.level || 1;
-        return Math.round(base * multiplier * level * 100);
+        return Math.round(base * multiplier * level / 100);
     };
 
     return (

@@ -1,0 +1,18 @@
+{
+  "code": 0,
+  "success": "true",
+  "list": [
+    {
+      "id": 1,
+      "name": "诸神之团",
+      "badge": "/assets/group/badge-placeholder.png",
+      "desc": "北欧神话中的勇士集结地。",
+      "members": [
+        {"id": 1, "nickname": "奥丁", "role": "团长", "avatar": "/assets/group/odin.png"},
+        {"id": 2, "nickname": "索尔", "role": "战士", "avatar": "/assets/group/thor.png"},
+        {"id": 3, "nickname": "芙蕾雅", "role": "祭司", "avatar": "/assets/group/freya.png"},
+        {"id": 4, "nickname": "洛基", "role": "谋士", "avatar": "/assets/group/loki.png"}
+      ]
+    }
+  ]
+} 
