@@ -23,6 +23,8 @@
     { "id": 19, "nickname": "魔狼·芬里尔", "avatar": "/assets/zk/魔狼.jpg" },
     { "id": 20, "nickname": "青春女神·伊登", "avatar": "/assets/zk/青春.jpg" },
     { "id": 21, "nickname": "败徳骑士·索列姆", "avatar": "/assets/zk/败德.jpg" },
-    { "id": 22, "nickname": "海妖·克拉肯", "avatar": "/assets/zk/海妖.jpg" }
+    { "id": 22, "nickname": "海妖·克拉肯", "avatar": "/assets/zk/海妖.jpg" },
+    { "id": 23, "nickname": "霸王·卡西亚斯", "avatar": "/assets/zk/霸王.jpg" },
+    { "id": 24, "nickname": "屠龙者·", "avatar": "/assets/zk/屠龙.jpg" }
   ]
 } 

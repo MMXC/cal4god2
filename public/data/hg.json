@@ -26,7 +26,7 @@
             "received": true,
             "memberId": 1
           },
-          "score": "1670000"
+          "score": "1620000"
         },
         {
           "id": 2,
@@ -42,19 +42,33 @@
             "received": false,
             "memberId": 3
           },
-          "score": "167000"
+          "score": "161000"
         },
         {
           "id": 3,
           "members": [
             {
-              "id": 5,
-              "nickname": "丰饶女神·希芙",
-              "avatar": "/assets/zk/丰饶.jpg"
+              "id": 24,
+              "nickname": "屠龙者·",
+              "avatar": "/assets/zk/屠龙.jpg"
+            },
+            {
+              "id": 17,
+              "nickname": "孤影·布伦希尔德",
+              "avatar": "/assets/zk/孤影.jpg"
+            },
+            {
+              "id": 23,
+              "nickname": "霸王·卡西亚斯",
+              "avatar": "/assets/zk/霸王.jpg"
             }
           ],
-          "badge": null,
-          "score": "74000"
+          "badge": {
+            "label": "钥匙",
+            "received": false,
+            "memberId": 24
+          },
+          "score": "80100"
         },
         {
           "id": 4,
@@ -70,7 +84,7 @@
             "received": false,
             "memberId": 7
           },
-          "score": "65000"
+          "score": "79000"
         },
         {
           "id": 5,
@@ -100,7 +114,19 @@
         },
         {
           "id": 6,
-          "members": []
+          "members": [
+            {
+              "id": 5,
+              "nickname": "丰饶女神·希芙",
+              "avatar": "/assets/zk/丰饶.jpg"
+            }
+          ],
+          "score": "79595",
+          "badge": {
+            "label": "钥匙",
+            "received": false,
+            "memberId": null
+          }
         }
       ]
     }
