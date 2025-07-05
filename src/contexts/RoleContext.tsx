@@ -1,5 +1,6 @@
-import React, {createContext, useContext, useState, ReactNode} from 'react';
+import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
 import { Selection } from './UserSelectionsContext';
+import { fetchProfileInfo } from '@/services/api';
 
 export type RoleType = {
     totalScore: number;
@@ -91,18 +92,36 @@ const defaultLists = {
     jnList: []
 };
 
+
+const defaultRole = {
+    nickname: "",
+    role: "",
+    baseAttack: 0,
+    panelAttack: 0,
+    soulPower: 0,
+    expeditionDamage: 0,
+    alienScore: 0,
+    avatar: "",
+    formerNicknames: [],
+    display: "",
+    linkedRoles: [null, null], // 关联角色
+};
+
+
 export type RoleContextType = {
     roleValues: RoleType;
     sources: SourcesType;
     lists: any;
     setLists: (lists: any) => void;
-    updateRole: (userSelections: Selection) => void;
+    updateRole: (userSelections: Selection, newRole: any) => void;
     recalculateRoleAndSources: (userSelections: Selection) => { roleValues: RoleType; sources: any };
     toggleLock: () => void;
     isLocked: boolean;
     scoreChangeRatio: number;
     calculateDamageIncrease: (category: keyof Selection, item: any, currentSelections: Selection) => number;
     calculateJnDamage: (jn: any) => number;
+    role: any;
+    setRole: (role: any) => void;
 };
 
 export const RoleContext = createContext<RoleContextType>({
@@ -117,6 +136,8 @@ export const RoleContext = createContext<RoleContextType>({
     scoreChangeRatio: 0,
     calculateDamageIncrease: () => 0,
     calculateJnDamage: () => 0,
+    role: defaultRole,
+    setRole: (role: any) => {},
 });
 
 // 创建角色数值的上下文
@@ -134,16 +155,34 @@ export function RoleProvider({ children }: { children: ReactNode }) {
     const [lists, setLists] = useState(defaultLists);
     const [isLocked, setIsLocked] = useState(false);
     const [scoreChangeRatio, setScoreChangeRatio] = useState(0);
+    const [role, setRole] = useState(defaultRole);
 
+
+    useEffect(() => {
+        // 优先本地缓存
+        const cached = localStorage.getItem("profile");
+        if (cached) {
+          setRole(JSON.parse(cached));
+        } else {
+          // 首次登录从API获取
+          fetchProfileInfo().then((data) => {
+            setRole(data);
+            localStorage.setItem("profile", JSON.stringify(data));
+          });
+        }
+      }, []);
+    
     const recalculateRoleAndSources = (userSelections: Selection) => {
         // 这里是你原有的计算逻辑
         return { roleValues: defaultRoleValues, sources: {} };
     };
 
-    const updateRole = (userSelections: Selection) => {
+    const updateRole = (userSelections: Selection, newRole: any) => {
         const { roleValues: newRoleValues, sources: newSources } = recalculateRoleAndSources(userSelections);
         setRoleValues(newRoleValues);
         setSources(newSources);
+        setRole(newRole);
+        localStorage.setItem("profile", JSON.stringify(newRole));
     };
 
     const toggleLock = () => {
@@ -183,6 +222,8 @@ export function RoleProvider({ children }: { children: ReactNode }) {
             lists,
             setLists,
             updateRole,
+            role,
+            setRole,
             recalculateRoleAndSources,
             toggleLock,
             isLocked,

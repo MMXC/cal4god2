@@ -401,6 +401,9 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
         return Math.round(base * multiplier * level / 100);
     };
 
+    // 新增：角色对象和设置方法
+    const [role, setRole] = useState<any>({});
+
     return (
         <RoleContext.Provider value={{
             roleValues,
@@ -420,6 +423,8 @@ export function RoleProvider({children}: { children?: React.ReactNode }) {
             scoreChangeRatio: scoreChangeRatio ?? 0,
             calculateDamageIncrease,
             calculateJnDamage,
+            role,
+            setRole,
         }}>
             {children}
         </RoleContext.Provider>

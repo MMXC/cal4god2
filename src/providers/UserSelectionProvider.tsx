@@ -24,7 +24,7 @@ export function UserSelectionProvider({ children }: Props) {
     const {updateRole} = useContext(RoleContext);
     useEffect(() => {
         // 这里可以添加一些副作用，比如保存数据到localStorage或数据库
-        updateRole(userSelections);
+        updateRole(userSelections, {});
         localStorage.removeItem('userSelections');
         localStorage.setItem('userSelections', JSON.stringify(userSelections));
     }, [userSelections]);

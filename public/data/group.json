@@ -2,17 +2,27 @@
   "code": 0,
   "success": "true",
   "list": [
-    {
-      "id": 1,
-      "name": "诸神之团",
-      "badge": "/assets/group/badge-placeholder.png",
-      "desc": "北欧神话中的勇士集结地。",
-      "members": [
-        {"id": 1, "nickname": "奥丁", "role": "团长", "avatar": "/assets/group/odin.png"},
-        {"id": 2, "nickname": "索尔", "role": "战士", "avatar": "/assets/group/thor.png"},
-        {"id": 3, "nickname": "芙蕾雅", "role": "祭司", "avatar": "/assets/group/freya.png"},
-        {"id": 4, "nickname": "洛基", "role": "谋士", "avatar": "/assets/group/loki.png"}
-      ]
-    }
+    { "id": 1, "nickname": "未来·诗寇蒂", "avatar": "/assets/zk/未来.jpg" },
+    { "id": 2, "nickname": "始源·尤弥尔", "avatar": "/assets/zk/始源.jpg" },
+    { "id": 3, "nickname": "无形之魂·海拉", "avatar": "/assets/zk/无形.jpg" },
+    { "id": 4, "nickname": "现在·微尔丹蒂", "avatar": "/assets/zk/现在.jpg" },
+    { "id": 5, "nickname": "丰饶女神·希芙", "avatar": "/assets/zk/丰饶.jpg" },
+    { "id": 6, "nickname": "太阳女神·雷娜尔", "avatar": "/assets/zk/日女.jpg" },
+    { "id": 7, "nickname": "影舞者·海拉", "avatar": "/assets/zk/影舞.jpg" },
+    { "id": 8, "nickname": "雷神·索尔", "avatar": "/assets/zk/雷神.jpg" },
+    { "id": 9, "nickname": "智者·密卡尔", "avatar": "/assets/zk/智者.jpg" },
+    { "id": 10, "nickname": "星辰女神·弗丽嘉", "avatar": "/assets/zk/星辰.jpg" },
+    { "id": 11, "nickname": "过去·乌尔德", "avatar": "/assets/zk/过去.jpg" },
+    { "id": 12, "nickname": "不朽者·奥丁", "avatar": "/assets/zk/不朽者.png" },
+    { "id": 13, "nickname": "圣者·伊斯特", "avatar": "/assets/zk/圣者.jpg" },
+    { "id": 14, "nickname": "管理者·欧德姆", "avatar": "/assets/zk/管理.jpg" },
+    { "id": 15, "nickname": "无形眼眸", "avatar": "/assets/zk/大眼.jpg" },
+    { "id": 16, "nickname": "终焉之龙·尼德霍格", "avatar": "/assets/zk/大龙.jpg" },
+    { "id": 17, "nickname": "孤影·布伦希尔德", "avatar": "/assets/zk/孤影.jpg" },
+    { "id": 18, "nickname": "亡语者·伊斯特", "avatar": "/assets/zk/亡语.jpg" },
+    { "id": 19, "nickname": "魔狼·芬里尔", "avatar": "/assets/zk/魔狼.jpg" },
+    { "id": 20, "nickname": "青春女神·伊登", "avatar": "/assets/zk/青春.jpg" },
+    { "id": 21, "nickname": "败徳骑士·索列姆", "avatar": "/assets/zk/败德.jpg" },
+    { "id": 22, "nickname": "海妖·克拉肯", "avatar": "/assets/zk/海妖.jpg" }
   ]
 } 

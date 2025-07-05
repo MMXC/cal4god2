@@ -341,7 +341,7 @@ export async function fetchGroupInfo(): Promise<any> {
         const response = await fetch('/data/group.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        return data.list[0];
+        return data.list;
     } catch (error) {
         console.error('Error fetching group info:', error);
         throw error;
@@ -358,5 +358,20 @@ export async function fetchProfileInfo(): Promise<any> {
     } catch (error) {
         console.error('Error fetching profile info:', error);
         throw error;
+    }
+}
+
+// 获取历史分组
+export async function fetchHistoryGroups(): Promise<any[]> {
+    try {
+        const response = await fetch('/data/hg.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list || [];
+    } catch (error) {
+        console.error('Error fetching history groups:', error);
+        return [];
     }
 }

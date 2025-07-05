@@ -63,15 +63,16 @@ function generateFilename(userSelections: any, nameRelections: { zkSelection: st
 
 
 // 假设这是你的UserContext
-export default function Cal() {
-    const {userSelections, selectItem, deleteItem, deleteOneItem, setUserSelections} = useContext(UserSelectionsContext);
+export default function Cal(props: { readOnly?: boolean, role?: any }) {
+    const { readOnly, role } = props;
+    const { userSelections, selectItem, deleteItem, deleteOneItem, setUserSelections } = useContext(UserSelectionsContext);
     const {
         roleValues,
         sources,
         toggleLock,
         isLocked,
         scoreChangeRatio,
-        calculateJnDamage
+        calculateJnDamage,
     } = useContext(RoleContext);
     const calRef = useRef<HTMLDivElement>(null);
     const nameRelections = {
@@ -98,9 +99,25 @@ export default function Cal() {
         "hySelection": "sx",
         "jnSelection": "sx"
     };
-    const {setLists} = useContext(RoleContext);
     const [exporting, setExporting] = useState(false); // loading 状态
     const [selectedProfession, setSelectedProfession] = useState<string>('斩魂');
+
+    // 只读模式下，数据来源于role
+    const displaySelections = readOnly && role ? {
+        zkSelection: role.mainCards || [],
+        fnSelection: role.fnCards || [],
+        jbSelection: role.jbCards || [],
+        tzSelection: role.tzCards || [],
+        zbSelection: role.zbCards || [],
+        ygSelection: role.ygCards || [],
+        hySelection: role.hyCards || [],
+        fwzySelection: role.fwzyCards || [],
+        fwSelection: role.fwCards || [],
+        jnSelection: role.jnCards || [],
+    } : userSelections;
+
+    // 只读模式下，属性来源于role，否则用roleValues
+    const displayRoleValues = readOnly && role ? (role.roleValues || {}) : roleValues;
 
     useEffect(() => {
         let isMounted = true;
@@ -206,25 +223,25 @@ export default function Cal() {
                         <div className="bg-card p-4 rounded-lg shadow-md ">
                             <div className="flex items-center justify-between mb-2 font-bold">
                                 <span
-                                    className="text-sm font-medium">主卡:&nbsp;&nbsp;{userSelections.zkSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">主卡:&nbsp;&nbsp;{displaySelections.zkSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="flex items-center justify-between mb-2 font-bold">
                                 <span
-                                    className="text-sm font-medium">赋能:&nbsp;&nbsp;{userSelections.fnSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">赋能:&nbsp;&nbsp;{displaySelections.fnSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(12,0.3fr)] gap-2">
                                 {Array.from({length: 12}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.zkSelection[i] ? (<img
-                                            src={userSelections.zkSelection[i].pre}
+                                        {displaySelections.zkSelection[i] ? (<img
+                                            src={displaySelections.zkSelection[i].pre}
                                             width={600}
                                             height={400}
-                                            alt={userSelections.zkSelection[i].name}
-                                            title={userSelections.zkSelection[i].name}
+                                            alt={displaySelections.zkSelection[i].name}
+                                            title={displaySelections.zkSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('zkSelection', userSelections.zkSelection[i])} // 添加点击事件处理器
+                                            onClick={() => handleClickPrevCard('zkSelection', displaySelections.zkSelection[i])} // 添加点击事件处理器
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -252,14 +269,14 @@ export default function Cal() {
                             <div className="grid grid-cols-[repeat(12,0.3fr)] gap-2">
                                 {Array.from({length: 12}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.fnSelection[i] ? (<img
-                                            src={userSelections.fnSelection[i].pre}
+                                        {displaySelections.fnSelection[i] ? (<img
+                                            src={displaySelections.fnSelection[i].pre}
                                             width={200}
                                             height={200}
-                                            alt={userSelections.fnSelection[i].name}
-                                            title={userSelections.fnSelection[i].name}
+                                            alt={displaySelections.fnSelection[i].name}
+                                            title={displaySelections.fnSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('fnSelection', userSelections.fnSelection[i])}
+                                            onClick={() => handleClickPrevCard('fnSelection', displaySelections.fnSelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -290,20 +307,20 @@ export default function Cal() {
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">羁绊:&nbsp;&nbsp;{userSelections.jbSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">羁绊:&nbsp;&nbsp;{displaySelections.jbSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(12,0.3fr)] gap-2">
                                 {Array.from({length: 6}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.jbSelection[i] ? (<img
-                                            src={userSelections.jbSelection[i].pre}
+                                        {displaySelections.jbSelection[i] ? (<img
+                                            src={displaySelections.jbSelection[i].pre}
                                             width={300}
                                             height={200}
-                                            alt={userSelections.jbSelection[i].name}
-                                            title={userSelections.jbSelection[i].name}
+                                            alt={displaySelections.jbSelection[i].name}
+                                            title={displaySelections.jbSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('jbSelection', userSelections.jbSelection[i])}
+                                            onClick={() => handleClickPrevCard('jbSelection', displaySelections.jbSelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -336,20 +353,20 @@ export default function Cal() {
                         <div className="bg-card p-2 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">套装:&nbsp;&nbsp;{userSelections.tzSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">套装:&nbsp;&nbsp;{displaySelections.tzSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(3,1fr)] gap-2">
                                 {Array.from({length: 11}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.tzSelection[i] ? (<img
-                                            src={userSelections.tzSelection[i].pic}
+                                        {displaySelections.tzSelection[i] ? (<img
+                                            src={displaySelections.tzSelection[i].pic}
                                             width={600}
                                             height={400}
-                                            alt={userSelections.tzSelection[i].name}
-                                            title={userSelections.tzSelection[i].name}
+                                            alt={displaySelections.tzSelection[i].name}
+                                            title={displaySelections.tzSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('tzSelection', userSelections.tzSelection[i])}
+                                            onClick={() => handleClickPrevCard('tzSelection', displaySelections.tzSelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -378,30 +395,30 @@ export default function Cal() {
                         <div className="bg-card p-4 rounded-lg shadow-md">
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">装备:&nbsp;&nbsp;{userSelections.zbSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">装备:&nbsp;&nbsp;{displaySelections.zbSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">远古词条:&nbsp;&nbsp;{userSelections.ygSelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">远古词条:&nbsp;&nbsp;{displaySelections.ygSelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">黄印词条:&nbsp;&nbsp;{userSelections.hySelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">黄印词条:&nbsp;&nbsp;{displaySelections.hySelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(10,1fr)] gap-2">
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.zbSelection[i] ? (<img
-                                            src={userSelections.zbSelection[i].pic}
+                                        {displaySelections.zbSelection[i] ? (<img
+                                            src={displaySelections.zbSelection[i].pic}
                                             width={600}
                                             height={400}
-                                            alt={userSelections.zbSelection[i].name}
-                                            title={userSelections.zbSelection[i].name}
+                                            alt={displaySelections.zbSelection[i].name}
+                                            title={displaySelections.zbSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('zbSelection', userSelections.zbSelection[i])}
+                                            onClick={() => handleClickPrevCard('zbSelection', displaySelections.zbSelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -430,14 +447,14 @@ export default function Cal() {
                             <div className="grid grid-cols-[repeat(10,1fr)] gap-2">
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.ygSelection[i] ? (<img
-                                            src={userSelections.ygSelection[i].pic}
+                                        {displaySelections.ygSelection[i] ? (<img
+                                            src={displaySelections.ygSelection[i].pic}
                                             width={600}
                                             height={400}
-                                            alt={userSelections.ygSelection[i].name}
-                                            title={userSelections.ygSelection[i].name}
+                                            alt={displaySelections.ygSelection[i].name}
+                                            title={displaySelections.ygSelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('ygSelection', userSelections.ygSelection[i])}
+                                            onClick={() => handleClickPrevCard('ygSelection', displaySelections.ygSelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -465,14 +482,14 @@ export default function Cal() {
                             <div className="grid grid-cols-[repeat(10,1fr)] gap-2">
                                 {Array.from({length: 4}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.hySelection[i] ? (<img
-                                            src={userSelections.hySelection[i].pic}
+                                        {displaySelections.hySelection[i] ? (<img
+                                            src={displaySelections.hySelection[i].pic}
                                             width={100}
                                             height={100}
-                                            alt={userSelections.hySelection[i].name}
-                                            title={userSelections.hySelection[i].name}
+                                            alt={displaySelections.hySelection[i].name}
+                                            title={displaySelections.hySelection[i].name}
                                             className="w-full h-full object-contain"
-                                            onClick={() => handleClickPrevCard('hySelection', userSelections.hySelection[i])}
+                                            onClick={() => handleClickPrevCard('hySelection', displaySelections.hySelection[i])}
                                         />) : (
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -503,18 +520,18 @@ export default function Cal() {
                         <div className="grid grid-rows-[auto_1fr] gap-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span
-                                    className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{userSelections.fwzySelection.map((item: any) => item.name).join("-")}</span>
+                                    className="text-sm font-medium">符文之语及符文:&nbsp;&nbsp;{displaySelections.fwzySelection.map((item: any) => item.name).join("-")}</span>
                                 <PlusIcon className="w-5 h-5 text-muted-foreground"/>
                             </div>
                             <div className="grid grid-cols-[repeat(5,0.6fr)] gap-0.5">
                                 {Array.from({length: 10}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                        {userSelections.fwzySelection[i] ?
+                                        {displaySelections.fwzySelection[i] ?
                                             (<span className="text-sm font-medium"
-                                                   title={userSelections.fwzySelection[i].name}
-                                                   onClick={() => handleClickPrevCard('fwzySelection', userSelections.fwzySelection[i])}
+                                                   title={displaySelections.fwzySelection[i].name}
+                                                   onClick={() => handleClickPrevCard('fwzySelection', displaySelections.fwzySelection[i])}
                                             >
-                                                {userSelections.fwzySelection[i].name}
+                                                {displaySelections.fwzySelection[i].name}
                                             </span>) :
                                             (
                                                 <Popover>
@@ -542,14 +559,14 @@ export default function Cal() {
                         <div className="grid grid-cols-[repeat(14,1fr)] gap-2 mt-4">
                             {Array.from({length: 14}).map((_, i) => (
                                 <div key={i} className="bg-muted rounded-md p-2 flex items-center justify-center">
-                                    {userSelections.fwSelection[i] ? (<img
-                                        src={userSelections.fwSelection[i].pic}
+                                    {displaySelections.fwSelection[i] ? (<img
+                                        src={displaySelections.fwSelection[i].pic}
                                         width={600}
                                         height={400}
-                                        alt={userSelections.fwSelection[i].name}
-                                        title={userSelections.fwSelection[i].name}
+                                        alt={displaySelections.fwSelection[i].name}
+                                        title={displaySelections.fwSelection[i].name}
                                         className="w-full h-full object-contain"
-                                        onClick={() => handleClickPrevCard('fwSelection', userSelections.fwSelection[i])}
+                                        onClick={() => handleClickPrevCard('fwSelection', displaySelections.fwSelection[i])}
                                     />) : (
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -596,33 +613,33 @@ export default function Cal() {
                             <div className="grid grid-cols-[repeat(14,1fr)] gap-2 mb-4">
                                 {Array.from({length: 14}).map((_, i) => (
                                     <div key={i} className="bg-muted rounded-md p-2 flex flex-col items-center justify-center">
-                                        {userSelections.jnSelection?.[i] ? (
+                                        {displaySelections.jnSelection?.[i] ? (
                                             <>
                                                 <div className="relative w-full">
                                                     <img
-                                                        src={userSelections.jnSelection[i].pic}
+                                                        src={displaySelections.jnSelection[i].pic}
                                                         width={200}
                                                         height={150}
-                                                        alt={userSelections.jnSelection[i].name}
-                                                        title={userSelections.jnSelection[i].name}
+                                                        alt={displaySelections.jnSelection[i].name}
+                                                        title={displaySelections.jnSelection[i].name}
                                                         className="w-full h-full object-contain"
-                                                        onClick={() => handleClickPrevCard('jnSelection', userSelections.jnSelection[i])}
+                                                        onClick={() => handleClickPrevCard('jnSelection', displaySelections.jnSelection[i])}
                                                     />
                                                     {/* 技能等级和倍率显示 */}
                                                     <div className="absolute top-1 left-1 bg-black bg-opacity-70 text-white text-xs px-1 rounded">
-                                                        Lv.{userSelections.jnSelection[i].level || 1}
+                                                        Lv.{displaySelections.jnSelection[i].level || 1}
                                                     </div>
                                                     <div className="absolute top-1 right-1 bg-red-600 bg-opacity-70 text-white text-xs px-1 rounded">
-                                                        {userSelections.jnSelection[i].multiplier || 1.0}x
+                                                        {displaySelections.jnSelection[i].multiplier || 1.0}x
                                                     </div>
                                                 </div>
                                                 {/* 技能伤害显示 */}
                                                 <div className="mt-2 text-center w-full">
                                                     <div className="text-sm font-medium text-gray-600">
-                                                        {userSelections.jnSelection[i].name}
+                                                        {displaySelections.jnSelection[i].name}
                                                     </div>
                                                     <div className="text-lg font-bold text-red-600">
-                                                        {calculateJnDamage(userSelections.jnSelection[i]).toLocaleString()} 亿
+                                                        {calculateJnDamage(displaySelections.jnSelection[i]).toLocaleString()} 亿
                                                     </div>
                                                     <div className="text-xs text-gray-500">
                                                         预计伤害
@@ -664,11 +681,11 @@ export default function Cal() {
                     <div className="flex items-center justify-between mb-4">
                         {isLocked ? (
                             <span className="text-lg font-large double-underline" style={{color: "#b73030"}}>
-                            {roleValues.totalScore?.toFixed(2)}
+                            {displayRoleValues.totalScore?.toFixed(2)}
                         </span>
                         ) : (
                             <span className="text-lg font-large double-underline" style={{color: "#5de011"}}>
-                            {roleValues.totalScore?.toFixed(2)}
+                            {displayRoleValues.totalScore?.toFixed(2)}
                         </span>
                         )}
 
@@ -727,7 +744,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">攻击</div>
-                                    <div className="text-2xl font-bold">{roleValues.gj}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.gj}%</div>
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
@@ -756,7 +773,7 @@ export default function Cal() {
                                     {/*<div*/}
                                     {/*    className="text-2xl font-bold">{Math.max(roleValues.bs??0, roleValues.hs??0, roleValues.ls??0, roleValues.ds??0) + roleValues.qsxsh}%*/}
                                     {/*</div>*/}
-                                    <RoleColorDisplay items={roleValues}/>
+                                    <RoleColorDisplay items={displayRoleValues}/>
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
@@ -824,7 +841,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">暴击率</div>
-                                    <div className="text-2xl font-bold">{roleValues.bjl}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.bjl}%</div>
                                     <PopoverContent>
                                         <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
                                             {/* Use flex column to automatically*/
@@ -850,7 +867,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">暴击伤害</div>
-                                    <div className="text-2xl font-bold">{roleValues.bjsh}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.bjsh}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -876,7 +893,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">异常增伤</div>
-                                    <div className="text-2xl font-bold">{roleValues.yczs}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.yczs}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -902,7 +919,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">对Boss增伤</div>
-                                    <div className="text-2xl font-bold">{roleValues.dbzs}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.dbzs}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -928,7 +945,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">最终伤害</div>
-                                    <div className="text-2xl font-bold">{roleValues.zzsh}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.zzsh}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -954,7 +971,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">对指定属性Boss增伤</div>
-                                    <div className="text-2xl font-bold">{roleValues.dzdbzs}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.dzdbzs}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -980,7 +997,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">技能增伤</div>
-                                    <div className="text-2xl font-bold">{roleValues.jn}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.jn}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -1006,7 +1023,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">穿透</div>
-                                    <div className="text-2xl font-bold">{roleValues.ct}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.ct}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -1032,7 +1049,7 @@ export default function Cal() {
                                 </PopoverTrigger>
                                 <div>
                                     <div className="text-sm font-medium">减抗</div>
-                                    <div className="text-2xl font-bold">{roleValues.jk}%</div>
+                                    <div className="text-2xl font-bold">{displayRoleValues.jk}%</div>
                                 </div>
                                 <PopoverContent>
                                     <div className="grid grid-cols-[repeat(1,1fr)] gap-0">
@@ -1052,9 +1069,9 @@ export default function Cal() {
                         <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                             <div style={{marginTop: '1rem'}}>
                                 <div
-                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(9 * (roleValues?.totalScore ?? 0.86) * 1.5 * (1 + 0.175 * 2 + ((userSelections.fwzySelection.some((item) => item.name === '无尽黑焰')) ? 0.83 : 0)) / (1 + (roleValues?.yczs ?? 0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
+                                    className="text-lg font-semibold">恭喜你，你的搭配初始破招伤害为{(9 * (displayRoleValues?.totalScore ?? 0.86) * 1.5 * (1 + 0.175 * 2 + ((displaySelections.fwzySelection.some((item: any) => item.name === '无尽黑焰')) ? 0.83 : 0)) / (1 + (displayRoleValues?.yczs ?? 0) / 100) * 0.5).toFixed(2)} 万！远征伤害为
                                     <span
-                                        style={{color: 'red'}}>{(9 * (roleValues?.totalScore ?? 0.86) * 333 * 3 * 6 / 10000).toFixed(2)} 亿！</span>
+                                        style={{color: 'red'}}>{(9 * (displayRoleValues?.totalScore ?? 0.86) * 333 * 3 * 6 / 10000).toFixed(2)} 亿！</span>
                                 </div>
                                 <div
                                     className="text-sm text-gray-500 mt-2">基于基础攻击9w估算（基础攻击可通过上下塔寻2增加的攻击*10计算）

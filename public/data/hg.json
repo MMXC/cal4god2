@@ -1,0 +1,108 @@
+{
+  "code": 0,
+  "success": "true",
+  "list": [
+    {
+      "id": 1,
+      "range": "2025年07月04日-2025年07月06日",
+      "desc": "活动分组-自由",
+      "groups": [
+        {
+          "id": 1,
+          "members": [
+            {
+              "id": 1,
+              "nickname": "未来·诗寇蒂",
+              "avatar": "/assets/zk/未来.jpg"
+            },
+            {
+              "id": 2,
+              "nickname": "始源·尤弥尔",
+              "avatar": "/assets/zk/始源.jpg"
+            }
+          ],
+          "badge": {
+            "label": "团长",
+            "received": true,
+            "memberId": 1
+          },
+          "score": "1670000"
+        },
+        {
+          "id": 2,
+          "members": [
+            {
+              "id": 3,
+              "nickname": "无形之魂·海拉",
+              "avatar": "/assets/zk/无形.jpg"
+            }
+          ],
+          "badge": {
+            "label": "钥匙",
+            "received": false,
+            "memberId": 3
+          },
+          "score": "167000"
+        },
+        {
+          "id": 3,
+          "members": [
+            {
+              "id": 5,
+              "nickname": "丰饶女神·希芙",
+              "avatar": "/assets/zk/丰饶.jpg"
+            }
+          ],
+          "badge": null,
+          "score": "74000"
+        },
+        {
+          "id": 4,
+          "members": [
+            {
+              "id": 7,
+              "nickname": "影舞者·海拉",
+              "avatar": "/assets/zk/影舞.jpg"
+            }
+          ],
+          "badge": {
+            "label": "钥匙",
+            "received": false,
+            "memberId": 7
+          },
+          "score": "65000"
+        },
+        {
+          "id": 5,
+          "members": [
+            {
+              "id": 6,
+              "nickname": "太阳女神·雷娜尔",
+              "avatar": "/assets/zk/日女.jpg"
+            },
+            {
+              "id": 4,
+              "nickname": "现在·微尔丹蒂",
+              "avatar": "/assets/zk/现在.jpg"
+            },
+            {
+              "id": 9,
+              "nickname": "智者·密卡尔",
+              "avatar": "/assets/zk/智者.jpg"
+            }
+          ],
+          "badge": {
+            "label": "副团",
+            "received": true,
+            "memberId": 6
+          },
+          "score": "27000"
+        },
+        {
+          "id": 6,
+          "members": []
+        }
+      ]
+    }
+  ]
+} 
