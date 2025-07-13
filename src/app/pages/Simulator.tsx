@@ -1,6 +1,6 @@
 'use client';
 import Image from "next/image";
-import Cal from '@/components/component/cal';
+import Cal2 from '@/components/component/cal2';
 import Zk from '@/components/component/zk';
 import Fw from '@/components/component/fw';
 
@@ -18,18 +18,30 @@ import Hy from "@/components/component/hy";
 import Yg from "@/components/component/yg";
 import Fn from "@/components/component/fn";
 import Self from "@/components/component/self";
+import Cal from '@/components/component/cal';
 
 export default function Simulator() {
   const [activeTab, setActiveTab] = useState("zk");
   const [self, setSelf] = useState(false);
+  const [showCal2, setShowCal2] = useState(true); // Cal/Cal2 切换
   return (
       <RoleProvider><UserSelectionProvider>
       <main className="flex min-h-screen flex-col items-center justify-between p-0 myth-bg-simulator">
         
         <div className="grid grid-cols-[1fr_10fr_1fr] gap-6 bottom-0 left-0 sm:h-58 h-68 w-200 items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none myth-card-area">
           <Tt />
-          <Cal />
+          {showCal2 ? <Cal /> : <Cal2 />}
           <Bd />
+        </div>
+
+        {/* 悬浮切换控件 */}
+        <div style={{ position: 'fixed', right: 32, bottom: 32, zIndex: 50 }}>
+          <button
+            className="rounded-full bg-blue-500 text-white px-4 py-2 shadow-lg hover:bg-blue-600 transition"
+            onClick={() => setShowCal2((prev) => !prev)}
+          >
+            {showCal2 ? 'V1' : 'V2'}
+          </button>
         </div>
 
         <div className="flex mt-4 tabs-container justify-center">
