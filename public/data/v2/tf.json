@@ -1,0 +1,10 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"id":   1,"name":"天赋1", "enabled":1, "condition": "", "desc": "", "categary":  0, "bind": "", "time": "", "level": "", "num": "", "min_level": "", "max_level": "", "min_num":"", "max_num":"", "pic":""},
+        {"id":   2,"name":"天赋2", "enabled":1, "condition": "", "desc": "", "categary":  0, "bind": "", "time": "", "level": "", "num": "", "min_level": "", "max_level": "", "min_num":"", "max_num":"", "pic":""},
+        {"id":   3,"name":"天赋3", "enabled":1, "condition": "", "desc": "", "categary":  0, "bind": "", "time": "", "level": "", "num": "", "min_level": "", "max_level": "", "min_num":"", "max_num":"", "pic":""},
+        {"id":   4,"name":"天赋4", "enabled":1, "condition": "", "desc": "", "categary":  0, "bind": "", "time": "", "level": "", "num": "", "min_level": "", "max_level": "", "min_num":"", "max_num":"", "pic":""}
+    ]
+}

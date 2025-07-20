@@ -375,3 +375,43 @@ export async function fetchHistoryGroups(): Promise<any[]> {
         return [];
     }
 }
+
+// 获取词条池子
+export async function fetchPoolData(): Promise<any[]> {
+    try {
+        const response = await fetch('/data/v2/ct.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.list || [];
+    } catch (error) {
+        console.error('Error fetching history groups:', error);
+        return [];
+    }
+}
+
+// 获取职业列表
+export async function fetchProfessions(): Promise<any[]> {
+    try {
+        const response = await fetch('/data/zy.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data.list || [];
+    } catch (error) {
+        console.error('Error fetching professions:', error);
+        return [];
+    }
+}
+// 获取天赋列表
+export async function fetchTalents(): Promise<any[]> {
+    try {
+        const response = await fetch('/data/v2/tf.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data.list || [];
+    } catch (error) {
+        console.error('Error fetching talents:', error);
+        return [];
+    }
+}

@@ -40,7 +40,7 @@ export default function Simulator() {
             className="rounded-full bg-blue-500 text-white px-4 py-2 shadow-lg hover:bg-blue-600 transition"
             onClick={() => setShowCal2((prev) => !prev)}
           >
-            {showCal2 ? 'V1' : 'V2'}
+            {showCal2 ? 'V2' : 'V1'}
           </button>
         </div>
 

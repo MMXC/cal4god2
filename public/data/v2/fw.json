@@ -1,0 +1,7 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"categary":"fw","code": "wz", "name":"物质", "quality":"base", "condition": "", "desc": "全属性抗性槽", "type": "number", "min":1, "max":10, "value":9, "relatedLvN":{"1":1, "2":1.5, "3":2.5, "4":4, "5":5, "6":7.5, "7":10.5, "8":15, "9":137, "10":30}, "isEdit":1, "required":0, "pic": "/assert/v2/fw/物质.png"}
+    ]
+}

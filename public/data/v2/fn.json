@@ -1,0 +1,46 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"categary":"ct","code": "sm", "quality":"base", "condition": "", "desc": "生命", "type": "number", "min":5777, "max":6846, "value":6846, "isEdit":1, "required":1, "relatedZb":["helmet"]},
+
+        {"categary":"ct","code": "dsxkxc", "quality":"rare", "condition": "", "desc": "毒属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "hsxkxc", "quality":"rare", "condition": "", "desc": "火属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "bsxkxc", "quality":"rare", "condition": "", "desc": "冰属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "dsxkxc", "quality":"rare", "condition": "", "desc": "电属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "pzshts", "quality":"rare", "condition": "", "desc": "破招伤害提升", "type": "number", "min":15.0, "max":17.5, "value":17.5, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "yhhfsmz", "quality":"rare", "condition": "", "desc": "余魂恢复生命值", "type": "number", "min":2.0, "max":5.0, "value":5.0, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+
+        {"categary":"ct","code": "zdnlz", "quality":"epic", "condition": "", "desc": "最大耐力值", "type": "number", "min":50, "max":100, "value":100, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "jnllqsjjs", "quality":"epic", "condition": "", "desc": "技能链冷却时间减少", "type": "number", "min":1.0, "max":3.0, "value":3.0, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "syjnlqsjjs", "quality":"epic", "condition": "", "desc": "所有技能冷却时间减少", "type": "number", "min":1.0, "max":3.0, "value":3.0, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "nlzhfsdtg", "quality":"epic", "condition": "", "desc": "耐力值恢复速度提高", "type": "number", "min":20, "max":40, "value":17.5, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "pzlqsjjs", "quality":"epic", "condition": "", "desc": "破招冷却时间减少", "type": "number", "min":1.0, "max":5.0, "value":5.0, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+
+        {"categary":"ct","code": "dsxkxc", "quality":"mythic", "condition": "", "desc": "毒属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "hsxkxc", "quality":"mythic", "condition": "", "desc": "火属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "bsxkxc", "quality":"mythic", "condition": "", "desc": "冰属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "dsxkxc", "quality":"mythic", "condition": "", "desc": "电属性抗性槽", "type": "number", "min":105, "max":120, "value":120, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "pzshts", "quality":"mythic", "condition": "", "desc": "破招伤害提升", "type": "number", "min":15.0, "max":17.5, "value":17.5, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code": "yhhfsmz", "quality":"mythic", "condition": "", "desc": "余魂恢复生命值", "type": "number", "min":2.0, "max":5.0, "value":5.0, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+
+        {"categary":"ct","code":"zzshjm", "quality":"legend", "condition": "自身处于异常状态时", "desc": "最终伤害减免", "type": "number", "min":9, "max":9, "value":9, "isEdit":0, "required":0, "relatedZb": ["ylsg"]},
+        {"categary":"ct","code":"sbzcsh", "quality":"legend", "condition": "自身生命值高于80%时", "desc": "闪避造成百分比攻击力伤害", "type": "number", "min":200, "max":200, "value":200, "isEdit":0, "required":0, "relatedZb": ["llzk"]},
+        {"categary":"ct","code":"sbzcsh", "quality":"legend", "condition": "自身生命值低于30%时", "desc": "闪避造成百分比攻击力伤害", "type": "number", "min":280, "max":280, "value":200, "isEdit":0, "required":0, "relatedZb": ["shtk"]},
+        {"categary":"ct","code":"zzshjm", "quality":"legend", "condition": "自身处于异常状态时", "desc": "最终伤害减免", "type": "number", "min":11, "max":11, "value":11, "isEdit":0, "required":0, "relatedZb": ["swlmjk", "cshstk", "yhyzzg", "blljtk"]},
+        {"categary":"ct","code":"sbzcsh", "quality":"legend", "condition": "自身生命值高于80%时", "desc": "闪避造成百分比攻击力伤害", "type": "number", "min":200, "max":200, "value":200, "isEdit":0, "required":0, "relatedZb": ["swlmjk", "cshstk", "yhyzzg", "blljtk"]},
+        {"categary":"ct","code":"sbzcsh", "quality":"legend", "condition": "自身生命值低于30%时", "desc": "闪避造成百分比攻击力伤害", "type": "number", "min":280, "max":280, "value":200, "isEdit":0, "required":0, "relatedZb": ["swlmjk", "cshstk", "yhyzzg", "blljtk"]},
+
+        {"categary":"ct","code":"sm", "quality":"ancient", "condition": "", "desc": "生命", "type": "number", "min":900, "max":1350, "value":900, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"zzshjm", "quality":"ancient", "condition": "每损失10%生命值", "desc": "最终伤害减免", "type": "number", "min":2, "max":6, "value":2, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"qsxsh", "quality":"ancient", "condition": "", "desc": "全属性伤害", "type": "number", "min":5, "max":10, "value":5, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"gjl", "quality":"ancient", "condition": "自身生命值高于80%时", "desc": "攻击力", "type": "number", "min":6, "max":22, "value":6, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"smz", "quality":"ancient", "condition": "", "desc": "生命值", "type": "number", "min":4, "max":6, "value":4, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"bsxshjm", "quality":"ancient", "condition": "", "desc": "冰属性伤害减免", "type": "number", "min":6, "max":11, "value":6, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"dsxshjm", "quality":"ancient", "condition": "", "desc": "毒属性伤害减免", "type": "number", "min":6, "max":11, "value":6, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"hsxshjm", "quality":"ancient", "condition": "", "desc": "火属性伤害减免", "type": "number", "min":6, "max":11, "value":6, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"lsxshjm", "quality":"ancient", "condition": "", "desc": "雷属性伤害减免", "type": "number", "min":6, "max":11, "value":6, "isEdit":1, "required":0, "relatedZb":["helmet"]},
+        {"categary":"ct","code":"bhtkdtzxgsxtzjsjy", "quality":"ancient", "condition": "", "desc": "包含头盔的套装效果所需套装件数-1", "type": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0}
+
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "code":  0,
+    "success": "true",
+    "list": [
+        {"categary":"zb", "type": "tk", "name":"羽灵圣冠", "code":"ylsg", "quality":"myth", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/羽灵圣冠.png", "isGroup":0, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"雷灵战盔", "code":"llzk", "quality":"myth", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/雷灵战盔.png", "isGroup":0, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"圣骸头盔", "code":"shtk", "quality":"myth", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/圣骸头盔.png", "isGroup":0, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"不死者头盔", "code":"bsztk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/不死者头盔(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"传世辉石头盔", "code":"cshstk", "quality":"immortal", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/传世辉石头盔.png", "isGroup":1, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"冥狱审判之盔", "code":"myspzk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/冥狱审判之盔(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"古神面具", "code":"gsmj", "quality":"group", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/古神面具.png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"圣战战盔", "code":"szzk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/圣战战盔(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"无尽黄昏铁盔", "code":"wjhhtk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/无尽黄昏铁盔(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"深渊流放者斗篷", "code":"sylfzdp", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/深渊流放者斗篷(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"渊海遗珠之冠", "code":"yhyzzg", "quality":"immortal", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/渊海遗珠之冠.png", "isGroup":1, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"白垩战盔", "code":"bezk", "quality":"group", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/白垩战盔.png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"碧鳞镂金头盔", "code":"blljtk", "quality":"immortal", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/碧鳞镂金头盔.png", "isGroup":1, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"神使面容", "code":"ssmr", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/神使面容(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"神威雷鸣角盔", "code":"swlmjk", "quality":"immortal", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/神威雷鸣角盔.png", "isGroup":1, "maxLegendCtNum":1},
+        {"categary":"zb", "type": "tk", "name":"禁忌炼金面具", "code":"jjljmj", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/禁忌炼金面具(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"熔铁勇士盔", "code":"rtysk", "quality":"group", "condition": "", "desc": "", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/熔铁勇士盔.png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"雷之洗礼头盔", "code":"lzxltk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/雷之洗礼头盔(绝版).png", "isGroup":1, "maxLegendCtNum":0},
+        {"categary":"zb", "type": "tk", "name":"魔狼之盔", "code":"mlzk", "quality":"group", "condition": "", "desc": "(绝版)", "kind": "number", "min":1, "max":1, "value":1, "isEdit":0, "required":0, "pic":"/assets/v2/zb/魔狼之盔(绝版).png", "isGroup":1, "maxLegendCtNum":0}
+    
+    ]
+}

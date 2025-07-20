@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "success": "true",
+  "list": [
+    { "id": 1, "nickname": "斩魂","code":"zh", "avatar": "/assets/zk/斩魂.jpg" },
+    { "id": 2, "nickname": "影舞","code":"yw", "avatar": "/assets/zk/影舞.jpg" },
+    { "id": 3, "nickname": "亡语","code":"wy", "avatar": "/assets/zk/亡语.jpg" },
+    { "id": 4, "nickname": "圣者","code":"sz", "avatar": "/assets/zk/圣者.jpg" },
+    { "id": 5, "nickname": "魔王","code":"mw", "avatar": "/assets/zk/魔王.jpg" },
+    { "id": 6, "nickname": "战将","code":"zj", "avatar": "/assets/zk/战将.jpg" }
+  ]
+} 
