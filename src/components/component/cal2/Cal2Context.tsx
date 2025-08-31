@@ -12,6 +12,8 @@ export interface CT {
   min?: number;
   max?: number;
   unit?: string;
+  needMin?: number;
+  needMax?: number;
 }
 
 export interface FW {
@@ -40,33 +42,49 @@ export interface EquipDetail {
   epiccts: CT[];
   legendcts: CT[];
   ancientcts: CT[];
-  tz: string;
+  tz: any;
   fwzycts?: any[];
+  tzcts?: any[];
 }
 
 export interface SkillDetail {
   type: string;
   name: string;
-  skill: any;
-  mainSoul: SoulSkill;
-  subSoul: SoulSkill;
+  jn: any;
+  zk: HH;
+  fk: HH;
+  fn: any
 }
 
-export interface SoulSkill {
+export interface HH {
   type: string;
   code: string;
   name: string;
   pic: string;
-  image: string;
   star: number;
   bond: string;
-  activeSkill: any;
-  passiveSkill: any;
-  tempSkill: any;
-  staminaSkill: any;
-  cooldownSkill: any;
-  relatedDamageSkill: any;
+  level: number;
+  multi: number;
+  growth: number;
+  min: number;
+  max: number;
+  value: number;
+  isEdit: boolean;
+  required: number;
+  isGroup: number;
+  maxLegendCtNum: number;
+  hj1: any;
+  hj2: any;
+  hj3: any;
+  hj4: any;
+  hj5: any;
+  hj6: any;
+  jb?: CT;
+  jbcts:CT[],
+  fn?: CT;
+  zlcts?: any[];
   empower?: any;
+  basects?: any[];
 }
 
 
@@ -136,19 +154,44 @@ function getDefaultEquipDetail(code: string): EquipDetail {
 // 默认 SkillDetail
 function getDefaultSkillDetail(code: string): SkillDetail {
   return {
-    type: 'skill',
+    type: 'jn',
     name: '',
-    skill: { code, name: '', level: 1, growth: 0, multiplier: 1, image: '' },
-    mainSoul: {
-      type: 'mainSoul',
-      code: '', name: '', image: '', star: 1, bond: '', pic: '',
-      activeSkill: null, passiveSkill: null, tempSkill: null, staminaSkill: null, cooldownSkill: null, relatedDamageSkill: null, empower: null
+    jn: { code, name: '', min:1, max:15, value: 1, growth: 0, multiplier: 1, pic: '' },
+    zk: {
+      type: 'zk',
+      basects:[],
+      code: '', name: '', value: 1, bond: '', pic: '',
+      hj1: null, hj2: null, hj3: null, hj4: null, hj5: null, hj6: null, empower: null,
+      level: 1,
+      multi: 1,
+      growth: 0,
+      min: 1,
+      max: 15,
+      required: 0,
+      isGroup: 1,
+      maxLegendCtNum: 0,
+      star: 1,
+      isEdit: true,
+      jbcts: []
     },
-    subSoul: {
-      type: 'subSoul',
-      code: '', name: '', image: '', star: 1, bond: '', pic: '',
-      activeSkill: null, passiveSkill: null, tempSkill: null, staminaSkill: null, cooldownSkill: null, relatedDamageSkill: null, empower: null
+    fk: {
+      type: 'fk',
+      basects:[],
+      code: '', name: '', value: 1, bond: '', pic: '',
+      hj1: null, hj2: null, hj3: null, hj4: null, hj5: null, hj6: null, empower: null,
+      level: 1,
+      multi: 1,
+      growth: 0,
+      min: 1,
+      max: 15,
+      required: 0,
+      isGroup: 1,
+      maxLegendCtNum: 0,
+      star: 1,
+      isEdit: true,
+      jbcts: []
     },
+    fn: null
   };
 }
 
@@ -187,21 +230,26 @@ export const QUALITY_LIST = [
 export const POOL_TABS = [
   { key: 'zb', label: '装备', icon: '🛡️' },
   { key: 'fw', label: '符文', icon: '🔮' },
+  { key: 'fwzy', label: '符文之语', icon: '🔮' },
+  { key: 'tz', label: '套装', icon: '💎' },
   { key: 'ct', label: '词条', icon: '📜' },
   { key: 'jn', label: '技能', icon: '⚡' },
-  { key: 'hh', label: '魂核', icon: '💠' },
+  { key: 'zk', label: '主卡', icon: '💠' },
+  { key: 'fk', label: '副卡', icon: '💠' },
   { key: 'fn', label: '赋能', icon: '✨' },
-  { key: 'tz', label: '套装', icon: '💎' },
-  { key: 'fwzy', label: '符文之语', icon: '🔮' }
+  { key: 'jb', label: '羁绊', icon: '🔗' }
 ];
 
 
 export const TYPE_COLORS: Record<string, string> = {
-  '稀有': 'bg-blue-500',
-  '史诗': 'bg-purple-500',
-  '传说': 'bg-orange-500',
-  '远古': 'bg-cyan-500',
-  '基础': 'bg-gray-500',
+  'base': 'gray',
+  'rare': 'blue',
+  'epic': 'purple',
+  'legend': 'orange',
+  'ancient': 'cyan',
+  'mythic': 'yellow',
+  'myth': 'red',
+  'immortal': 'green',
 };
 
 export const DOT_COLORS: Record<string, string> = {
@@ -377,16 +425,33 @@ export const Cal2Provider: React.FC<{ children: React.ReactNode }> = ({ children
             target['fwzycts'] = dragData.fwzycts;
           }
         }
-      }else if (type === 'skill') {
+      }else if (type === 'jn') {
         // 技能类型
         if (targetCode && newData[targetCode]) {
           const target = newData[targetCode];
-          if (target.type === 'skill') {
-            newData[targetCode] = { ...target, skill: dragData };
-          }
+          newData[targetCode] = { ...target, jn: dragData, name: dragData.name };
+        }
+      }else if (type === 'zk') {
+        // 主卡类型
+        if (targetCode && newData[targetCode]) {
+          const target = newData[targetCode];
+          console.log('target', target);
+          console.log('dragData', dragData);
+          newData[targetCode] = { ...target, zk: dragData, basects: dragData.basects };
+        }
+      }else if (type === 'fk') {
+        // 副卡类型
+        if (targetCode && newData[targetCode]) {
+          const target = newData[targetCode];
+          newData[targetCode] = { ...target, fk: dragData };
+        }
+      }else if (type === 'fn') {
+        // 赋能类型
+        if (targetCode && newData[targetCode]) {
+          const target = newData[targetCode];
+          newData[targetCode] = { ...target, fn: dragData };
         }
       }
-      
       return newData;
     });
   }

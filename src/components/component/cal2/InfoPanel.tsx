@@ -22,7 +22,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ equips, skills }) => {
   const { roleValues } = useContext(RoleContext);
   const [tab, setTab] = useState<'sum'|'detail'>('sum');
   return (
-    <div className="w-full bg-[#181f2a] p-4 rounded-xl shadow-lg ml-4">
+    <div className="w-full p-4 rounded-xl shadow-lg ml-4">
       <div className="flex border-b border-gray-700 mb-2">
         <button className={`px-4 py-1 font-bold text-sm ${tab==='sum' ? 'text-blue-300 border-b-2 border-blue-400' : 'text-gray-400'}`} onClick={()=>setTab('sum')}>合计</button>
         <button className={`px-4 py-1 font-bold text-sm ml-4 ${tab==='detail' ? 'text-purple-300 border-b-2 border-purple-400' : 'text-gray-400'}`} onClick={()=>setTab('detail')}>详情</button>
@@ -62,7 +62,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ equips, skills }) => {
               {list.map((skill, idx) => (
                 <div key={idx} className="bg-gray-800/80 rounded-lg px-3 py-1 mb-1">
                   <span className="text-purple-300 font-bold mr-2">{skill.name}</span>
-                  <span className="text-gray-400">{skill?.mainSoul.activeSkill}</span>
+                  <span className="text-gray-400">{skill?.zk.hj1.name}</span>
                 </div>
               ))}
             </div>

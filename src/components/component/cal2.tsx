@@ -5,7 +5,7 @@ import EquipGrid from './cal2/EquipGrid';
 import SkillGrid from './cal2/SkillGrid';
 import InfoPanel from './cal2/InfoPanel';
 import DetailPanel from './cal2/DetailPanel';
-import { Cal2Provider, useCal2, EquipDetail } from './cal2/Cal2Context';
+import { Cal2Provider, useCal2, EquipDetail, SkillDetail } from './cal2/Cal2Context';
 
 // 类型声明
 interface EquipType {
@@ -37,7 +37,7 @@ function SingleSelectCardRow({ options, value, onChange, labelKey = 'name' }: { 
             'px-4 py-2 rounded-lg border cursor-pointer text-sm ' +
             (value === opt.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-800 text-gray-200 border-gray-600 hover:border-blue-400')
           }
-          onClick={() => onChange(opt.id)}
+          onClick={() => onChange(opt.code)}
         >
           {opt[labelKey]}
         </div>
@@ -72,7 +72,7 @@ function Cal2Content() {
   const allowedTabs = ['equip', 'runeWord', 'rune', 'base', 'rare', 'epic', 'legend', 'ancient', 'skill', 'core', 'empower'];
   const [category, setCategory] = useState('');
   const [selectedDetailCode, setSelectedDetailCode] = useState<string | null>(null);
-  const { setData, handleDropToDetail } = useCal2();
+  const { setData, handleDropToDetail, setJobCode, setTalentCode } = useCal2();
 
   // 区域展开收起状态
   const [areaExpanded, setAreaExpanded] = useState({
@@ -94,13 +94,30 @@ function Cal2Content() {
   useEffect(() => {
     fetchProfessions().then(data => {
       setProfessions(Array.isArray(data) ? data : []);
-      if (Array.isArray(data) && data.length > 0) setSelectedProfession(data[0].id);
+      if (Array.isArray(data) && data.length > 0) setSelectedProfession(data[0].code);
     });
     fetchTalents().then(data => {
       setTalents(Array.isArray(data) ? data : []);
-      if (Array.isArray(data) && data.length > 0) setSelectedTalent(data[0].id);
+      if (Array.isArray(data) && data.length > 0) setSelectedTalent(data[0].code);
     });
   }, []);
+
+  useEffect(() => {
+    console.log("selectedProfession", selectedProfession);
+    setData(prev => {
+      const newData = { ...prev }; 
+      newData["qq"].name = "轻切";
+      newData["qp"].name = "轻破";
+      newData["zq"].name = "重切";
+      newData["zp"].name = "重破";
+      newData["qq"].jn = poolData.find(item => item.code === "qq" && item.belongJob === selectedProfession && item.type==="jn");
+      newData["qp"].jn = poolData.find(item => item.code === "qp" && item.belongJob === selectedProfession && item.type==="jn");
+      newData["zq"].jn = poolData.find(item => item.code === "zq" && item.belongJob === selectedProfession && item.type==="jn");
+      newData["zp"].jn = poolData.find(item => item.code === "zp" && item.belongJob === selectedProfession && item.type==="jn");
+      return newData;
+    });
+    setJobCode(selectedProfession);
+  }, [selectedProfession]);
 
   function handleEquipDrop(slot: string, equip: any) {
     setSelectedEquips(prev => ({ ...prev, [slot]: equip }));
@@ -110,7 +127,7 @@ function Cal2Content() {
   }
   function handleDetailEdit(patch: any) {
     const { code, group, entryCode, value } = patch;
-    
+    console.log("handleDetailEdit：", patch);
     setData(prev => {
       const newData = { ...prev };
       const target = newData[code];
@@ -136,12 +153,27 @@ function Cal2Content() {
           case '远古词条':
             ctArray = equipTarget.ancientcts;
             break;
+          case '符文之语':
+            console.log("符文之语：", value);
+            newData[code].fwzy = { ...equipTarget.fwzy, value: Number(value).toFixed(0) };
+            ctArray = equipTarget.fwzycts||[];
+            break;
+          case '符文':
+            newData[code].fwzy.value=newData[code].fwzy.relatedFw.map((fw:any)=>newData[code].fws.find((f:any)=>f.code===fw)?.value||10).reduce((a:number,b:number)=>Math.min(a,b),10)
+            ctArray = equipTarget.fws;
+            break;
         }
         
         // 找到并更新对应的词条
         const entryIndex = ctArray.findIndex(ct => ct.code === entryCode);
         if (entryIndex !== -1) {
-          ctArray[entryIndex] = { ...ctArray[entryIndex], value };
+          if (group === '符文之语') {
+            console.log("符文之语：", value);
+          } else if (group === '符文') {
+            ctArray[entryIndex] = { ...ctArray[entryIndex], value:  Number(value).toFixed(0) };
+          } else {
+            ctArray[entryIndex] = { ...ctArray[entryIndex], value };
+          }
           
           // 更新对应的数组
           switch (group) {
@@ -160,7 +192,61 @@ function Cal2Content() {
             case '远古词条':
               newData[code] = { ...equipTarget, ancientcts: [...ctArray] };
               break;
+            case '符文之语':
+              break;
+            case '符文':
+              newData[code] = { ...equipTarget, fws: [...ctArray] };
+              break;
           }
+        }
+      }else if (target && target.type === 'jn') {
+        const skillTarget = target as SkillDetail;
+        switch (group) {
+          case '主动魂技':
+            skillTarget.zk.hj1.value = value.toFixed(0);
+            break;
+          case '被动魂技':
+            skillTarget.zk.hj2.value = value.toFixed(0);
+            break;
+          case '临时魂技':
+            skillTarget.zk.hj3.value = value.toFixed(0);
+            break;
+          case '灵':
+            skillTarget.zk.hj4.value = value.toFixed(0);
+            break;
+          case '躯':
+            skillTarget.zk.hj5.value = value.toFixed(0);
+            break;
+          case '忆':
+            skillTarget.zk.hj6.value = value.toFixed(0);
+            break;
+          case '赋能':
+            skillTarget.fn.value = value;
+            break;
+          case '技能':
+            skillTarget.jn.level = value.toFixed(0);
+            break;
+          case '主卡':
+            skillTarget.zk.value = value.toFixed(0);
+            break;
+          case '副卡':
+            skillTarget.fk.value = value.toFixed(0);
+            break;
+          case '注灵':
+            let zlArray: any[] = [];
+            zlArray = skillTarget.zk.zlcts||[];
+            zlArray.map(zl=>zl.value=Number(value).toFixed(0));
+            skillTarget.zk.zlcts = [...zlArray];
+            break;
+          case '基础属性':
+            let ctArray: any[] = [];
+            ctArray = skillTarget.zk.basects||[];
+            const entryIndex = ctArray.findIndex(ct => ct.code === entryCode);
+            if (entryIndex !== -1) {
+              ctArray[entryIndex] = { ...ctArray[entryIndex], value:  Number(value).toFixed(0) };
+            }
+            skillTarget.zk.basects = [...ctArray];
+            break;
         }
       }
       
@@ -225,6 +311,16 @@ function Cal2Content() {
             break;
           case '远古词条':
             newData[selectedDetailCode] = { ...equipTarget, ancientcts: filteredArray };
+            break;
+          case '符文之语':
+            newData[selectedDetailCode]['fws'] = [];
+            newData[selectedDetailCode]['fwzy'] = {};
+            newData[selectedDetailCode]['fwzycts'] = [];
+            break;
+          case '符文':
+            newData[selectedDetailCode]['fws'] = [];
+            newData[selectedDetailCode]['fwzy'] = {};
+            newData[selectedDetailCode]['fwzycts'] = [];
             break;
         }
       }
@@ -325,7 +421,7 @@ function Cal2Content() {
 
       {/* 区域4：属性面板 */}
       <div className={`flex flex-col ${areaExpanded.area4 ? 'flex-1' : 'w-8'} transition-all duration-300`}>
-        <div className="flex items-center justify-between bg-gray-100 p-2 border-b">
+        <div className="flex items-center justify-between p-2 border-b">
           <span className="text-sm font-bold">属性面板</span>
           <button 
             onClick={() => toggleArea('area4')}
@@ -335,7 +431,7 @@ function Cal2Content() {
           </button>
         </div>
         {areaExpanded.area4 && (
-          <div className="flex flex-col bg-gray-50 rounded-lg p-4 flex-1 flex flex-col">
+          <div className="flex flex-col rounded-lg p-4 flex-1 flex flex-col">
             <InfoPanel
               equips={selectedEquips}
               skills={selectedSkills}

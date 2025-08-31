@@ -13,7 +13,7 @@ export interface PoolItemType {
   image?: string; // 图片url
   entryDots?: string[]; // 词条点类型数组
   category?: string;
-  quality?: string; // 新增品质属性
+  quality: string; // 新增品质属性
   [key: string]: any;
 }
 
@@ -41,10 +41,8 @@ function getAllowedTabs(selectedCode: string, jobCode: string) {
 
   if (!selectedCode) return POOL_TABS.map(t => t.key);
   // 技能相关code判断
-  if (
-    ['q1', 'q2', 'q3', 'q4', 'z1', 'z2', 'z3', 'z4'].includes(selectedCode)
-  ) {
-    return ['jn', 'hh', 'fn'];
+  if (['qq','qp','zq','zp','q1', 'q2', 'q3', 'q4', 'z1', 'z2', 'z3', 'z4'].includes(selectedCode)) {
+    return ['jn', 'hh', 'fn', 'ct', 'jb', 'zk', 'fk'];
   }
   // 其它视为装备
   return ['zb', 'fw', 'fwzy', 'tz', 'ct'];
@@ -123,13 +121,14 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
           {poolData
             // 按品质筛选
             .filter(item => !quality || item.quality === quality || quality === 'all')
+            .filter(item => (!jobCode || item.belongJob === jobCode)||item.type!=='jn')
             // 保留原有的分类筛选逻辑（如有需要）
-            .filter(item => item.relatedZb.includes(selectedCode))
-            .filter(item => !activeTab || item.type === activeTab)
+            .filter(item => {
+              return (item.relatedZb.includes(selectedCode) || activeTab==='fw' || (item.relatedJn?.includes(selectedCode)))
+            })
+            .filter(item => !activeTab || item.type === activeTab ||((activeTab==='fk'||activeTab==='zk')&&item.type==='hh'))
             .map(item => {
               if(item.type==='fwzy'){
-                console.log(item);
-                console.log(item.relatedFw);
                 return {
                   ...item,
                   fws: item.relatedFw.map((fw: string) => {
@@ -142,6 +141,31 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
                     console.log(ctItem);
                     return ctItem;
                   })
+                }
+              }else if(item.type==='zb'){
+                console.log(item.relatedTz);
+                return {
+                  ...item,
+                  tz: poolData.find(i=>i.categary=== 'zb'&&i.code===item.belongTz && i.type==='tz'),
+                  tzcts: poolData.filter(i=>i.categary=== 'zb'&&i.type===item.belongTz)
+                }
+              }else if(item.type==='hh'){
+                return {
+                  ...item,
+                  type: activeTab,
+                  sm: poolData.find(i=>i.categary=== 'jn'&&i.code===item.sm && i.type==='ct'),
+                  fy: poolData.find(i=>i.categary=== 'jn'&&i.code===item.fy && i.type==='ct'),
+                  gj: poolData.find(i=>i.categary=== 'jn'&&i.code===item.gj && i.type==='ct'),
+                  hj1: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj1 && i.type==='hj'&&item.quality===i.quality),
+                  hj2: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj2 && i.type==='hj'&&item.quality===i.quality),
+                  hj3: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj3 && i.type==='hj'&&item.quality===i.quality),
+                  hj4: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj4 && i.type==='hj'&&item.quality===i.quality),
+                  hj5: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj5 && i.type==='hj'&&item.quality===i.quality),
+                  hj6: poolData.find(i=>i.categary=== 'jn'&&i.code===item.hj6 && i.type==='hj'&&item.quality===i.quality),
+                  jb: poolData.find(i=>i.categary=== 'jn'&&i.code===item.belongJb && i.type==='jb'),
+                  basects: poolData.filter(i=>i.categary=== 'jn'&&i.code.startsWith('jc') && i.type==='ct'),
+                  jbcts: poolData.filter(i=>i.categary=== 'jn'&&i.belongJb===item.belongJb && i.type==='ct'),
+                  zlcts: poolData.filter(i=>i.categary=== 'jn'&&i.type==='zl'&&i.quality===item.quality&&(((item.hj1==='hh'||item.hj1==='ws')&&(['bjsh','ct','bs','hs','ls','ds'].includes(i.code)))||((item.hj1!=='hh'&&item.hj1!=='ws')&&(['bjsh','ct',item.hj1].includes(i.code)))))
                 }
               }
               return item;
@@ -160,9 +184,8 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
                     }));
                   }}
                   onClick={()=>onItemClick(item)}
+                  style={{color: TYPE_COLORS[item.quality]}}
                 >
-                  {/* 类型标签 */}
-                  {item.typeLabel && <span className={`absolute left-2 top-2 px-2 py-0.5 text-xs text-white rounded ${TYPE_COLORS[item.typeLabel]||'bg-gray-400'}`}>{item.typeLabel}</span>}
                   {/* 图片 */}
                   {item.pic ? <img src={item.pic} alt={item.name} className="w-16 h-16 object-cover rounded mb-1" /> : <span className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded mb-1">{item.icon}</span>}
                   {/* 名称/描述 */}
@@ -191,10 +214,11 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
                     }));
                   }}
                   onClick={()=>onItemClick(item)}
+                  style={{color: TYPE_COLORS[item.quality]}}
                 >
                   {item.pic ? <img src={item.pic} alt={item.name} className="w-8 h-8 object-cover rounded" /> : <span className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded">{item.icon}</span>}
                   <span className="flex-1 text-xs font-bold text-gray-800">{item.name}</span>
-                  <span className="text-xs text-left text-gray-500">{item.condition||''}</span>
+                  <span className={`text-xs text-left`}>{item.condition||''}</span>
                   <span className="text-xs text-left text-gray-500">{item.desc}</span>
                   <div className="flex flex-row gap-1">
                     {item.entryDots && item.entryDots.map((dot, i) => (
@@ -202,7 +226,6 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
                     ))}
                   </div>
                   <span className="text-xs bg-yellow-700 text-yellow-200 rounded px-1">{item.min!==item.max?("("+item.min+"-"+item.max+")"+item.unit||''):(item.value+item.unit)}</span>
-                  {item.typeLabel && <span className={`ml-2 px-2 py-0.5 text-xs text-white rounded ${TYPE_COLORS[item.typeLabel]||'bg-gray-400'}`}>{item.typeLabel}</span>}
                 </div>
               )
             ))}
