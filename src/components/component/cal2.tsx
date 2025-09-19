@@ -5,7 +5,7 @@ import EquipGrid from './cal2/EquipGrid';
 import SkillGrid from './cal2/SkillGrid';
 import InfoPanel from './cal2/InfoPanel';
 import DetailPanel from './cal2/DetailPanel';
-import { Cal2Provider, useCal2, EquipDetail, SkillDetail } from './cal2/Cal2Context';
+import { Cal2Provider, useCal2, EquipDetail, SkillDetail, JobDetail } from './cal2/Cal2Context';
 
 // 类型声明
 interface EquipType {
@@ -33,6 +33,9 @@ function SingleSelectCardRow({ options, value, onChange, labelKey = 'name' }: { 
       {options.map(opt => (
         <div
           key={opt.id}
+          style={{
+            color: opt.code==value?'red':'gray'
+          }}
           className={
             'px-4 py-2 rounded-lg border cursor-pointer text-sm ' +
             (value === opt.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-800 text-gray-200 border-gray-600 hover:border-blue-400')
@@ -63,6 +66,7 @@ function Cal2Content() {
   // 其它 state
   const [selectedEquips, setSelectedEquips] = useState<Record<string, any>>({});
   const [selectedSkills, setSelectedSkills] = useState<Record<string, any>>({});
+  const [selectedJobs, setSelectedJobs] = useState<Record<string, any>>({});
   const [selectedDetail, setSelectedDetail] = useState<any>(null);
   // 职业/天赋
   const [professions, setProfessions] = useState<any[]>([]);
@@ -116,6 +120,7 @@ function Cal2Content() {
       newData["zp"].jn = poolData.find(item => item.code === "zp" && item.belongJob === selectedProfession && item.type==="jn");
       return newData;
     });
+    setSelectedDetailCode(selectedProfession);
     setJobCode(selectedProfession);
   }, [selectedProfession]);
 
@@ -126,7 +131,7 @@ function Cal2Content() {
     setSelectedSkills(prev => ({ ...prev, [slot]: skill }));
   }
   function handleDetailEdit(patch: any) {
-    const { code, group, entryCode, value } = patch;
+    const { code, group, entryCode, value, condition, id } = patch;
     console.log("handleDetailEdit：", patch);
     setData(prev => {
       const newData = { ...prev };
@@ -162,10 +167,13 @@ function Cal2Content() {
             newData[code].fwzy.value=newData[code].fwzy.relatedFw.map((fw:any)=>newData[code].fws.find((f:any)=>f.code===fw)?.value||10).reduce((a:number,b:number)=>Math.min(a,b),10)
             ctArray = equipTarget.fws;
             break;
+          case '强化':
+            ctArray = equipTarget.qhcts||[];
+            break;
         }
         
         // 找到并更新对应的词条
-        const entryIndex = ctArray.findIndex(ct => ct.code === entryCode);
+        const entryIndex = id?ctArray.findIndex(ct => ct.id === id):ctArray.findIndex(ct => ct.code === entryCode && ct.condition === condition);
         if (entryIndex !== -1) {
           if (group === '符文之语') {
             console.log("符文之语：", value);
@@ -196,6 +204,9 @@ function Cal2Content() {
               break;
             case '符文':
               newData[code] = { ...equipTarget, fws: [...ctArray] };
+              break;
+            case '强化':
+              newData[code] = { ...equipTarget, qhcts: [...ctArray] };
               break;
           }
         }
@@ -243,9 +254,56 @@ function Cal2Content() {
             ctArray = skillTarget.zk.basects||[];
             const entryIndex = ctArray.findIndex(ct => ct.code === entryCode);
             if (entryIndex !== -1) {
-              ctArray[entryIndex] = { ...ctArray[entryIndex], value:  Number(value).toFixed(0) };
+              ctArray[entryIndex] = { ...ctArray[entryIndex], value:  Number(value.toFixed(0)) };
             }
             skillTarget.zk.basects = [...ctArray];
+            break;
+        } 
+      }else if (target && target.type === 'job') {
+        const jobTarget = target as JobDetail;
+        let jobCtArray: any[] = [];
+        switch (group) {
+          case '角色属性':
+            jobCtArray = jobTarget.jccts||[];
+            break;
+          case '天赋':
+            jobCtArray = jobTarget.tfcts||[];
+            break;
+          case '命运星盘':
+            jobCtArray = jobTarget.xpcts||[];
+            break;
+          case '界限超越':
+            jobCtArray = jobTarget.cycts||[];
+            break;
+          case '时装':
+            jobCtArray = jobTarget.szcts||[];
+            break;
+          case '称号':
+            jobCtArray = jobTarget.chcts||[];
+            break;
+        }
+        const entryIndex = jobCtArray.findIndex(ct => ct.code === entryCode);
+        if (entryIndex !== -1) {
+          jobCtArray[entryIndex] = { ...jobCtArray[entryIndex], value:  Number(value).toFixed(1) };
+        }
+        switch (group) {
+          case '角色属性':
+            newData[code] = { ...jobTarget, jccts: jobCtArray };
+            break;
+          case '天赋':
+            newData[code] = { ...jobTarget, tfcts: jobCtArray };
+            break;
+          case '命运星盘':
+            newData[code] = { ...jobTarget, xpcts: jobCtArray };
+            break;
+          case '界限超越':
+            newData[code] = { ...jobTarget, cycts: jobCtArray };
+            break;
+          case '时装':
+            newData[code] = { ...jobTarget, szcts: jobCtArray };
+            break;
+          case '称号':
+            newData[code] = { ...jobTarget, chcts: jobCtArray };
             break;
         }
       }
@@ -258,11 +316,13 @@ function Cal2Content() {
       setSelectedEquips(prev => { const n = { ...prev }; delete n[selectedDetail.slot]; return n; });
     } else if (selectedDetail?.type === 'skill') {
       setSelectedSkills(prev => { const n = { ...prev }; delete n[selectedDetail.slot]; return n; });
+    } else if (selectedDetail?.type === 'job') {
+      setSelectedJobs(prev => { const n = { ...prev }; delete n[selectedDetail.slot]; return n; });
     }
     setSelectedDetail(null);
   }
 
-  function handleRemoveEntry(entryCode: string, group: string) {
+  function handleRemoveEntry(entryCode: string, group: string, id?: string) {
     if (!selectedDetailCode) return;
     
     setData(prev => {
@@ -290,10 +350,13 @@ function Cal2Content() {
           case '远古词条':
             ctArray = equipTarget.ancientcts;
             break;
+          case '强化':
+            ctArray = equipTarget.qhcts||[];
+            break;
         }
         
         // 移除指定词条
-        const filteredArray = ctArray.filter(ct => ct.code !== entryCode);
+        const filteredArray = id?ctArray.filter(ct => ct.id !== id):ctArray.filter(ct => ct.code !== entryCode);
         
         // 更新对应的数组
         switch (group) {
@@ -321,6 +384,53 @@ function Cal2Content() {
             newData[selectedDetailCode]['fws'] = [];
             newData[selectedDetailCode]['fwzy'] = {};
             newData[selectedDetailCode]['fwzycts'] = [];
+            break;
+          case '强化':
+            newData[selectedDetailCode] = { ...equipTarget, qhcts: filteredArray };
+            break;
+        }
+      }else if (target && target.type === 'job') {
+        const jobTarget = target as JobDetail;
+        let jobCtArray: any[] = [];
+        switch (group) {
+          case '角色属性':
+            jobCtArray = jobTarget.jccts||[];
+            break;
+          case '天赋':
+            jobCtArray = jobTarget.tfcts||[];
+            break;
+          case '命运星盘':
+            jobCtArray = jobTarget.xpcts||[];
+            break;
+          case '界限超越':
+            jobCtArray = jobTarget.cycts||[];
+            break;
+          case '时装':
+            jobCtArray = jobTarget.szcts||[];
+            break;
+          case '称号':
+            jobCtArray = jobTarget.chcts||[];
+            break;
+        }
+        const filteredArray = jobCtArray.filter(ct => ct.code !== entryCode);
+        switch (group) {
+          case '角色属性':
+            newData[selectedDetailCode] = { ...jobTarget, jccts: filteredArray };
+            break;
+          case '天赋':
+            newData[selectedDetailCode] = { ...jobTarget, tfcts: filteredArray };
+            break;
+          case '命运星盘':
+            newData[selectedDetailCode] = { ...jobTarget, xpcts: filteredArray };
+            break;
+          case '界限超越':
+            newData[selectedDetailCode] = { ...jobTarget, cycts: filteredArray };
+            break;
+          case '时装':
+            newData[selectedDetailCode] = { ...jobTarget, szcts: filteredArray };
+            break;
+          case '称号':
+            newData[selectedDetailCode] = { ...jobTarget, chcts: filteredArray };
             break;
         }
       }
@@ -413,8 +523,6 @@ function Cal2Content() {
             <EquipGrid onSlotClick={setSelectedDetailCode} />
             {/* 技能16宫格 */}
             <SkillGrid onSlotClick={setSelectedDetailCode} />
-            {/* 天赋选择行 */}
-            <SingleSelectCardRow options={talents} value={selectedTalent} onChange={setSelectedTalent} />
           </div>
         )}
       </div>
@@ -432,10 +540,7 @@ function Cal2Content() {
         </div>
         {areaExpanded.area4 && (
           <div className="flex flex-col rounded-lg p-4 flex-1 flex flex-col">
-            <InfoPanel
-              equips={selectedEquips}
-              skills={selectedSkills}
-            />
+            <InfoPanel  />
           </div>
         )}
       </div>

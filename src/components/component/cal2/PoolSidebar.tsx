@@ -43,9 +43,11 @@ function getAllowedTabs(selectedCode: string, jobCode: string) {
   // 技能相关code判断
   if (['qq','qp','zq','zp','q1', 'q2', 'q3', 'q4', 'z1', 'z2', 'z3', 'z4'].includes(selectedCode)) {
     return ['jn', 'hh', 'fn', 'ct', 'jb', 'zk', 'fk'];
+  }else if (['zh','yw','wy','sz','mw','zj'].includes(selectedCode)) {
+    return ['js', 'xp', 'tf', 'cy', 'sz', 'ch'];
   }
   // 其它视为装备
-  return ['zb', 'fw', 'fwzy', 'tz', 'ct'];
+  return ['zb', 'fw', 'fwzy', 'tz', 'ct','qh'];
 }
 
 const PoolSidebar: React.FC<PoolSidebarProps> = ({
@@ -70,12 +72,15 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
     <div className="h-full flex flex-row bg-gray-50 border-r border-gray-300">
       {/* Tab竖排 */}
       <div className="flex flex-col gap-1 py-4 px-2 border-r border-gray-200 min-w-[60px]">
-        {POOL_TABS.map(tab => (
+        {POOL_TABS.filter(tab => getAllowedTabs(selectedCode, jobCode).includes(tab.key)).map(tab => (
           <button
             key={tab.key}
             className={`flex flex-col items-center py-2 px-2 rounded text-xs font-bold transition-all ${
               activeTab===tab.key ? 'bg-yellow-200 text-yellow-900' : allowedTabs.includes(tab.key) ? 'text-gray-700 hover:bg-gray-200' : 'text-gray-400 bg-gray-100 cursor-not-allowed'
             }`}
+            style={{
+              color: tab.key==activeTab?'red':'gray'
+            }}
             disabled={!allowedTabs.includes(tab.key)}
             onClick={()=>handleTabClick(tab.key)}
           >
@@ -110,6 +115,9 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
               key={q.key}
               className={`px-3 py-1 rounded text-xs font-bold transition-all ${quality === q.key ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-700'}`}
               onClick={() => setQuality(q.key)}
+              style={{
+                color: q.key==quality?'red':'gray'
+              }}
             >
               {q.label}
             </button>
@@ -124,7 +132,7 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
             .filter(item => (!jobCode || item.belongJob === jobCode)||item.type!=='jn')
             // 保留原有的分类筛选逻辑（如有需要）
             .filter(item => {
-              return (item.relatedZb.includes(selectedCode) || activeTab==='fw' || (item.relatedJn?.includes(selectedCode)))
+              return (item.relatedZb.includes(selectedCode) || activeTab==='fw' || (item.relatedJn?.includes(selectedCode)) || ['js','ch','sz','xp','tf','cy'].includes(activeTab))
             })
             .filter(item => !activeTab || item.type === activeTab ||((activeTab==='fk'||activeTab==='zk')&&item.type==='hh'))
             .map(item => {
@@ -165,7 +173,7 @@ const PoolSidebar: React.FC<PoolSidebarProps> = ({
                   jb: poolData.find(i=>i.categary=== 'jn'&&i.code===item.belongJb && i.type==='jb'),
                   basects: poolData.filter(i=>i.categary=== 'jn'&&i.code.startsWith('jc') && i.type==='ct'),
                   jbcts: poolData.filter(i=>i.categary=== 'jn'&&i.belongJb===item.belongJb && i.type==='ct'),
-                  zlcts: poolData.filter(i=>i.categary=== 'jn'&&i.type==='zl'&&i.quality===item.quality&&(((item.hj1==='hh'||item.hj1==='ws')&&(['bjsh','ct','bs','hs','ls','ds'].includes(i.code)))||((item.hj1!=='hh'&&item.hj1!=='ws')&&(['bjsh','ct',item.hj1].includes(i.code)))))
+                  zlcts: poolData.filter(i=>i.categary=== 'jn'&&i.type==='zl'&&i.quality===item.quality&&(((item.hj1==='hh'||item.hj1==='zcws')&&(['bjsh','ct','bs','hs','ls','ds'].includes(i.code)))||((item.hj1!=='hh'&&item.hj1!=='zcws')&&(['bjsh','ct'].includes(i.code)||'zc'+i.code===item.hj1))))
                 }
               }
               return item;

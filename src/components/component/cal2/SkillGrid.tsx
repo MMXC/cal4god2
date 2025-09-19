@@ -17,7 +17,7 @@ export default function SkillGrid({ onSlotClick }: { onSlotClick?: (code: string
           }
           onClick={() => slot.type !== 'disabled' && onSlotClick?.(slot.type)}
         >
-          {data[slot.type]?.name?<img src={data[slot.type].jn?.pic} alt={data[slot.type].name} title={data[slot.type].name} className="w-15 h-15" />:typeLabels[slot.type]}
+          {data[slot.type]?.name?<img src={data[slot.type].zk?.pic} alt={data[slot.type].name} title={data[slot.type].name} className="w-15 h-15" />:typeLabels[slot.type]}
         </div>
       ))}
     </div>
