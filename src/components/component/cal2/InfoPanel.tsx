@@ -95,18 +95,39 @@ const InfoPanel: React.FC<{}> = () => {
         </div>
       ) : (
         <div className="py-2">          
-          {validEntriesSummary.ctEntries.length > 0 && (
-            <div className="mb-2">
-              {validEntriesSummary.ctEntries.sort((a, b) => (a.condition?.length||0) - (b.condition?.length||0)).map((ct: CT, index: number) => (
-                <div key={index} className="bg-gray-800/80 rounded-lg px-3 py-1 mb-1" style={{color: TYPE_COLORS[ct.quality||'base']}}>
-                  <span className="text-xs text-gray-500 ml-2">来源: {ct.sourceName}</span>
-                  <span className="text-blue-300 font-bold mr-2">{ct.condition}</span>
-                  <span className="text-blue-300 font-bold mr-2">{ct.name?ct.name:ct.desc}</span>
-                  <span className="text-gray-400">{ct.calculatedValue} {ct.unit}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          {validEntriesSummary.ctEntries.length > 0 && (() => {
+            const grouped = validEntriesSummary.ctEntries.reduce((acc: Record<string, CT[]>, ct: CT) => {
+              const key = ct.condition && ct.condition.trim() ? ct.condition : '无条件';
+              if (!acc[key]) acc[key] = [];
+              acc[key].push(ct);
+              return acc;
+            }, {});
+
+            const groupEntries = Object.entries(grouped)
+              .sort((a, b) => (a[0].length - b[0].length) || a[0].localeCompare(b[0]));
+
+            return (
+              <div className="mb-2">
+                {groupEntries.map(([condition, items]) => {
+                  const sortedItems = items
+                    .slice()
+                    .sort((a, b) => ((b.calculatedValue||0) - (a.calculatedValue||0)) || ((a.name||a.desc).localeCompare(b.name||b.desc)));
+                  return (
+                    <div key={condition} className="mb-2">
+                      <div className="text-xs text-gray-400 font-bold px-2 py-1">{condition}</div>
+                      {sortedItems.map((ct: CT, index: number) => (
+                        <div key={ct.id || `${ct.code}-${index}` } className="bg-gray-800/80 rounded-lg px-3 py-1 mb-1" style={{color: TYPE_COLORS[ct.quality||'base']}}>
+                          <span className="text-xs text-gray-500 ml-2">来源: {ct.sourceName}</span>
+                          <span className="text-blue-300 font-bold mr-2">{ct.name?ct.name:ct.desc}</span>
+                          <span className="text-gray-400">{ct.calculatedValue} {ct.unit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>

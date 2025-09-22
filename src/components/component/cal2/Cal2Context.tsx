@@ -393,19 +393,21 @@ export const showSummary = [
   { key: '[额外攻击力]', label: '额外攻击力', color: 'purple', sxSet:['xpgj','cygj','szgj'] },
   { key: '[百分比攻击力]', label: '百分比攻击力', color: 'red', sxSet:['gj%','gjl%','自身生命值高于80%时gjl%'] },
   { key: '[面板攻击力]', label: '面板攻击力', color: 'red', sxSet:[''] },
-  { key: '[暴击率]', label: '暴击率', color: 'purple', sxSet:['bjl%','进入战斗后bjl%','ty3%','ty3'] },
+  { key: '[会心]', label: '会心', color: 'purple', sxSet:['hx','hj1'] },
+  { key: '[暴击率]', label: '暴击率', color: 'purple', sxSet:['bjl%','ty3%','ty3'] },
   { key: '[基础暴击伤害]', label: '基础暴击伤害', color: 'yellow', sxSet:['bjsh%','my3%','my3'] },
   { key: '[额外暴击伤害]', label: '额外暴击伤害', color: 'yellow', sxSet:['erbjsh%','进入战斗后erbjsh%'] },
   { key: '[基础最终伤害]', label: '基础最终伤害', color: 'teal', sxSet:['zzsh%','进入战斗后zzsh%','对首领目标zzsh%','对异常目标zzsh%'] },
   { key: '[额外最终伤害]', label: '额外最终伤害', color: 'teal', sxSet:['erzzsh%','进入战斗后erzzsh%'] },
-  { key: '[全属性伤害]', label: '全属性伤害', color: 'purple', sxSet:['qsxsh%'] },
+  { key: '[全属性伤害]', label: '全属性伤害', color: 'purple', sxSet:['qsxsh%','qs%'] },
+  { key: '[额外全属性伤害]', label: '额外全属性伤害', color: 'purple', sxSet:['erqsxsh%'] },
   { key: '[火伤]', label: '火伤', color: 'red', sxSet:['hs%'] },
   { key: '[雷伤]', label: '雷伤', color: 'yellow', sxSet:['ls%'] },
   { key: '[毒伤]', label: '毒伤', color: 'green', sxSet:['ds%'] },
   { key: '[冰伤]', label: '冰伤', color: 'cyan', sxSet:['bs%'] },
   { key: '[穿透]', label: '穿透', color: 'orange', sxSet:['ct%'] },
-  { key: '[减抗]', label: '减抗', color: 'green' },
-  { key: '[技能伤害]', label: '技能伤害', color: 'red', sxSet:['jnsh%','hp3%','hp3'] },
+  { key: '[减抗]', label: '减抗', color: 'green', sxSet:['jk%'] },
+  { key: '[技能伤害]', label: '技能伤害', color: 'red', sxSet:['jnsh%','hp3%'] },
   { key: '[普攻伤害]', label: '普攻伤害', color: 'purple', sxSet:['pgsh%'] },
   { key: '[破招伤害]', label: '破招伤害', color: 'purple', sxSet:['pzsh%','lz1%'] },
   { key: '[对首领目标伤害提升]', label: '对首领目标伤害提升', color: 'cyan', sxSet:['对首领目标shts%'] },
@@ -413,7 +415,19 @@ export const showSummary = [
   { key: '[对火属性首领目标伤害提升]', label: '对火属性首领目标伤害提升', color: 'cyan', sxSet:['对火属性首领目标shts%'] },
   { key: '[对雷属性首领目标伤害提升]', label: '对雷属性首领目标伤害提升', color: 'cyan', sxSet:['对雷属性首领目标shts%'] },
   { key: '[对毒属性首领目标伤害提升]', label: '对毒属性首领目标伤害提升', color: 'cyan', sxSet:['对毒属性首领目标shts%'] },
-  { key: '[对异常目标伤害提升]', label: '对异常目标伤害提升', color: 'gray', sxSet:['对异常目标shts%'] }
+  { key: '[对异常目标伤害提升]', label: '对异常目标伤害提升', color: 'gray', sxSet:['对异常目标shts%'] },
+
+  { key: '[首刀百分比攻击力]', label: '首刀百分比攻击力', color: 'red', sxSet:['gj%','gjl%','自身生命值高于80%时gjl%', '进入战斗后gj%', '进入战斗后gjl%'] },
+  { key: '[首刀暴击率]', label: '首刀暴击率', color: 'red', sxSet:['bjl%','进入战斗后bjl%','ty3%','ty3'] },
+  { key: '[首刀属性伤害]', label: '首刀属性伤害', color: 'red', sxSet:[''] },
+  { key: '[首刀最终伤害]', label: '首刀最终伤害', color: 'red', sxSet:['zzsh%','进入战斗后zzsh%','对首领目标zzsh%','对异常目标zzsh%','目标生命值高于80%时zzsh%'] },
+  { key: '[首刀暴击伤害]', label: '首刀暴击伤害', color: 'red', sxSet:['bjsh%','my3%','my3','进入战斗后bjsh%','对首领目标bjsh%','对异常目标bjsh%'] },
+  { key: '[首刀对首领增伤]', label: '首刀对首领增伤', color: 'red', sxSet:['对首领目标shts%'] },
+  { key: '[首刀伤害提升]', label: '首刀伤害提升', color: 'red', sxSet:['shts%'] },
+  { key: '[首刀技能伤害]', label: '首刀技能伤害', color: 'red', sxSet:['jnsh%','hp3%'] },
+  { key: '[首刀穿透]', label: '首刀穿透', color: 'red', sxSet:['ct%'] },
+  { key: '[首刀减抗]', label: '首刀减抗', color: 'red', sxSet:['jk%'] },
+  { key: '[首刀伤害预估]', label: '首刀伤害预估', color: 'red', sxSet:[''] }
 ];
 
 // 16宫格技能区槽位定义
@@ -884,6 +898,15 @@ export const Cal2Provider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log("showSummary:", showSummary);
     summary.attrSummary = {};
 
+    showSummary.forEach((item: any) => {
+        if (!summary.attrSummary[item.key]) {
+          summary.attrSummary[item.key] = {
+            total: 0,
+            sources: []
+          };
+        }
+    });
+
     summary.ctEntries.forEach((ct: CT) => {
       showSummary.forEach((item: any) => {
         if (item.sxSet?.includes(ct.condition+ct.code+ct.unit)) {
@@ -934,11 +957,23 @@ export const Cal2Provider: React.FC<{ children: React.ReactNode }> = ({ children
         sourceCode: '深空星海'
       });
     });
+        //先处理特殊条件词条
+    summary.ctEntries.filter((ct: CT) => ct.condition === '每装备一个原初至臻魂核' && ct.code==='qsxsh' && ct.isActive).forEach((ct: CT) => {
+      console.log("计数:", (Object.entries(data).filter((item: any) => item[1].type === 'jn').filter((item:any)=>item[1].zk?.quality==='mythic')).length);
+      summary.attrSummary['[全属性伤害]'].total += (ct.calculatedValue || ct.value || 0) * (Object.entries(data).filter((item: any) => item[1].type === 'jn').filter((item:any)=>item[1].zk?.quality==='mythic')).length;
+      summary.attrSummary['[全属性伤害]'].sources.push({
+        code: '深空星海',
+        name: '深空星海',
+        sourceName: '深空星海',
+        sourceType: 'soulCore',
+        sourceCode: '深空星海'
+      });
+    });
     //先处理特殊条件词条
-    summary.ctEntries.filter((ct: CT) => ct.condition === '每装备一个神话魂核' && ct.code==='gjl' && ct.isActive).forEach((ct: CT) => {
+    summary.ctEntries.filter((ct: CT) => ct.condition === '每装备一个神话至臻魂核' && ct.code==='qsxsh' && ct.isActive).forEach((ct: CT) => {
       console.log("计数:", (Object.entries(data).filter((item: any) => item[1].type === 'jn').filter((item:any)=>item[1].zk?.quality==='myth')).length);
-      summary.attrSummary['[百分比攻击力]'].total += (ct.calculatedValue || ct.value || 0) * (Object.entries(data).filter((item: any) => item[1].type === 'jn').filter((item:any)=>item[1].zk?.quality==='myth')).length;
-      summary.attrSummary['[百分比攻击力]'].sources.push({
+      summary.attrSummary['[全属性伤害]'].total += (ct.calculatedValue || ct.value || 0) * (Object.entries(data).filter((item: any) => item[1].type === 'jn').filter((item:any)=>item[1].zk?.quality==='myth')).length;
+      summary.attrSummary['[全属性伤害]'].sources.push({
         code: '深空星海',
         name: '深空星海',
         sourceName: '深空星海',
